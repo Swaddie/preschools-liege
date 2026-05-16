@@ -482,98 +482,6 @@
     color: white;
     display: block;
   }
-  /* PHOTO CAROUSEL */
-  .card-carousel {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    background: var(--sand);
-    overflow: hidden;
-    border-bottom: 1px solid var(--sand);
-    overflow: hidden;
-}
-  .carousel-inner {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    transition: transform 0.35s ease;
-    will-change: transform;
-  }
-  .carousel-inner img {
-    flex: 0 0 100%;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .carousel-inner img {
-    flex-shrink: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255,255,255,0.85);
-    border: none;
-    border-radius: 50%;
-    width: 32px; height: 32px;
-    font-size: 16px;
-    cursor: pointer;
-    z-index: 10;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    transition: background 0.15s;
-  }
-  .carousel-btn:hover { background: white; }
-  .carousel-btn.prev { left: 8px; }
-  .carousel-btn.next { right: 8px; }
-  .carousel-dots {
-    position: absolute;
-    bottom: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 5px;
-  }
-  .carousel-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.5);
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .carousel-dot.active { background: white; }
-  .carousel-attrib {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    padding: 3px 8px;
-    font-size: 9px;
-    color: rgba(255,255,255,0.8);
-    background: linear-gradient(transparent, rgba(0,0,0,0.4));
-    text-align: right;
-  }
-  .carousel-attrib a { color: rgba(255,255,255,0.8); text-decoration: none; }
-  .carousel-loading {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--muted);
-    font-size: 12px;
-    gap: 8px;
-  }
-  .spinner {
-    width: 18px; height: 18px;
-    border: 2px solid var(--sand);
-    border-top-color: var(--forest);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 
 </head>
@@ -682,7 +590,6 @@
       <span class="dist-tag">✈️ 16.1 км · ~14 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="1" data-place="ChIJn2dXslz3wEcRK8spZeqwaLo" data-query="La Belle Jardiniere Montessori Angleur Liege"><div class="carousel-inner"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=Ab43m-tsOOPehajnhr2GUZIBDlrbcsr0HqLQ9tfHKmYG0qVxYfChNuHoCYRnY5IXbUuCOn_4IzWtupVSeu9vX0bJ8-9kUhQzHSatOSpFJuSvhdTcbycQOreLGs55L34vWN13jTcjcuxCUZK8hZ2n0q6kmOXfUvODlWq8JTgL_UL2Y61RriktCZQ61KGvigBFrGL3PWKVzbcOmD0QEEV0be3qVrTo6W08GPEimdadTus1J6q_pI1jtD7tnt8dSrYzDT5QsSCGpPZ12t3HzQsQ-7ZCJM6R53kt3TH-ptNovBk0X4BLkQ&key=AIzaSyDyJF6Sb5T-GLXiq01n6ohUkn3WJ7vwfPE" referrerpolicy="no-referrer" crossorigin="anonymous" loading="lazy"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=Ab43m-tPsNVgz1ig6nnJHOWHTBCFn7-mZ2geR8sQ6BnispACqhOB1UmZTXUKVY1PoAVYUlV6Ab_F955A6a7nsOhg0M44Dalipku9whiuQlyo6LCCVJUV-r7r6kUb3mumKojdGvc9dF-CQfH8SmghxDQuLUL-A8ct5EzikI1DjXLDhhKSGfKVvlmwlzYVnLygHwIR1FDDbx5qT5OZEcoFdvNPBx2xX_B7r3Jbrw_6KHwHy37kkuEGW4Nrb5JYUh2PNzELtP_Up9zEbkBOZjq9CsyUFApw8MrSehYp_Sx92H8-v3g7kw&key=AIzaSyDyJF6Sb5T-GLXiq01n6ohUkn3WJ7vwfPE" referrerpolicy="no-referrer" crossorigin="anonymous" loading="lazy"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=Ab43m-vjl2Lg9prkowwbQjKgqWsTf32Rojk0Ec-5-sHWFSOye7Aq08c62ovuS-UZlzTpuBYzU1N_4qrn2Ql3vwkGA1Me8rpi7yT5vCdXy_hm_GANcYRv6J8YV08jxHIkETekFxf0UdRu4R-MBStow4pP6nnyfIW4tBRUtc_-aVHuzjg7T51ONV4XILKnG_-yQK0S7U-XDcu5dSt98q1y0MaMeuDDdeZXpQA8_PgMoZQ5PabTk_le1ap4s1iVkHBoDU4ebNn-6AkG61H2abbRVbEHcN62hLJIQ9yZY5YvcBGYcHhOhg&key=AIzaSyDyJF6Sb5T-GLXiq01n6ohUkn3WJ7vwfPE" referrerpolicy="no-referrer" crossorigin="anonymous" loading="lazy"></div><button class="carousel-btn prev" onclick="carouselStep(this,-1)">‹</button><button class="carousel-btn next" onclick="carouselStep(this,1)">›</button><div class="carousel-dots"><div class="carousel-dot active" onclick="carouselGo(this,0)"></div><div class="carousel-dot" onclick="carouselGo(this,1)"></div><div class="carousel-dot" onclick="carouselGo(this,2)"></div></div><div class="carousel-attrib" id="ca-1" data-attribs="École Montessori · La Belle-Jardinière|École Montessori · La Belle-Jardinière|École Montessori · La Belle-Jardinière">© École Montessori · La Belle-Jardinière</div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue du Vallon 3, Angleur</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 367 03 31</span></div>
@@ -714,7 +621,6 @@
       <span class="dist-tag">✈️ 16.6 км · ~16 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="2" data-place="ChIJrbCaUTr3wEcRiZpmfuai0Yo" data-query="Ecole Montessori des Etoiles Chenee Liege"><div class="carousel-inner"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=Ab43m-tiQS0MAkLLFWcq_zBSVdITrvoAKMF3PSCArAOVgSG32SqGcwK0GvqRGfIJSzIUjQh52ViGKdUt9_8AnaavNszpEHyj1m8fiS4bjGJXeEpKaYqh7A9jbpeNlV5e9mfntwEtU-y9TLCW3-SdXR8J_LrZAbW5shGN1yXD8GP8Si7jld1QIAmHtAAfuGKLG5zEpu5b6XzB43xzSXIIAPgO7h_KJPeLsHMijofM2yOfx9jkTMX3q-kLmvhhE4B5ppvQLA8v4y7dfLIb71SL5Wt7gNqyvowaRzC5jsz-2CZT6TaxTg&key=AIzaSyDyJF6Sb5T-GLXiq01n6ohUkn3WJ7vwfPE" referrerpolicy="no-referrer" crossorigin="anonymous" loading="lazy"></div><div class="carousel-dots"><div class="carousel-dot active" onclick="carouselGo(this,0)"></div></div><div class="carousel-attrib" id="ca-2" data-attribs="Montessori des Étoiles">© Montessori des Étoiles</div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Large 59, Chênée</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 229 52 22</span></div>
@@ -747,7 +653,6 @@
       <span class="dist-tag">✈️ 11.9 км · ~12 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="22" data-place="" data-query="Les Deux Chenes Modave ecole"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Rausa 23, Modave</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 473 59 71 18</span></div>
@@ -779,7 +684,6 @@
       <span class="dist-tag">✈️ 12.7 км · ~12 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="23" data-place="" data-query="Ecole Montessori Tilff Neupre"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Site Ecotopia, Tilff (Neupré)</span></div>
       <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">3–6 лет (только maternelle)</span></div>
@@ -810,7 +714,6 @@
       <span class="dist-tag">✈️ 12.2 км · ~13 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="24" data-place="" data-query="Jardin Enfants Waldorf Ferme Larock Rotheux"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Duchêne 12, Rotheux-Rimière</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 372 04 75</span></div>
@@ -841,7 +744,6 @@
       <span class="dist-tag">✈️ 16.1 км · ~17 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="25" data-place="" data-query="UWC Maastricht school"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Страна</span><span class="card-row-val">Нидерланды, Маастрихт</span></div>
       <div class="card-row"><span class="card-row-label">Язык</span><span class="card-row-val">Английский</span></div>
@@ -877,7 +779,6 @@
       <span class="dist-tag">✈️ 20.4 км · ~19 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="3" data-place="ChIJq4Iv1OP4wEcRqwARlSKA8sI" data-query="Ecole de la Jeunesse Seraing"><div class="carousel-inner"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=Ab43m-u8STWe2i_ZQSFMutR6artheE6tImLS8ih91xI2vtSjvAG4vSYfVxy3ec8nhd20DMcJsLJPf9lFnhFLTY2qWeE8EiGNPLns1Fk5uptJEApsBF4CgvZZuzHQI83hNtz1brdPxxYcNsgo_EQ1nP7s0fsfuckADczBVHa4yE0JC6o7d-Fo4pIXhvDxXzAtTqwruxdMHEC19NmwyruSVDsx279wAnXa8sYAuyHiQrAA1lJZJmTd1pNUTzbLMztUk3CwU0jvaeli7QzlOUtn2Pj35L_5WIyf11_Z2cXW4Sfouq55VA&key=AIzaSyDyJF6Sb5T-GLXiq01n6ohUkn3WJ7vwfPE" referrerpolicy="no-referrer" crossorigin="anonymous" loading="lazy"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=Ab43m-ur8j8K9N7xG2ZOLpPZ2MxoAtnO5L9q25oGRRPcKP6-ebsLhmNIzuikvy-DCrb7btuYnUoqIdHm8WVKIOWPH-iULvInsua8pR0wSRkfo0soWq4ZJREu_zqIkMo8VJHkk3UsGRoDquKy-jgNaeCHdJHDrWiID_ZJlP4c3QVDWYCLobkR4z7sZFGHaCCyJ9KwNoVy_2GTrvLBL028VsJ3E7GoUN7mSMmjfMZkj8GNzwXBvqh_iMy8cOHDHvvjfdZKqIg3wuqyVDDmTnWdoRm6ckMJCHf32SmGYGwn6uvzEbQLbg&key=AIzaSyDyJF6Sb5T-GLXiq01n6ohUkn3WJ7vwfPE" referrerpolicy="no-referrer" crossorigin="anonymous" loading="lazy"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=Ab43m-sWhM5DPpNTxQRQN9S91JyEXbYaQmRdsWnp2gJ55unAYIRLpUe9jEEcqD57M3t1YTd58uLeiIAQVWhs0enOygWXefQp4PYtVgLdGZtf9jHNzEo9QJ0TueRMYR8GtVQ53xdD1RxQYiZTVv8lQOUX5oxatm75c-LiGkceqG3jcRQn6GjcbEXzmoy1FcpaaXfOKYfBSecREAWAQtBNzhfCeJ_vcRNGu-hfNa0w8lX1NTzDxpbpz9efSWX7L0O_yaPTMJzMML_ZjabIzYDSRZVdTNh_txJxcIU3kv1sYFQC52En7w&key=AIzaSyDyJF6Sb5T-GLXiq01n6ohUkn3WJ7vwfPE" referrerpolicy="no-referrer" crossorigin="anonymous" loading="lazy"></div><button class="carousel-btn prev" onclick="carouselStep(this,-1)">‹</button><button class="carousel-btn next" onclick="carouselStep(this,1)">›</button><div class="carousel-dots"><div class="carousel-dot active" onclick="carouselGo(this,0)"></div><div class="carousel-dot" onclick="carouselGo(this,1)"></div><div class="carousel-dot" onclick="carouselGo(this,2)"></div></div><div class="carousel-attrib" id="ca-3" data-attribs="École de la Jeunesse|École de la Jeunesse|École de la Jeunesse">© École de la Jeunesse</div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue de la Jeunesse 56, Seraing</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 338 10 42</span></div>
@@ -907,7 +808,6 @@
       <span class="dist-tag">✈️ 10.3 км · ~8 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="4" data-place="ChIJoSysQuX5wEcRyWdiejjRQi8" data-query="Institut Saint Maur Liege Hirondelles"><div class="carousel-inner"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=Ab43m-t-DlKDCwTcEnQzDuNR18i7sUv3Xj6PGRGP2APFr-lVzP8YZVWrZe1JRlXT4D1gO5LUaF-S9bkfDJuUX8iKjkcehy36yaHxkeAPIjFeWi1_IdUvaK04fkACWel2D2KsulVfAGQgLyzlwlcL9s8xI9S0df2_E6OoDH8BLWw_5vHUbfgnQRsq1ZOmxuMXt_U2iADiCckhDsRbAb4J-YbLU_HngfA1nxezNZfIZrkDy2SMjEP21RoZRacKuBqBwrsHg-5FHx912rBhxHLufbxaJEp9MEQ47Ma7vizd8c7U0NYkjEekALz2ZfAVJblPuslKb6PiB86Jzr0weUhbn7e6-d2wHTxIfdVUV6HDs9cMaz8HPjn3P7kBRU5Q5cyGnkylI-4H0qxW43aC_CXswhwiAJkA2Wqtgr2uGeXz9dw561Owf-cw0TPaXWSxioKEB1Ob&key=AIzaSyDyJF6Sb5T-GLXiq01n6ohUkn3WJ7vwfPE" referrerpolicy="no-referrer" crossorigin="anonymous" loading="lazy"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=Ab43m-u5Mo3vmqvr_Ep4CZEungg2xqYwqf9LIHcWtAIXaQ-6BKoltpogfmPSUEs3-usaphU0SF5MhNRb8zs8kv2BqX5KzSnwS_H36xGX48O9hTA4OEJ6GzT9JOw7AYzYmizjijONNIYvaiUWwbheyhsR1Y1HRoNy87Dl-M3vU5Xa70yWciA_fjyVfnWNkZujY49bxTGkqP2iRhMoQplr6aSBttHRCI04avSiEtMMTuYEB3_jITki9wdQryIgwHed9vSIkvUYwqmTSTRqSin9D5BQ7sZeoqOOHVNgfWA-_cthF2n4JrBW2wOEBuEyHStKYIoM3S44R-QHxFravugd6mdNU8P3wbKX3EYsMVFahJaNPbZJ4dwtDEC1slql4VRNkCLq9T2x4nruEQ-d7HJATpj-8aN_dW4IJLu7K74In2FW95uVRuQ7NdEzk8qOtXiMEfJe&key=AIzaSyDyJF6Sb5T-GLXiq01n6ohUkn3WJ7vwfPE" referrerpolicy="no-referrer" crossorigin="anonymous" loading="lazy"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=Ab43m-uhefOFgUrtQKHDiDiM88Ov7pjRGXilGNr-4xBQl4oyLHi5DyehIcLkFqWFjiYueH-SSHiTZFy16tH4VYtUsMgbY3pbleBQeabndHVQLsh5yHElG3BpWYHEbQGGru5bVc-8Qma5tey_55-WfWyd9JGpP0P4UQtSZvzZX2KopGfLEVfpFxd4zcOSJmoFx2wRkWHYJRyelMdb-wIQI3495m91nE3kAkkRGevxnebzoR5YvOD0SbywYyfzsCZdiBI1A4Wf3SGraqRqy1oMA2ByGt7BtgwMv_Gew80PaJqBtSK2vjKFN227edSaZWyZFO5V5Ef5l8UXtur8sNMtBmpOnTTdAArR-PYXU-HJGNiFqjAAGbMQwGNEvCbS6gpsHaHhd8ZypkaXykRek8pQxOSzohSyAaP4AxDJJ7j_BWbAOBgo0TCpU6jFYKpB6Yo3OAlP&key=AIzaSyDyJF6Sb5T-GLXiq01n6ohUkn3WJ7vwfPE" referrerpolicy="no-referrer" crossorigin="anonymous" loading="lazy"></div><button class="carousel-btn prev" onclick="carouselStep(this,-1)">‹</button><button class="carousel-btn next" onclick="carouselStep(this,1)">›</button><div class="carousel-dots"><div class="carousel-dot active" onclick="carouselGo(this,0)"></div><div class="carousel-dot" onclick="carouselGo(this,1)"></div><div class="carousel-dot" onclick="carouselGo(this,2)"></div></div><div class="carousel-attrib" id="ca-4" data-attribs="Sabrina Mazy|Sabrina Mazy|Sabrina Mazy">© Sabrina Mazy</div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue des Hirondelles 73, Льеж</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 253 08 91</span></div>
@@ -940,7 +840,6 @@
       <span class="dist-tag">✈️ 9.1 км · ~10 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="5" data-place="ChIJz3aYwB36wEcRAOpemOHOWBg" data-query="Sainte Veronique Maternelle Louvrex Liege"><div class="carousel-inner"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=Ab43m-vkJZQ1UZjtmwApVWPc7nH0xze7JF7dXbF-CuQnOhG63ezrQphA8gfsMe9olahXYtCaoTezMMv1sd4Wnzxf7A9GiacQ_6tgUFX4nUKz0OAGMfjQOa0EkbO4FUC64O1NfQVKTkNiX6MIW9Q5ovon_100ZOH1KhVo3oULQN9ldnq7Xrb4ZkgwU9hIqK3k0dLraaufhUT1lpSS_AkwPVgeUkDL4D-5J743V3D7_j4qxnXJMSDYg16Du-7vYQryeEyBE8GNTXfUXdQo4YaOJpJKKle91V4GVfayAaUlLWa-MXwGN98t__YK388ZVWVWqrS54m_SipUBk0RSHu3qmpKo7N5wMCLOnhApisxbBmtk_PWhkCZAzIzQq7uyYw1bBfMh25BxEbuIbbyc04VPOxZzA_2-H8n5UG9d23uaEfuG__1TyTA&key=AIzaSyDyJF6Sb5T-GLXiq01n6ohUkn3WJ7vwfPE" referrerpolicy="no-referrer" crossorigin="anonymous" loading="lazy"></div><div class="carousel-dots"><div class="carousel-dot active" onclick="carouselGo(this,0)"></div></div><div class="carousel-attrib" id="ca-5" data-attribs="Jean Marie Balaes">© Jean Marie Balaes</div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Louvrex 96, Льеж</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 252 80 45</span></div>
@@ -971,7 +870,6 @@
       <span class="dist-tag">✈️ 10.0 км · ~12 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="10" data-place="" data-query="School Saint Hubert Saint-Nicolas Liege"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Place Ferrer 15, Saint-Nicolas</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 233 71 73</span></div>
@@ -999,7 +897,6 @@
       <span class="dist-tag">✈️ 10.2 км · ~12 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="12" data-place="" data-query="Saint Louis de Gonzague Flemalle Liege"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Thier Saint-Léonard 1, Flémalle</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 250 46 48</span></div>
@@ -1029,7 +926,6 @@
       <span class="dist-tag">✈️ 10.4 км · ~12 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="15" data-place="" data-query="Ecole Sainte Marie Boirs Bassenge"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue de l'Eglise 45, Boirs</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 286 23 29</span></div>
@@ -1059,7 +955,6 @@
       <span class="dist-tag">✈️ 12.1 км · ~12 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="17" data-place="" data-query="Notre Dame de Mehagne Embourg Chaudfontaine"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue des Coquelicots 12, Embourg</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 365 75 06</span></div>
@@ -1088,7 +983,6 @@
       <span class="dist-tag">✈️ 12.1 км · ~13 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="19" data-place="" data-query="Ecole Le Sartay Embourg"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Pierre Henvard 64, Embourg</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 361 69 50</span></div>
@@ -1117,7 +1011,6 @@
       <span class="dist-tag">✈️ 19.1 км · ~18 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="26" data-place="" data-query="Ecole du Haut Fleron Liege"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Eugène Jehaes 9a, Fléron</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 358 71 14</span></div>
@@ -1153,7 +1046,6 @@
       <span class="dist-tag">✈️ 9.5 км · ~9 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="6" data-place="ChIJXVHVJIvwwEcRybjmSb7jp98" data-query="Ecole libre Prealle Bas Herstal"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Basse Préalle, Herstal</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 264 19 39</span></div>
@@ -1180,7 +1072,6 @@
       <span class="dist-tag">✈️ 15.3 км · ~14 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="7" data-place="" data-query="Ecole Libre des Monts Herstal"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Campagne des Monts 19b, Herstal</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 375 51 99</span></div>
@@ -1210,7 +1101,6 @@
       <span class="dist-tag">✈️ 19.8 км · ~17 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="8" data-place="" data-query="Ecole Bellenay Herstal"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue de la Clawenne 44, Herstal</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 256 86 60</span></div>
@@ -1236,7 +1126,6 @@
       <span class="dist-tag">✈️ 15.3 км · ~14 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="9" data-place="" data-query="Ecole Saint Dominique Saint-Nicolas Liege"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Francisco Ferrer 2, Saint-Nicolas</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 226 02 41</span></div>
@@ -1262,7 +1151,6 @@
       <span class="dist-tag">✈️ 43.5 км · ~36 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="11" data-place="" data-query="EFLS Saint Lambert Saint-Nicolas Liege"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Thierbise 64, Saint-Nicolas</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 263 41 52</span></div>
@@ -1288,7 +1176,6 @@
       <span class="dist-tag">✈️ 40.5 км · ~30 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="13" data-place="" data-query="Ecole Sainte Therese Seraing"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue de la Fontaine 244, Seraing</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 476 48 65 71</span></div>
@@ -1317,7 +1204,6 @@
       <span class="dist-tag">✈️ 36.0 км · ~38 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="14" data-place="" data-query="Ecole Saint Joseph Seraing"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue de la Colline 283, Seraing</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 336 45 46</span></div>
@@ -1345,7 +1231,6 @@
       <span class="dist-tag">✈️ 21.5 км · ~23 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="16" data-place="" data-query="Ecole Enfant Jesus Juprelle Liege"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue du Pairoux 2, Voroux-lez-Liers</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 278 48 87</span></div>
@@ -1373,7 +1258,6 @@
       <span class="dist-tag">✈️ 14.3 км · ~15 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="18" data-place="" data-query="Ecole Princesse de Liege Chaudfontaine"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Avenue du Centenaire 6, Chaudfontaine</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 361 56 50</span></div>
@@ -1400,7 +1284,6 @@
       <span class="dist-tag">✈️ 42.6 км · ~34 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="20" data-place="" data-query="Ecole Libre Theux Belgique"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Hóvemont 30B, Theux</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 87 54 13 30</span></div>
@@ -1426,7 +1309,6 @@
       <span class="dist-tag">✈️ 23.2 км · ~24 мин</span>
     </div>
 
-    <div class="card-carousel" data-num="21" data-place="" data-query="Ecole Providence Verviers"><div class="carousel-loading" style="flex-direction:column;gap:8px;"><span style="font-size:28px;">📷</span><span style="font-size:12px;color:#a09890;">Фото не добавлены</span></div></div>
     <div class="card-body">
       <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue de Dison 139, Verviers</span></div>
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 87 39 43 10</span></div>
@@ -1717,137 +1599,10 @@
   }
 </script>
 <script>
-// ── GOOGLE PLACES PHOTO CAROUSEL ─────────────────────────────
-var PLACES_KEY = 'AIzaSyDyJF6Sb5T-GLXiq01n6ohUkn3WJ7vwfPE';
 
-function buildCarousel(el, photos) {
-  if (!photos || photos.length === 0) {
-    el.innerHTML = '<div class="carousel-loading" style="color:#bbb;">📷 Нет фото</div>';
-    return;
-  }
-  // Take max 5 photos
-  var items = photos.slice(0, 5);
-  var idx = 0;
-
-  var inner = '<div class="carousel-inner">';
-  var attribs = [];
-  items.forEach(function(p) {
-    var url = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=' + p.photo_reference + '&key=' + PLACES_KEY;
-    inner += '<img src="' + url + '" loading="lazy" onerror="this.style.display=\'none\'">';
-    // parse attribution
-    var a = p.html_attributions && p.html_attributions[0] ? p.html_attributions[0] : '© Google';
-    attribs.push(a);
-  });
-  inner += '</div>';
-
-  var dots = '<div class="carousel-dots">';
-  items.forEach(function(_, i) {
-    dots += '<div class="carousel-dot' + (i===0?' active':'') + '" onclick="carouselGo(this,'+i+')"></div>';
-  });
-  dots += '</div>';
-
-  var btns = items.length > 1
-    ? '<button class="carousel-btn prev" onclick="carouselStep(this,-1)">‹</button><button class="carousel-btn next" onclick="carouselStep(this,1)">›</button>'
-    : '';
-
-  el.innerHTML = inner + btns + dots + '<div class="carousel-attrib" id="ca-' + el.dataset.num + '">' + attribs[0] + '</div>';
-  el._attribs = attribs;
-  el._idx = 0;
-  el._total = items.length;
-}
-
-function carouselGo(dot, idx) {
-  var el = dot.closest('.card-carousel');
-  goTo(el, idx);
-}
-
-function carouselStep(btn, dir) {
-  var el = btn.closest('.card-carousel');
-  var next = ((el._idx || 0) + dir + el._total) % el._total;
-  goTo(el, next);
-}
-
-function goTo(el, idx) {
-  el._idx = idx;
-  var inner = el.querySelector('.carousel-inner');
-  if (inner) inner.style.transform = 'translateX(-' + (idx * 100) + '%)';
-  el.querySelectorAll('.carousel-dot').forEach(function(d, i) {
-    d.classList.toggle('active', i === idx);
-  });
-  var ca = el.querySelector('.carousel-attrib');
-  if (ca) {
-    var attribs = (ca.dataset.attribs || '').split('|');
-    ca.innerHTML = '© ' + (attribs[idx] || attribs[0] || '');
-  }
-}
-
-function loadCarousel(el) {
-  var placeId = el.dataset.place;
-  var query   = el.dataset.query;
-  var num     = el.dataset.num;
-
-  if (placeId) {
-    // Already have place_id — fetch photos directly
-    fetchPhotos(el, placeId);
-  } else if (query) {
-    // Find place first
-    var url = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='
-      + encodeURIComponent(query)
-      + '&inputtype=textquery&fields=place_id,photos&key=' + PLACES_KEY;
-    fetch(url)
-      .then(function(r){ return r.json(); })
-      .then(function(data) {
-        if (data.candidates && data.candidates[0]) {
-          var c = data.candidates[0];
-          el.dataset.place = c.place_id || '';
-          if (c.photos) {
-            buildCarousel(el, c.photos);
-          } else {
-            fetchPhotos(el, c.place_id);
-          }
-        } else {
-          el.innerHTML = '<div class="carousel-loading" style="color:#bbb;">📷 Нет фото</div>';
-        }
-      })
-      .catch(function() {
-        el.innerHTML = '<div class="carousel-loading" style="color:#bbb;">📷 Нет фото</div>';
-      });
-  }
-}
-
-function fetchPhotos(el, placeId) {
-  var url = 'https://maps.googleapis.com/maps/api/place/details/json?place_id='
-    + placeId + '&fields=photos&key=' + PLACES_KEY;
-  fetch(url)
-    .then(function(r){ return r.json(); })
-    .then(function(data) {
-      var photos = data.result && data.result.photos;
-      buildCarousel(el, photos);
-    })
-    .catch(function() {
-      el.innerHTML = '<div class="carousel-loading" style="color:#bbb;">📷 Нет фото</div>';
-    });
-}
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize pre-built carousels (schools 1-5)
-  document.querySelectorAll('.card-carousel').forEach(function(el) {
-    var inner = el.querySelector('.carousel-inner');
-    if (inner) {
-      var imgs = inner.querySelectorAll('img');
-      el._total = imgs.length;
-      el._idx = 0;
-      // Wait for first image to load before showing
-      if (imgs.length > 0) {
-        imgs[0].addEventListener('load', function() {
-          el.querySelector('.carousel-loading') && (el.querySelector('.carousel-loading').style.display = 'none');
-        });
-        imgs[0].addEventListener('error', function() {
-          el.innerHTML = '<div class="carousel-loading" style="color:#bbb;">📷 Нет фото</div>';
-        });
-      }
-    }
-  });
+
 
   // Dynamic photo loading disabled (CORS)
 });
