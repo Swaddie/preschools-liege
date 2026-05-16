@@ -136,15 +136,60 @@
     cursor: pointer;
     transition: all 0.2s;
   }
-  #district-filters {
-    flex-wrap: wrap;
-    padding-top: 0 !important;
-    border-top: 1px solid var(--sand);
-    margin-top: -8px;
+  /* DROPDOWNS */
+  .dropdown { position: relative; }
+  .dropdown-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--sand);
+    background: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--dark);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
   }
-  #district-filters .results-count {
-    margin-left: auto;
+  .dropdown-btn:hover { border-color: var(--forest); color: var(--forest); }
+  .dropdown-btn.active { background: var(--forest); border-color: var(--forest); color: white; }
+  .dd-arrow { font-size: 10px; opacity: 0.6; transition: transform 0.2s; }
+  .dropdown.open .dd-arrow { transform: rotate(180deg); }
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    background: white;
+    border: 1px solid var(--sand);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    z-index: 999;
+    min-width: 200px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 6px 0;
   }
+  .dropdown.open .dropdown-menu { display: block; }
+  .dd-item {
+    padding: 8px 16px;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--dark);
+    transition: background 0.1s;
+  }
+  .dd-item:hover { background: var(--cream); }
+  .dd-item.active { color: var(--forest); font-weight: 600; }
+  .dd-separator {
+    padding: 6px 16px 2px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    pointer-events: none;
+  }
+  #district-filters { display: none; }
+
   .results-count {
     margin-left: auto;
     font-size: 13px;
@@ -536,37 +581,60 @@
 
 <div class="filters-bar">
   <div class="filters-inner">
-    <span class="filter-label">Фильтр:</span>
-    <button class="filter-btn active" onclick="filter('type','all', this)">Все</button>
-    <button class="filter-btn" onclick="filter('type','free', this)">Бесплатные</button>
-    <button class="filter-btn" onclick="filter('type','paid', this)">Платные</button>
-    <button class="filter-btn" onclick="filter('type','montessori', this)">Монтессори</button>
-    <button class="filter-btn" onclick="filter('type','nature', this)">Природа</button>
-    <button class="filter-btn" onclick="filter('type','close', this)">До 15 мин</button>
-  </div>
-  <div class="filters" id="district-filters" style="padding-top:0;gap:6px;">
-    <span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;padding:6px 4px 6px 0;white-space:nowrap;">Район:</span>
-    <button class="filter-btn active" onclick="filter('district','all', this)">Все</button>
-    <button class="filter-btn" onclick="filter('district','angleur', this)">Angleur</button>
-    <button class="filter-btn" onclick="filter('district','chenee', this)">Chênée</button>
-    <button class="filter-btn" onclick="filter('district','liege', this)">Льеж центр</button>
-    <button class="filter-btn" onclick="filter('district','cointe', this)">Cointe</button>
-    <button class="filter-btn" onclick="filter('district','saint-nicolas', this)">Saint-Nicolas</button>
-    <button class="filter-btn" onclick="filter('district','seraing', this)">Seraing</button>
-    <button class="filter-btn" onclick="filter('district','herstal', this)">Herstal</button>
-    <button class="filter-btn" onclick="filter('district','flemalle', this)">Flémalle</button>
-    <button class="filter-btn" onclick="filter('district','embourg', this)">Embourg</button>
-    <button class="filter-btn" onclick="filter('district','chaudfontaine', this)">Chaudfontaine</button>
-    <button class="filter-btn" onclick="filter('district','juprelle', this)">Juprelle</button>
-    <button class="filter-btn" onclick="filter('district','bassenge', this)">Bassenge</button>
-    <button class="filter-btn" onclick="filter('district','fleron', this)">Fléron</button>
-    <button class="filter-btn" onclick="filter('district','nature', this)">🌿 Природа/ферма</button>
-    <button class="filter-btn" onclick="filter('district','international', this)">🌍 Международная</button>
+    <div class="dropdown" id="dd-type">
+      <button class="dropdown-btn" onclick="toggleDropdown('dd-type')">
+        <span id="dd-type-label">Тип: Все</span> <span class="dd-arrow">▾</span>
+      </button>
+      <div class="dropdown-menu">
+        <div class="dd-item active" onclick="filterDropdown('type','all','Все',this)">Все школы</div>
+        <div class="dd-item" onclick="filterDropdown('type','free','Бесплатные',this)">Бесплатные</div>
+        <div class="dd-item" onclick="filterDropdown('type','paid','Платные',this)">Платные / частные</div>
+        <div class="dd-item" onclick="filterDropdown('type','montessori','Монтессори',this)">Монтессори</div>
+        <div class="dd-item" onclick="filterDropdown('type','nature','Природа',this)">🌿 Природа / ферма</div>
+        <div class="dd-item" onclick="filterDropdown('type','close','До 15 мин',this)">⚡ До 15 мин езды</div>
+      </div>
+    </div>
+
+    <div class="dropdown" id="dd-district">
+      <button class="dropdown-btn" onclick="toggleDropdown('dd-district')">
+        <span id="dd-district-label">Район: Все</span> <span class="dd-arrow">▾</span>
+      </button>
+      <div class="dropdown-menu">
+        <div class="dd-item active" onclick="filterDropdown('district','all','Все',this)">Все районы</div>
+        <div class="dd-separator">— Льеж и пригороды —</div>
+        <div class="dd-item" onclick="filterDropdown('district','angleur','Angleur',this)">Angleur</div>
+        <div class="dd-item" onclick="filterDropdown('district','chenee','Chênée',this)">Chênée</div>
+        <div class="dd-item" onclick="filterDropdown('district','liege','Льеж центр',this)">Льеж центр</div>
+        <div class="dd-item" onclick="filterDropdown('district','cointe','Cointe',this)">Cointe</div>
+        <div class="dd-item" onclick="filterDropdown('district','fleron','Fléron',this)">Fléron</div>
+        <div class="dd-separator">— Север —</div>
+        <div class="dd-item" onclick="filterDropdown('district','saint-nicolas','Saint-Nicolas',this)">Saint-Nicolas</div>
+        <div class="dd-item" onclick="filterDropdown('district','herstal','Herstal',this)">Herstal</div>
+        <div class="dd-item" onclick="filterDropdown('district','juprelle','Juprelle',this)">Juprelle</div>
+        <div class="dd-item" onclick="filterDropdown('district','bassenge','Bassenge',this)">Bassenge</div>
+        <div class="dd-separator">— Запад —</div>
+        <div class="dd-item" onclick="filterDropdown('district','flemalle','Flémalle',this)">Flémalle</div>
+        <div class="dd-separator">— Юг —</div>
+        <div class="dd-item" onclick="filterDropdown('district','seraing','Seraing',this)">Seraing</div>
+        <div class="dd-item" onclick="filterDropdown('district','embourg','Embourg',this)">Embourg</div>
+        <div class="dd-item" onclick="filterDropdown('district','chaudfontaine','Chaudfontaine',this)">Chaudfontaine</div>
+        <div class="dd-separator">— Далеко —</div>
+        <div class="dd-item" onclick="filterDropdown('district','theux','Theux',this)">Theux</div>
+        <div class="dd-item" onclick="filterDropdown('district','verviers','Verviers',this)">Verviers</div>
+        <div class="dd-item" onclick="filterDropdown('district','modave','Modave',this)">Modave</div>
+        <div class="dd-item" onclick="filterDropdown('district','tilff','Tilff',this)">Tilff (Neupré)</div>
+        <div class="dd-item" onclick="filterDropdown('district','rotheux','Rotheux',this)">Rotheux</div>
+        <div class="dd-item" onclick="filterDropdown('district','maastricht','Maastricht',this)">🌍 Maastricht (NL)</div>
+      </div>
+    </div>
+
     <span class="results-count" id="count">26 школ</span>
     <div class="view-toggle">
       <button class="view-btn active" id="btn-list" onclick="setView('list')" title="Список">☰</button>
       <button class="view-btn" id="btn-map" onclick="setView('map')" title="Карта">🗺</button>
     </div>
+  </div>
+
   </div>
 </div>
 
@@ -1529,22 +1597,48 @@
     legend.addTo(lmap);
   }
 
+  // ── DROPDOWNS ─────────────────────────────────────────────────
+  function toggleDropdown(id) {
+    var dd = document.getElementById(id);
+    var isOpen = dd.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.dropdown').forEach(function(d){ d.classList.remove('open'); });
+    if (!isOpen) dd.classList.add('open');
+  }
+
+  // Close dropdowns on outside click
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.dropdown')) {
+      document.querySelectorAll('.dropdown').forEach(function(d){ d.classList.remove('open'); });
+    }
+  });
+
+  function filterDropdown(category, value, label, item) {
+    // Update active item in dropdown
+    var ddId = category === 'type' ? 'dd-type' : 'dd-district';
+    document.querySelectorAll('#' + ddId + ' .dd-item').forEach(function(i){ i.classList.remove('active'); });
+    item.classList.add('active');
+
+    // Update button label and active state
+    var btn = document.querySelector('#' + ddId + ' .dropdown-btn');
+    var prefix = category === 'type' ? 'Тип' : 'Район';
+    document.getElementById(ddId + '-label').textContent = prefix + ': ' + label;
+    btn.classList.toggle('active', value !== 'all');
+
+    // Close dropdown
+    document.getElementById(ddId).classList.remove('open');
+
+    // Update state and apply filters
+    if (category === 'type') activeType = value;
+    else activeDistrict = value;
+    applyFilters();
+  }
+
   // ── FILTER ────────────────────────────────────────────────────
   var activeType = 'all';
   var activeDistrict = 'all';
 
-  function filter(category, value, btn) {
-    // Update active state
-    if (category === 'type') {
-      activeType = value;
-      document.querySelectorAll('#list-view .filters:first-of-type .filter-btn').forEach(function(b){ b.classList.remove('active'); });
-    } else {
-      activeDistrict = value;
-      document.querySelectorAll('#district-filters .filter-btn').forEach(function(b){ b.classList.remove('active'); });
-    }
-    btn.classList.add('active');
-
-    // Filter cards
+  function applyFilters() {
     var cards = document.querySelectorAll('.card');
     var count = 0;
     cards.forEach(function(card) {
@@ -1560,12 +1654,9 @@
       card.classList.toggle('hidden', !show);
       if (show) count++;
     });
-
     document.getElementById('count').textContent = count + ' ' + plural(count, 'школа', 'школы', 'школ');
     document.getElementById('noResults').style.display = count === 0 ? 'block' : 'none';
-
-    // Sync map markers if map is open
-    if (mapInitialized) { syncMapMarkers(); }
+    if (mapInitialized) syncMapMarkers();
   }
 
   function syncMapMarkers() {
@@ -1579,12 +1670,8 @@
         || (activeType === 'nature'     && tags.includes('nature'))
         || (activeType === 'close'      && tags.includes('close'));
       var distOk = activeDistrict === 'all' || tags.includes(activeDistrict);
-      var show = typeOk && distOk;
-      if (show) {
-        item.marker.addTo(window._lmap);
-      } else {
-        item.marker.remove();
-      }
+      if (typeOk && distOk) item.marker.addTo(window._lmap);
+      else item.marker.remove();
     });
   }
 
