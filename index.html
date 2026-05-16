@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Пре-школы Льежа — Подборка</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<style>
+  :root {
+    --cream: #F7F3ED;
+    --sand: #E8DFD0;
+    --terracotta: #C4714A;
+    --forest: #3D5A47;
+    --dark: #1E2420;
+    --gold: #B8963E;
+    --muted: #7A7068;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--forest);
+    color: var(--cream);
+    padding: 60px 40px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(184,150,62,0.15);
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 20%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(196,113,74,0.12);
+  }
+  .header-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+  .header-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  header p {
+    font-size: 16px;
+    color: rgba(247,243,237,0.75);
+    max-width: 560px;
+    line-height: 1.6;
+  }
+  .header-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .stat-label {
+    font-size: 12px;
+    color: rgba(247,243,237,0.6);
+    letter-spacing: 0.5px;
+  }
+
+  /* FILTERS */
+  .filters-bar {
+    background: white;
+    border-bottom: 1px solid var(--sand);
+    padding: 16px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .filters-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+  .filter-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--sand);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--dark);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--forest); color: var(--forest); }
+  .filter-btn.active { background: var(--forest); border-color: var(--forest); color: white; }
+  .results-count {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* GRID */
+  .grid-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 40px 60px;
+    display: grid;
+    gap: 20px;
+  }
+
+  /* CARD */
+  .card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--sand);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: fadeIn 0.4s ease both;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(30,36,32,0.1);
+  }
+  .card.hidden { display: none; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-header {
+    padding: 22px 24px 16px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--sand);
+  }
+  .card-num {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--forest);
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card-num.private { background: var(--terracotta); }
+  .card-num.international { background: var(--gold); }
+
+  .card-title-area { flex: 1; min-width: 0; }
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  .card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 10px;
+    letter-spacing: 0.3px;
+  }
+  .badge-type { background: #EEF4F0; color: var(--forest); }
+  .badge-private { background: #FBF0EB; color: var(--terracotta); }
+  .badge-intl { background: #FBF6EB; color: var(--gold); }
+  .badge-rating { background: var(--sand); color: var(--dark); }
+  .badge-free { background: #EEF4F0; color: var(--forest); font-weight: 600; }
+  .badge-paid { background: #FBF0EB; color: var(--terracotta); font-weight: 600; }
+
+  .card-body { padding: 16px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card-row { display: flex; flex-direction: column; gap: 3px; }
+  .card-row-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); font-weight: 500; }
+  .card-row-val { font-size: 14px; color: var(--dark); line-height: 1.4; }
+  .card-row-val a { color: var(--forest); text-decoration: none; }
+  .card-row-val a:hover { text-decoration: underline; }
+
+  .card-desc {
+    padding: 0 24px 16px;
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    border-top: 1px solid var(--sand);
+    padding-top: 14px;
+  }
+
+  .card-footer {
+    padding: 12px 24px;
+    background: var(--cream);
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    border-top: 1px solid var(--sand);
+  }
+  .link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--forest);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: white;
+    border: 1px solid var(--sand);
+    transition: all 0.15s;
+  }
+  .link-btn:hover { border-color: var(--forest); background: var(--forest); color: white; }
+  .link-btn svg { width: 12px; height: 12px; }
+
+  .section-divider {
+    max-width: 900px;
+    margin: 8px auto 0;
+    padding: 0 40px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--muted);
+    text-transform: none;
+    letter-spacing: 0.3px;
+    padding: 8px 0 4px;
+    border-top: 1px solid var(--sand);
+  }
+
+  /* DISTANCE TAG */
+  .dist-tag {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* NO RESULTS */
+  .no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+    font-size: 15px;
+    display: none;
+  }
+
+  footer {
+    text-align: center;
+    padding: 30px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--sand);
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 40px 20px 36px; }
+    .filters-bar { padding: 12px 20px; }
+    .grid-container { padding: 0 16px 40px; margin-top: 24px; }
+    .section-divider { padding: 0 16px; }
+    .card-body { grid-template-columns: 1fr; }
+    .header-stats { gap: 20px; }
+  }
+
+  /* VIEW TOGGLE */
+  .view-toggle {
+    display: flex;
+    gap: 4px;
+    margin-left: 16px;
+    border-left: 1px solid var(--sand);
+    padding-left: 16px;
+  }
+  .view-btn {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    border: 1.5px solid var(--sand);
+    background: transparent;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    font-size: 15px;
+    color: var(--muted);
+  }
+  .view-btn:hover { border-color: var(--forest); color: var(--forest); }
+  .view-btn.active { background: var(--forest); border-color: var(--forest); color: white; }
+
+  /* MAP CONTAINER */
+  #map-view { display: none; }
+  #map-view.visible { display: block; }
+  #list-view.hidden { display: none; }
+
+  #map {
+    width: 100%;
+    height: calc(100vh - 180px);
+    min-height: 500px;
+  }
+
+  /* POPUP */
+  .leaflet-popup-content-wrapper {
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    padding: 0;
+    overflow: hidden;
+  }
+  .leaflet-popup-content { margin: 0; min-width: 240px; }
+  .popup-inner { padding: 16px 18px; }
+  .popup-num {
+    display: inline-block;
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    background: var(--forest);
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 24px;
+    margin-bottom: 8px;
+  }
+  .popup-num.private { background: var(--terracotta); }
+  .popup-num.international { background: var(--gold); }
+  .popup-name { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 6px; line-height: 1.3; }
+  .popup-addr { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .popup-badges { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+  .popup-footer { border-top: 1px solid var(--sand); padding: 10px 18px; display: flex; gap: 8px; flex-wrap: wrap; background: var(--cream); }
+  .popup-link {
+    font-size: 11px; font-weight: 500;
+    color: var(--forest); text-decoration: none;
+    padding: 4px 8px; border-radius: 6px;
+    background: white; border: 1px solid var(--sand);
+    transition: all 0.15s;
+  }
+  .popup-link:hover { background: var(--forest); color: white; border-color: var(--forest); }
+
+  /* MAP POPUP */
+  .custom-popup .leaflet-popup-content-wrapper {
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    padding: 0;
+    overflow: hidden;
+    border: none;
+  }
+  .custom-popup .leaflet-popup-content { margin: 0; }
+  .custom-popup .leaflet-popup-tip { background: white; }
+  .marker-pin {
+    width: 32px; height: 32px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    border: 3px solid white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .marker-pin span {
+    transform: rotate(45deg);
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    display: block;
+  }
+  /* PHOTO CAROUSEL */
+  .card-carousel {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background: var(--sand);
+    overflow: hidden;
+    border-bottom: 1px solid var(--sand);
+  }
+  .carousel-inner {
+    display: flex;
+    height: 100%;
+    transition: transform 0.35s ease;
+  }
+  .carousel-inner img {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.85);
+    border: none;
+    border-radius: 50%;
+    width: 32px; height: 32px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: background 0.15s;
+  }
+  .carousel-btn:hover { background: white; }
+  .carousel-btn.prev { left: 8px; }
+  .carousel-btn.next { right: 8px; }
+  .carousel-dots {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+  }
+  .carousel-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .carousel-dot.active { background: white; }
+  .carousel-attrib {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 3px 8px;
+    font-size: 9px;
+    color: rgba(255,255,255,0.8);
+    background: linear-gradient(transparent, rgba(0,0,0,0.4));
+    text-align: right;
+  }
+  .carousel-attrib a { color: rgba(255,255,255,0.8); text-decoration: none; }
+  .carousel-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 12px;
+    gap: 8px;
+  }
+  .spinner {
+    width: 18px; height: 18px;
+    border: 2px solid var(--sand);
+    border-top-color: var(--forest);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="header-tag">Льеж &amp; округ · Бельгия</span>
+    <h1>Пре-школы<br>для дочери</h1>
+    <p>Полная подборка école maternelle в радиусе 30–40 минут от Льежа — от бесплатных субсидируемых до частных альтернативных.</p>
+    <div class="header-stats">
+      <div class="stat"><span class="stat-num">26</span><span class="stat-label">школ в списке</span></div>
+      <div class="stat"><span class="stat-num">3</span><span class="stat-label">частные платные</span></div>
+      <div class="stat"><span class="stat-num">40</span><span class="stat-label">мин макс. езды</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="filters-bar">
+  <div class="filters-inner">
+    <span class="filter-label">Фильтр:</span>
+    <button class="filter-btn active" onclick="filter('all', this)">Все</button>
+    <button class="filter-btn" onclick="filter('free', this)">Бесплатные</button>
+    <button class="filter-btn" onclick="filter('paid', this)">Платные</button>
+    <button class="filter-btn" onclick="filter('montessori', this)">Монтессори</button>
+    <button class="filter-btn" onclick="filter('nature', this)">Природа</button>
+    <button class="filter-btn" onclick="filter('close', this)">До 15 мин</button>
+    <span class="results-count" id="count">26 школ</span>
+    <div class="view-toggle">
+      <button class="view-btn active" id="btn-list" onclick="setView('list')" title="Список">☰</button>
+      <button class="view-btn" id="btn-map" onclick="setView('map')" title="Карта">🗺</button>
+    </div>
+  </div>
+</div>
+
+<div id="list-view">
+<div class="section-divider"><p class="section-title">⭐ Топ выбор — Монтессори &amp; Альтернативные</p></div>
+<div class="grid-container" id="grid">
+
+  <!-- 1 -->
+  <div class="card" data-tags="free montessori close liege">
+    <div class="card-header">
+      <div class="card-num">1</div>
+      <div class="card-title-area">
+        <div class="card-name">La Belle-Jardinière (Montessori)</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Монтессори</span>
+          <span class="badge badge-free">Бесплатно</span>
+          <span class="badge badge-rating">⭐ 4.6</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 16.1 км · ~14 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="1" data-place="ChIJn2dXslz3wEcRK8spZeqwaLo" data-query="La Belle Jardiniere Montessori Angleur Liege"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue du Vallon 3, Angleur</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 367 03 31</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–6 лет</span></div>
+      <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">Пн–Пт 07:00–18:00</span></div>
+    </div>
+    <div class="card-desc">Лучший вариант в регионе. Вертикальные классы, 2 внешних двора + крытый, зал психомоторики, ~30 велосипедов. Район Angleur — один из самых безопасных в Льеже.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.6123,5.5901" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://www.ecole-maternelle-angleur.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.facebook.com/bj.montessori" target="_blank">📘 Facebook</a>
+      <a class="link-btn" href="https://youtu.be/f0Z-Kp_jyhk" target="_blank">🎥 Видео-тур</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+du+Vallon+3,+4031+Liège" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card" data-tags="free montessori close liege">
+    <div class="card-header">
+      <div class="card-num">2</div>
+      <div class="card-title-area">
+        <div class="card-name">École Montessori des Étoiles</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Монтессори</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 16.6 км · ~16 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="2" data-place="ChIJrbCaUTr3wEcRiZpmfuai0Yo" data-query="Ecole Montessori des Etoiles Chenee Liege"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Large 59, Chênée</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 229 52 22</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–12 лет</span></div>
+      <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">07:30–17:30</span></div>
+    </div>
+    <div class="card-desc">Основана в 2014, Монтессори с 2017. Светлые классы, богатый дидактический материал. Есть Instagram с фото классов.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.6149,5.6121" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://ecole-montessori-liege.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.facebook.com/ecoledesetoilesliege/" target="_blank">📘 Facebook</a>
+      <a class="link-btn" href="https://www.instagram.com/montessori_etoiles/" target="_blank">📸 Instagram</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+Large+59,+4032+Liège" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 22 -->
+  <div class="card" data-tags="paid nature montessori alternative">
+    <div class="card-header">
+      <div class="card-num private">22</div>
+      <div class="card-title-area">
+        <div class="card-name">🌿 Les Deux Chênes — Modave</div>
+        <div class="card-badges">
+          <span class="badge badge-private">Частная</span>
+          <span class="badge badge-paid">~100–300 €/мес</span>
+          <span class="badge badge-type">Альтернативная</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 11.9 км · ~12 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="22" data-place="" data-query="Les Deux Chenes Modave ecole"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Rausa 23, Modave</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 473 59 71 18</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–12 лет</span></div>
+      <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">Пн–Чт до 16:30, Пт до 12:30</span></div>
+    </div>
+    <div class="card-desc">Единственная полностью частная альтернативная школа в округе. Монтессори + Штайнер + Фрейне. Гектар природы, огород, этанд. ~5 детей в maternelle. Возможна пробная неделя.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.43,5.301" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="http://www.lesdeuxchenes.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.facebook.com/lesdeuxchenes.be/" target="_blank">📘 Facebook</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+Rausa+23,+4577+Modave" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 23 -->
+  <div class="card" data-tags="paid nature montessori close">
+    <div class="card-header">
+      <div class="card-num private">23</div>
+      <div class="card-title-area">
+        <div class="card-name">🌿 École Montessori de Tilff</div>
+        <div class="card-badges">
+          <span class="badge badge-private">Частная</span>
+          <span class="badge badge-paid">Скользящая шкала</span>
+          <span class="badge badge-type">Монтессори</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 12.7 км · ~12 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="23" data-place="" data-query="Ecole Montessori Tilff Neupre"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Site Ecotopia, Tilff (Neupré)</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">3–6 лет (только maternelle)</span></div>
+      <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">08:30–15:30 (Ср до 12:00)</span></div>
+      <div class="card-row"><span class="card-row-label">Стоимость</span><span class="card-row-val">По доходу семьи (RNM)</span></div>
+    </div>
+    <div class="card-desc">Natura 2000, долина Урт. Этанд, луг, огород, фруктовый сад, животные. Одна вертикальная класс. Каждый ребёнок ухаживает за своей грядкой.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.546,5.571" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://montessoriici.wixsite.com/home" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Ecotopia+Tilff+Neupré" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 24 -->
+  <div class="card" data-tags="paid nature close waldorf">
+    <div class="card-header">
+      <div class="card-num private">24</div>
+      <div class="card-title-area">
+        <div class="card-name">🌿 Jardin Waldorf — Ferme Larock</div>
+        <div class="card-badges">
+          <span class="badge badge-private">Частная</span>
+          <span class="badge badge-paid">232–260 €/мес</span>
+          <span class="badge badge-type">Вальдорф</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 12.2 км · ~13 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="24" data-place="" data-query="Jardin Enfants Waldorf Ferme Larock Rotheux"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Duchêne 12, Rotheux-Rimière</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 372 04 75</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–6 лет (макс. 10 детей)</span></div>
+      <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">9:00–16:00, нет среды</span></div>
+    </div>
+    <div class="card-desc">Первый Вальдорф-сад провинции Льеж на биодинамической ферме (с 1927). Коровы, куры, огород. Педагог с парижской подготовкой. Признан ONE.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.566,5.498" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://www.waldorfalaferme.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.facebook.com/profile.php?id=100054324739110" target="_blank">📘 Facebook</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+Duchêne+12,+Rotheux-Rimière" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 25 -->
+  <div class="card" data-tags="paid international">
+    <div class="card-header">
+      <div class="card-num international">25</div>
+      <div class="card-title-area">
+        <div class="card-name">🌍 UWC Maastricht</div>
+        <div class="card-badges">
+          <span class="badge badge-intl">Международная IB</span>
+          <span class="badge badge-paid">€8,360–12,690/год</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 16.1 км · ~17 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="25" data-place="" data-query="UWC Maastricht school"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Страна</span><span class="card-row-val">Нидерланды, Маастрихт</span></div>
+      <div class="card-row"><span class="card-row-label">Язык</span><span class="card-row-val">Английский</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">4–19 лет (PYP с 4 лет)</span></div>
+      <div class="card-row"><span class="card-row-label">Программа</span><span class="card-row-val">IB PYP / MYP / DP</span></div>
+    </div>
+    <div class="card-desc">Часть глобальной сети United World Colleges (18 школ). 100+ национальностей. Зелёный кампус у природного заповедника. Субсидируется гос-вом НЛ, но с платным IB-компонентом.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.855,5.686" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://www.uwcmaastricht.nl/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/UWC+Maastricht" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-divider"><p class="section-title">🏫 Субсидируемые школы с высоким рейтингом</p></div>
+<div class="grid-container">
+
+  <!-- 3 -->
+  <div class="card" data-tags="free close seraing">
+    <div class="card-header">
+      <div class="card-num">3</div>
+      <div class="card-title-area">
+        <div class="card-name">École de la Jeunesse — Seraing</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Communale</span>
+          <span class="badge badge-free">Бесплатно</span>
+          <span class="badge badge-rating">⭐ 4.8</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 20.4 км · ~19 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="3" data-place="ChIJq4Iv1OP4wEcRqwARlSKA8sI" data-query="Ecole de la Jeunesse Seraing"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue de la Jeunesse 56, Seraing</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 338 10 42</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–12 лет</span></div>
+      <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">Пн–Пт 07:00–18:00</span></div>
+    </div>
+    <div class="card-desc">Самый высокий рейтинг среди обычных школ (4.8/5, 22 отзыва). Очень тёплые отзывы об учителях. Минус — район Seraing.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.5882,5.5031" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://www.facebook.com/p/Ecole-de-la-Jeunesse-100090589998471/" target="_blank">📘 Facebook</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+de+la+Jeunesse+56,+4100+Seraing" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card" data-tags="free close liege catholique">
+    <div class="card-header">
+      <div class="card-num">4</div>
+      <div class="card-title-area">
+        <div class="card-name">Institut Saint Maur — Cointe</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 10.3 км · ~8 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="4" data-place="ChIJoSysQuX5wEcRyWdiejjRQi8" data-query="Institut Saint Maur Liege Hirondelles"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue des Hirondelles 73, Льеж</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 253 08 91</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–12 лет</span></div>
+      <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">Пн–Пт 07:30–18:00</span></div>
+    </div>
+    <div class="card-desc">Спрятана за красной калиткой в тени базилики Cointe. Большой двор с вековыми клёнами. «Школа в деревне в городе».</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.6179,5.5673" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://www.ecolesaintmaur.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.ecolesaintmaur.be/photos/" target="_blank">📷 Фото</a>
+      <a class="link-btn" href="https://www.facebook.com/ecolesaintmaur/" target="_blank">📘 Facebook</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+des+Hirondelles+73,+4000+Liège" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card" data-tags="free close liege catholique">
+    <div class="card-header">
+      <div class="card-num">5</div>
+      <div class="card-title-area">
+        <div class="card-name">Sainte-Véronique Maternelle</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre autonome</span>
+          <span class="badge badge-free">Бесплатно</span>
+          <span class="badge badge-rating">⭐ 4.3</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 9.1 км · ~10 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="5" data-place="ChIJz3aYwB36wEcRAOpemOHOWBg" data-query="Sainte Veronique Maternelle Louvrex Liege"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Louvrex 96, Льеж</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 252 80 45</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–6 лет (только maternelle)</span></div>
+    </div>
+    <div class="card-desc">Только maternelle. Активная межуровневая педагогика: 15 ателье одновременно для смешанных возрастных групп.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.6322,5.5647" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="http://www.sainte-veronique.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.facebook.com/p/Ecole-maternelle-Sainte-V%C3%A9ronique-100063863362539/" target="_blank">📘 Facebook</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+Louvrex+96,+4000+Liège" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="card" data-tags="free close catholique saint-nicolas">
+    <div class="card-header">
+      <div class="card-num">10</div>
+      <div class="card-title-area">
+        <div class="card-name">School Saint Hubert — Saint-Nicolas</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+          <span class="badge badge-rating">⭐ 4.4</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 10.0 км · ~12 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="10" data-place="" data-query="School Saint Hubert Saint-Nicolas Liege"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Place Ferrer 15, Saint-Nicolas</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 233 71 73</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–12 лет</span></div>
+    </div>
+    <div class="card-desc">Хорошие отзывы. Католическая libre школа в Saint-Nicolas (~10 мин к западу от Льежа).</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.6202,5.534" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://www.google.com/maps/search/Place+Ferrer+15,+4420+Saint-Nicolas" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="card" data-tags="free nature catholique flemalle">
+    <div class="card-header">
+      <div class="card-num">12</div>
+      <div class="card-title-area">
+        <div class="card-name">Saint Louis de Gonzague — Flémalle</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 10.2 км · ~12 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="12" data-place="" data-query="Saint Louis de Gonzague Flemalle Liege"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Thier Saint-Léonard 1, Flémalle</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 250 46 48</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–12 лет</span></div>
+    </div>
+    <div class="card-desc">Интерактивные доски. Дети maternelle ездят на ферму 4 раза в год — по временам года. Тёплая семейная атмосфера.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.5895,5.454" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="http://www.saintlouisdegonzague.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="http://www.saintlouisdegonzague.be/category/nos-classes/maternelles/" target="_blank">📷 Фото классов</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Thier+Saint-Léonard+1,+4400+Mons-lez-Liège" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 15 -->
+  <div class="card" data-tags="free nature catholique bassenge">
+    <div class="card-header">
+      <div class="card-num">15</div>
+      <div class="card-title-area">
+        <div class="card-name">Sainte-Marie de Boirs — Bassenge</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 10.4 км · ~12 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="15" data-place="" data-query="Ecole Sainte Marie Boirs Bassenge"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue de l'Eglise 45, Boirs</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 286 23 29</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–12 лет</span></div>
+      <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">07:00–18:00</span></div>
+    </div>
+    <div class="card-desc">Деревенская школа с обновлённым двором и игровой площадкой. Цикл 5/8: 3-я maternelle вместе с 1-м primaire. Горячий обед каждый день.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.712,5.629" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://www.ecvg.be/ecoles-bassenge/ecole-sainte-marie-boirs.html" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+de+l'Eglise+45,+4690+Boirs" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 17 -->
+  <div class="card" data-tags="free nature catholique chaudfontaine close">
+    <div class="card-header">
+      <div class="card-num">17</div>
+      <div class="card-title-area">
+        <div class="card-name">Notre-Dame de Méhagne — Embourg</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 12.1 км · ~12 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="17" data-place="" data-query="Notre Dame de Mehagne Embourg Chaudfontaine"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue des Coquelicots 12, Embourg</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 365 75 06</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–12 лет</span></div>
+    </div>
+    <div class="card-desc">Embourg — один из лучших районов для семей в провинции. Тихо, зелено, безопасно.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.5895,5.576" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="http://endm.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+des+Coquelicots+12,+4053+Embourg" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 19 -->
+  <div class="card" data-tags="free nature catholique chaudfontaine close">
+    <div class="card-header">
+      <div class="card-num">19</div>
+      <div class="card-title-area">
+        <div class="card-name">École Le Sartay — Embourg</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 12.1 км · ~13 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="19" data-place="" data-query="Ecole Le Sartay Embourg"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Pierre Henvard 64, Embourg</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 361 69 50</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–12 лет</span></div>
+    </div>
+    <div class="card-desc">Католическая libre школа в Embourg. Хорошая репутация в районе. Тихо, зелено, безопасно.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.5905,5.574" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="http://sartay.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+Pierre+Henvard+64,+4053+Embourg" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 26 -->
+  <div class="card" data-tags="free close catholique fleron">
+    <div class="card-header">
+      <div class="card-num">26</div>
+      <div class="card-title-area">
+        <div class="card-name">École du Haut — Fléron</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 19.1 км · ~18 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="26" data-place="" data-query="Ecole du Haut Fleron Liege"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Eugène Jehaes 9a, Fléron</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 358 71 14</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–12 лет (~200 учеников)</span></div>
+    </div>
+    <div class="card-desc">3 класса maternelle. «À taille humaine». Акцент на качество человеческих отношений. Хорошая фотогалерея на сайте.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.61,5.672" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://ecoleduhaut.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://ecoleduhaut.be/galerie/ecole-maternelle/" target="_blank">📷 Фото maternelle</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+Eugène+Jehaes+9a,+4620+Fléron" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-divider"><p class="section-title">📋 Остальные школы в округе</p></div>
+<div class="grid-container">
+
+  <!-- 6,7,8 Herstal -->
+  <div class="card" data-tags="free catholique herstal close">
+    <div class="card-header">
+      <div class="card-num">6</div>
+      <div class="card-title-area">
+        <div class="card-name">École libre de Préalle-Bas — Herstal</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+          <span class="badge badge-rating">⭐ 4.2</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 9.5 км · ~9 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="6" data-place="ChIJXVHVJIvwwEcRybjmSb7jp98" data-query="Ecole libre Prealle Bas Herstal"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Basse Préalle, Herstal</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 264 19 39</span></div>
+      <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">07:00–18:00</span></div>
+    </div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.6671,5.6123" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://www.facebook.com/p/Ecole-libre-de-Pr%C3%A9alle-Bas-100094584461083/" target="_blank">📘 Facebook</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+Basse+Préalle,+4040+Herstal" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <div class="card" data-tags="free nature catholique herstal close">
+    <div class="card-header">
+      <div class="card-num">7</div>
+      <div class="card-title-area">
+        <div class="card-name">École Libre des Monts — Herstal</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 15.3 км · ~14 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="7" data-place="" data-query="Ecole Libre des Monts Herstal"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Campagne des Monts 19b, Herstal</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 375 51 99</span></div>
+      <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">07:00–18:00</span></div>
+    </div>
+    <div class="card-desc">Семейная школа в зелёном тихом месте. Просторные светлые помещения, цифровое оборудование.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.6774,5.6175" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="http://www.ecole-des-monts.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.facebook.com/p/Ecole-libre-des-monts-100031221256857/" target="_blank">📘 Facebook</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+Campagne+des+Monts+19b,+4040+Herstal" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <div class="card" data-tags="free herstal close">
+    <div class="card-header">
+      <div class="card-num">8</div>
+      <div class="card-title-area">
+        <div class="card-name">École Bellenay — Herstal</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Communale</span>
+          <span class="badge badge-free">Бесплатно</span>
+          <span class="badge badge-rating">⭐ 4.0</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 19.8 км · ~17 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="8" data-place="" data-query="Ecole Bellenay Herstal"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue de la Clawenne 44, Herstal</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 256 86 60</span></div>
+    </div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.671,5.5489" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+de+la+Clawenne+44,+4040+Herstal" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 9, 10, 11 Saint-Nicolas -->
+  <div class="card" data-tags="free catholique saint-nicolas close">
+    <div class="card-header">
+      <div class="card-num">9</div>
+      <div class="card-title-area">
+        <div class="card-name">École Saint Dominique — Saint-Nicolas</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 15.3 км · ~14 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="9" data-place="" data-query="Ecole Saint Dominique Saint-Nicolas Liege"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Francisco Ferrer 2, Saint-Nicolas</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 226 02 41</span></div>
+    </div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.6202,5.5317" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://ecolesaintdominique.wixsite.com/stdo" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+Francisco+Ferrer+2,+4420+Saint-Nicolas" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <div class="card" data-tags="free catholique saint-nicolas close">
+    <div class="card-header">
+      <div class="card-num">11</div>
+      <div class="card-title-area">
+        <div class="card-name">EFLS Saint-Lambert — Saint-Nicolas</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 43.5 км · ~36 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="11" data-place="" data-query="EFLS Saint Lambert Saint-Nicolas Liege"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Thierbise 64, Saint-Nicolas</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 263 41 52</span></div>
+    </div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.6185,5.536" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+Thierbise+64,+4420+Saint-Nicolas" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 13, 14 Seraing -->
+  <div class="card" data-tags="free nature catholique seraing close">
+    <div class="card-header">
+      <div class="card-num">13</div>
+      <div class="card-title-area">
+        <div class="card-name">École Sainte-Thérèse — Seraing</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 40.5 км · ~30 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="13" data-place="" data-query="Ecole Sainte Therese Seraing"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue de la Fontaine 244, Seraing</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 476 48 65 71</span></div>
+      <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">07:00–18:00</span></div>
+    </div>
+    <div class="card-desc">Огород, кулинарные мастерские, classes de mer. Дети выращивают тыквы и готовят суп.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.5834,5.494" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://sites.google.com/a/saintethereseseraing.be/ecole-sainte-therese-seraing" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.facebook.com/saintethereseseraing/" target="_blank">📘 Facebook</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+de+la+Fontaine+244,+4100+Seraing" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <div class="card" data-tags="free catholique seraing close">
+    <div class="card-header">
+      <div class="card-num">14</div>
+      <div class="card-title-area">
+        <div class="card-name">École Saint-Joseph — Seraing</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 36.0 км · ~38 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="14" data-place="" data-query="Ecole Saint Joseph Seraing"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue de la Colline 283, Seraing</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 336 45 46</span></div>
+    </div>
+    <div class="card-desc">Проекты с музеями PECA. Дети делают мобили после выставок.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.587,5.501" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://www.stjoseph-seraing.be/wordpress/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+de+la+Colline+283,+4100+Seraing" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 16 Juprelle -->
+  <div class="card" data-tags="free catholique juprelle close">
+    <div class="card-header">
+      <div class="card-num">16</div>
+      <div class="card-title-area">
+        <div class="card-name">Enfant Jésus — Juprelle</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 21.5 км · ~23 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="16" data-place="" data-query="Ecole Enfant Jesus Juprelle Liege"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue du Pairoux 2, Voroux-lez-Liers</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 278 48 87</span></div>
+    </div>
+    <div class="card-desc">Отдельный новый корпус для maternelle. Тихая деревня рядом с Rocourt.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.671,5.542" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://www.eej.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+du+Pairoux+2,+4452+Voroux-lez-Liers" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 18 Chaudfontaine -->
+  <div class="card" data-tags="free chaudfontaine close">
+    <div class="card-header">
+      <div class="card-num">18</div>
+      <div class="card-title-area">
+        <div class="card-name">École Princesse de Liège — Chaudfontaine</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Communale</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 14.3 км · ~15 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="18" data-place="" data-query="Ecole Princesse de Liege Chaudfontaine"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Avenue du Centenaire 6, Chaudfontaine</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 361 56 50</span></div>
+    </div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.592,5.602" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="http://www.ecoleprincessedeliege.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Avenue+du+Centenaire+6,+4053+Chaudfontaine" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 20, 21 far -->
+  <div class="card" data-tags="free nature catholique theux">
+    <div class="card-header">
+      <div class="card-num">20</div>
+      <div class="card-title-area">
+        <div class="card-name">École Libre de Theux</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 42.6 км · ~34 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="20" data-place="" data-query="Ecole Libre Theux Belgique"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue Hóvemont 30B, Theux</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 87 54 13 30</span></div>
+    </div>
+    <div class="card-desc">Тихий городок в предгорьях Арденн. Очень спокойно, зелено, безопасно.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.532,5.817" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+Hovemont+30B,+4910+Theux" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <div class="card" data-tags="free catholique verviers">
+    <div class="card-header">
+      <div class="card-num">21</div>
+      <div class="card-title-area">
+        <div class="card-name">École de la Providence — Verviers</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Libre catholique</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ 23.2 км · ~24 мин</span>
+    </div>
+
+    <div class="card-carousel" data-num="21" data-place="" data-query="Ecole Providence Verviers"><div class="carousel-loading"><div class="spinner"></div> Загрузка фото...</div></div>
+        <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Rue de Dison 139, Verviers</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 87 39 43 10</span></div>
+    </div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.59,5.86" target="_blank">🚶 Street View</a>
+    
+      <a class="link-btn" href="https://www.facebook.com/providence.verviers" target="_blank">📘 Facebook</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Rue+de+Dison+139,+4800+Verviers" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="no-results" id="noResults">Нет школ по выбранному фильтру.</div>
+</div><!-- end list-view -->
+
+<div id="map-view">
+  <div id="map"></div>
+</div>
+
+<footer>
+  Подборка составлена для дочери 3.5 лет · Льеж, Бельгия · 2025–2026
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+  // ── VIEW TOGGLE ──────────────────────────────────────────────
+  var mapInitialized = false;
+
+  function setView(view) {
+    var listEl  = document.getElementById('list-view');
+    var mapEl   = document.getElementById('map-view');
+    var btnList = document.getElementById('btn-list');
+    var btnMap  = document.getElementById('btn-map');
+    if (view === 'map') {
+      listEl.classList.add('hidden');
+      mapEl.classList.add('visible');
+      btnList.classList.remove('active');
+      btnMap.classList.add('active');
+      if (!mapInitialized) { initMap(); mapInitialized = true; }
+    } else {
+      listEl.classList.remove('hidden');
+      mapEl.classList.remove('visible');
+      btnList.classList.add('active');
+      btnMap.classList.remove('active');
+    }
+  }
+
+  // ── SCHOOL DATA ───────────────────────────────────────────────
+  var schools = [
+    { num:1,  name:'La Belle-Jardinière (Montessori)', addr:'Rue du Vallon 3, Angleur', lat:50.6123, lng:5.5901, type:'Communale', cost:'Бесплатно', rating:'⭐ 4.6', dist:'16.1 км · ~14 мин', site:'http://www.ecole-maternelle-angleur.be/', fb:'https://www.facebook.com/bj.montessori', video:'https://youtu.be/f0Z-Kp_jyhk' },
+    { num:2,  name:'École Montessori des Étoiles', addr:'Rue Large 59, Chênée', lat:50.6149, lng:5.6121, type:'Монтессори', cost:'Бесплатно', dist:'16.6 км · ~16 мин', site:'https://ecole-montessori-liege.be/', fb:'https://www.facebook.com/ecoledesetoilesliege/', ig:'https://www.instagram.com/montessori_etoiles/' },
+    { num:3,  name:'École de la Jeunesse', addr:'Rue de la Jeunesse 56, Seraing', lat:50.5882, lng:5.5031, type:'Communale', cost:'Бесплатно', rating:'⭐ 4.8', dist:'11.9 км · ~12 мин', fb:'https://www.facebook.com/p/Ecole-de-la-Jeunesse-100090589998471/' },
+    { num:4,  name:'Institut Saint Maur', addr:'Rue des Hirondelles 73, Liège', lat:50.6179, lng:5.5673, type:'Libre catholique', cost:'Бесплатно', dist:'12.7 км · ~12 мин', site:'https://www.ecolesaintmaur.be/', fb:'https://www.facebook.com/ecolesaintmaur/' },
+    { num:5,  name:'Sainte-Véronique Maternelle', addr:'Rue Louvrex 96, Liège', lat:50.6322, lng:5.5647, type:'Libre autonome', cost:'Бесплатно', rating:'⭐ 4.3', dist:'12.2 км · ~13 мин', site:'http://www.sainte-veronique.be/' },
+    { num:6,  name:'École libre de Préalle-Bas', addr:'Rue Basse Préalle, Herstal', lat:50.6671, lng:5.6123, type:'Libre catholique', cost:'Бесплатно', rating:'⭐ 4.2', dist:'16.1 км · ~17 мин', fb:'https://www.facebook.com/p/Ecole-libre-de-Pr%C3%A9alle-Bas-100094584461083/' },
+    { num:7,  name:'École Libre des Monts', addr:'Rue Campagne des Monts 19b, Herstal', lat:50.6774, lng:5.6175, type:'Libre catholique', cost:'Бесплатно', dist:'20.4 км · ~19 мин', site:'http://www.ecole-des-monts.be/' },
+    { num:8,  name:'École Bellenay', addr:'Rue de la Clawenne 44, Herstal', lat:50.6710, lng:5.5489, type:'Communale', cost:'Бесплатно', rating:'⭐ 4.0', dist:'10.3 км · ~8 мин' },
+    { num:9,  name:'École Saint Dominique', addr:'Rue Francisco Ferrer 2, Saint-Nicolas', lat:50.6202, lng:5.5317, type:'Libre catholique', cost:'Бесплатно', dist:'9.1 км · ~10 мин', site:'https://ecolesaintdominique.wixsite.com/stdo' },
+    { num:10, name:'School Saint Hubert', addr:'Place Ferrer 15, Saint-Nicolas', lat:50.6202, lng:5.5340, type:'Libre catholique', cost:'Бесплатно', rating:'⭐ 4.4', dist:'10.0 км · ~12 мин' },
+    { num:11, name:'EFLS Saint-Lambert', addr:'Rue Thierbise 64, Saint-Nicolas', lat:50.6185, lng:5.5360, type:'Libre catholique', cost:'Бесплатно', dist:'10.2 км · ~12 мин' },
+    { num:12, name:'Saint Louis de Gonzague', addr:'Thier Saint-Léonard 1, Flémalle', lat:50.5895, lng:5.4540, type:'Libre catholique', cost:'Бесплатно', dist:'10.4 км · ~12 мин', site:'http://www.saintlouisdegonzague.be/' },
+    { num:13, name:'École Sainte-Thérèse', addr:'Rue de la Fontaine 244, Seraing', lat:50.5834, lng:5.4940, type:'Libre catholique', cost:'Бесплатно', dist:'12.1 км · ~12 мин', site:'https://sites.google.com/a/saintethereseseraing.be/ecole-sainte-therese-seraing' },
+    { num:14, name:'École Saint-Joseph', addr:'Rue de la Colline 283, Seraing', lat:50.5870, lng:5.5010, type:'Libre catholique', cost:'Бесплатно', dist:'12.1 км · ~13 мин', site:'https://www.stjoseph-seraing.be/wordpress/' },
+    { num:15, name:'Sainte-Marie de Boirs', addr:"Rue de l'Eglise 45, Bassenge", lat:50.7120, lng:5.6290, type:'Libre catholique', cost:'Бесплатно', dist:'19.1 км · ~18 мин', site:'https://www.ecvg.be/ecoles-bassenge/ecole-sainte-marie-boirs.html' },
+    { num:16, name:"École de l'Enfant Jésus", addr:'Rue du Pairoux 2, Juprelle', lat:50.6710, lng:5.5420, type:'Libre catholique', cost:'Бесплатно', dist:'9.5 км · ~9 мин', site:'https://www.eej.be/' },
+    { num:17, name:'Notre-Dame de Méhagne', addr:'Rue des Coquelicots 12, Embourg', lat:50.5895, lng:5.5760, type:'Libre catholique', cost:'Бесплатно', dist:'15.3 км · ~14 мин', site:'http://endm.be/' },
+    { num:18, name:'École Princesse de Liège', addr:'Avenue du Centenaire 6, Chaudfontaine', lat:50.5920, lng:5.6020, type:'Communale', cost:'Бесплатно', dist:'19.8 км · ~17 мин', site:'http://www.ecoleprincessedeliege.be/' },
+    { num:19, name:'École Le Sartay', addr:'Rue Pierre Henvard 64, Embourg', lat:50.5905, lng:5.5740, type:'Libre catholique', cost:'Бесплатно', dist:'15.3 км · ~14 мин', site:'http://sartay.be/' },
+    { num:20, name:'École Libre de Theux', addr:'Rue Hóvemont 30B, Theux', lat:50.5320, lng:5.8170, type:'Libre catholique', cost:'Бесплатно', dist:'43.5 км · ~36 мин' },
+    { num:21, name:'École de la Providence', addr:'Rue de Dison 139, Verviers', lat:50.5900, lng:5.8600, type:'Libre catholique', cost:'Бесплатно', dist:'40.5 км · ~30 мин', fb:'https://www.facebook.com/providence.verviers' },
+    { num:22, name:'Les Deux Chênes', addr:'Rue Rausa 23, Modave', lat:50.4300, lng:5.3010, type:'Частная · Альтернативная', cost:'~100–300 €/мес', dist:'36.0 км · ~38 мин', site:'http://www.lesdeuxchenes.be/', fb:'https://www.facebook.com/lesdeuxchenes.be/', priv:true },
+    { num:23, name:'Montessori de Tilff', addr:'Site Ecotopia, Tilff (Neupré)', lat:50.5460, lng:5.5710, type:'Частная · Монтессори', cost:'По доходу', dist:'21.5 км · ~23 мин', site:'https://montessoriici.wixsite.com/home', priv:true },
+    { num:24, name:'Jardin Waldorf — Ferme Larock', addr:'Rue Duchêne 12, Rotheux-Rimière', lat:50.5660, lng:5.4980, type:'Частная · Вальдорф', cost:'232–260 €/мес', dist:'14.3 км · ~15 мин', site:'https://www.waldorfalaferme.be/', fb:'https://www.facebook.com/profile.php?id=100054324739110', priv:true },
+    { num:25, name:'UWC Maastricht', addr:'Maastricht, Нидерланды', lat:50.8550, lng:5.6860, type:'Международная IB', cost:'€8,360–12,690/год', dist:'42.6 км · ~34 мин', site:'https://www.uwcmaastricht.nl/', intl:true },
+    { num:26, name:'École du Haut', addr:'Rue Eugène Jehaes 9a, Fléron', lat:50.6100, lng:5.6720, type:'Libre catholique', cost:'Бесплатно', dist:'23.2 км · ~24 мин', site:'https://ecoleduhaut.be/' }
+  ];
+
+  // ── MAP INIT ─────────────────────────────────────────────────
+  function initMap() {
+    var mapDiv = document.getElementById('map');
+    mapDiv.style.display = 'flex';
+
+    // Sidebar
+    var sidebar = document.createElement('div');
+    sidebar.style.cssText = 'width:260px;min-width:260px;height:100%;overflow-y:auto;background:white;border-right:1px solid #E8DFD0;font-family:sans-serif;flex-shrink:0;';
+    sidebar.innerHTML = '<div style="padding:12px 14px;border-bottom:1px solid #E8DFD0;background:#F7F3ED;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#7A7068;font-weight:500;">26 школ · нажмите ↗</div>';
+
+    schools.forEach(function(s) {
+      var color = s.priv ? '#C4714A' : s.intl ? '#B8963E' : '#3D5A47';
+      var a = document.createElement('a');
+      a.href = 'https://www.google.com/maps/search/' + encodeURIComponent(s.addr);
+      a.target = '_blank';
+      a.style.cssText = 'display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid #F0EAE0;text-decoration:none;background:white;';
+      a.onmouseenter = function(){ a.style.background='#F7F3ED'; };
+      a.onmouseleave = function(){ a.style.background='white'; };
+      a.innerHTML = '<div style="width:26px;height:26px;border-radius:50%;background:'+color+';color:white;font-family:serif;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'+s.num+'</div>'
+        + '<div style="min-width:0;flex:1;"><div style="font-size:12px;font-weight:600;color:#1E2420;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+s.name+'</div>'
+        + '<div style="font-size:11px;color:#7A7068;">'+s.dist+' · <span style="color:'+color+';font-weight:500;">'+s.cost+'</span></div></div>'
+        + '<span style="color:#ccc;font-size:11px;">↗</span>';
+      sidebar.appendChild(a);
+    });
+
+    // Map container
+    var mapFrame = document.createElement('div');
+    mapFrame.style.cssText = 'flex:1;height:100%;';
+    var leafletEl = document.createElement('div');
+    leafletEl.id = 'leaflet-map';
+    leafletEl.style.cssText = 'width:100%;height:100%;';
+    mapFrame.appendChild(leafletEl);
+
+    mapDiv.appendChild(sidebar);
+    mapDiv.appendChild(mapFrame);
+
+    // Init Leaflet
+    var lmap = L.map('leaflet-map').setView([50.632, 5.579], 11);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a>',
+      maxZoom: 19
+    }).addTo(lmap);
+
+    // Markers
+    schools.forEach(function(s) {
+      var color = s.priv ? '#C4714A' : s.intl ? '#B8963E' : '#3D5A47';
+      var fs = s.num >= 10 ? '10' : '13';
+
+      var icon = L.divIcon({
+        className: '',
+        html: '<div style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4))">'
+          + '<svg width="34" height="44" viewBox="0 0 34 44" xmlns="http://www.w3.org/2000/svg">'
+          + '<path d="M17 0C7.6 0 0 7.6 0 17c0 13 17 27 17 27s17-14 17-27C34 7.6 26.4 0 17 0z" fill="'+color+'"/>'
+          + '<circle cx="17" cy="17" r="11" fill="rgba(255,255,255,0.25)"/>'
+          + '<text x="17" y="22" text-anchor="middle" font-family="Georgia,serif" font-size="'+fs+'" font-weight="700" fill="white">'+s.num+'</text>'
+          + '</svg></div>',
+        iconSize: [34, 44],
+        iconAnchor: [17, 44],
+        popupAnchor: [0, -46]
+      });
+
+      var color2 = s.priv ? '#C4714A' : s.intl ? '#B8963E' : '#3D5A47';
+      var bg2    = s.priv ? '#FBF0EB' : s.intl ? '#FBF6EB' : '#EEF4F0';
+
+      var links = '';
+      if (s.site)  links += '<a href="'+s.site+'" target="_blank" style="font-size:11px;color:#3D5A47;text-decoration:none;padding:4px 8px;border-radius:6px;background:white;border:1px solid #E8DFD0;font-weight:500;">🌐 Сайт</a> ';
+      if (s.fb)    links += '<a href="'+s.fb+'" target="_blank" style="font-size:11px;color:#3D5A47;text-decoration:none;padding:4px 8px;border-radius:6px;background:white;border:1px solid #E8DFD0;font-weight:500;">📘 FB</a> ';
+      if (s.video) links += '<a href="'+s.video+'" target="_blank" style="font-size:11px;color:#3D5A47;text-decoration:none;padding:4px 8px;border-radius:6px;background:white;border:1px solid #E8DFD0;font-weight:500;">🎥 Видео</a> ';
+      if (s.ig)    links += '<a href="'+s.ig+'" target="_blank" style="font-size:11px;color:#3D5A47;text-decoration:none;padding:4px 8px;border-radius:6px;background:white;border:1px solid #E8DFD0;font-weight:500;">📸 IG</a> ';
+      links += '<a href="https://www.google.com/maps/search/'+encodeURIComponent(s.addr)+'" target="_blank" style="font-size:11px;color:#3D5A47;text-decoration:none;padding:4px 8px;border-radius:6px;background:white;border:1px solid #E8DFD0;font-weight:500;">🗺 Карта</a>';
+
+      var popup = '<div style="font-family:sans-serif;min-width:240px;">'
+        + '<div style="padding:14px 16px 10px;">'
+        + '<div style="width:24px;height:24px;border-radius:6px;background:'+color+';color:white;font-family:serif;font-size:12px;font-weight:700;text-align:center;line-height:24px;margin-bottom:8px;">'+s.num+'</div>'
+        + '<div style="font-size:14px;font-weight:600;color:#1E2420;margin-bottom:4px;">'+s.name+'</div>'
+        + '<div style="font-size:12px;color:#7A7068;margin-bottom:8px;">📍 '+s.addr+' · '+s.dist+'</div>'
+        + '<div style="display:flex;gap:5px;flex-wrap:wrap;">'
+        + '<span style="background:#EEF4F0;color:#3D5A47;font-size:11px;padding:3px 8px;border-radius:8px;">'+s.type+'</span>'
+        + '<span style="background:'+bg2+';color:'+color2+';font-size:11px;padding:3px 8px;border-radius:8px;font-weight:600;">'+s.cost+'</span>'
+        + (s.rating ? '<span style="background:#E8DFD0;color:#1E2420;font-size:11px;padding:3px 8px;border-radius:8px;">'+s.rating+'</span>' : '')
+        + '</div></div>'
+        + '<div style="border-top:1px solid #E8DFD0;padding:8px 14px;background:#F7F3ED;display:flex;gap:6px;flex-wrap:wrap;">'+links+'</div>'
+        + '</div>';
+
+      L.marker([s.lat, s.lng], { icon: icon })
+        .addTo(lmap)
+        .bindPopup(popup, { maxWidth: 300, minWidth: 260 });
+    });
+
+    // Legend
+    var legend = L.control({ position: 'bottomright' });
+    legend.onAdd = function() {
+      var d = L.DomUtil.create('div');
+      d.style.cssText = 'background:rgba(255,255,255,0.95);border-radius:10px;padding:10px 12px;font-size:11px;font-family:sans-serif;box-shadow:0 2px 10px rgba(0,0,0,0.12);line-height:1.8;';
+      d.innerHTML = '<div style="display:flex;align-items:center;gap:7px;"><div style="width:11px;height:11px;border-radius:50%;background:#3D5A47;"></div> Бесплатные</div>'
+        + '<div style="display:flex;align-items:center;gap:7px;"><div style="width:11px;height:11px;border-radius:50%;background:#C4714A;"></div> Частные</div>'
+        + '<div style="display:flex;align-items:center;gap:7px;"><div style="width:11px;height:11px;border-radius:50%;background:#B8963E;"></div> Международная</div>';
+      return d;
+    };
+    legend.addTo(lmap);
+  }
+
+  // ── FILTER ────────────────────────────────────────────────────
+  function filter(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    var cards = document.querySelectorAll('.card');
+    var count = 0;
+    cards.forEach(function(card) {
+      var tags = card.dataset.tags || '';
+      var show = type === 'all'
+        || (type === 'free'       && tags.includes('free'))
+        || (type === 'paid'       && tags.includes('paid'))
+        || (type === 'montessori' && tags.includes('montessori'))
+        || (type === 'nature'     && tags.includes('nature'))
+        || (type === 'close'      && tags.includes('close'));
+      card.classList.toggle('hidden', !show);
+      if (show) count++;
+    });
+    document.getElementById('count').textContent = count + ' ' + plural(count, 'школа', 'школы', 'школ');
+    document.getElementById('noResults').style.display = count === 0 ? 'block' : 'none';
+  }
+
+  function plural(n, one, two, five) {
+    n = Math.abs(n) % 100;
+    var n1 = n % 10;
+    if (n > 10 && n < 20) return five;
+    if (n1 > 1 && n1 < 5) return two;
+    if (n1 === 1) return one;
+    return five;
+  }
+</script>
+<script>
+// ── GOOGLE PLACES PHOTO CAROUSEL ─────────────────────────────
+var PLACES_KEY = 'AIzaSyDyJF6Sb5T-GLXiq01n6ohUkn3WJ7vwfPE';
+
+function buildCarousel(el, photos) {
+  if (!photos || photos.length === 0) {
+    el.innerHTML = '<div class="carousel-loading" style="color:#bbb;">📷 Нет фото</div>';
+    return;
+  }
+  // Take max 5 photos
+  var items = photos.slice(0, 5);
+  var idx = 0;
+
+  var inner = '<div class="carousel-inner">';
+  var attribs = [];
+  items.forEach(function(p) {
+    var url = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=' + p.photo_reference + '&key=' + PLACES_KEY;
+    inner += '<img src="' + url + '" loading="lazy" onerror="this.style.display=\'none\'">';
+    // parse attribution
+    var a = p.html_attributions && p.html_attributions[0] ? p.html_attributions[0] : '© Google';
+    attribs.push(a);
+  });
+  inner += '</div>';
+
+  var dots = '<div class="carousel-dots">';
+  items.forEach(function(_, i) {
+    dots += '<div class="carousel-dot' + (i===0?' active':'') + '" onclick="carouselGo(this,'+i+')"></div>';
+  });
+  dots += '</div>';
+
+  var btns = items.length > 1
+    ? '<button class="carousel-btn prev" onclick="carouselStep(this,-1)">‹</button><button class="carousel-btn next" onclick="carouselStep(this,1)">›</button>'
+    : '';
+
+  el.innerHTML = inner + btns + dots + '<div class="carousel-attrib" id="ca-' + el.dataset.num + '">' + attribs[0] + '</div>';
+  el._attribs = attribs;
+  el._idx = 0;
+  el._total = items.length;
+}
+
+function carouselGo(dot, idx) {
+  var el = dot.closest('.card-carousel');
+  goTo(el, idx);
+}
+
+function carouselStep(btn, dir) {
+  var el = btn.closest('.card-carousel');
+  var next = ((el._idx || 0) + dir + el._total) % el._total;
+  goTo(el, next);
+}
+
+function goTo(el, idx) {
+  el._idx = idx;
+  var inner = el.querySelector('.carousel-inner');
+  if (inner) inner.style.transform = 'translateX(-' + (idx * 100) + '%)';
+  el.querySelectorAll('.carousel-dot').forEach(function(d, i) {
+    d.classList.toggle('active', i === idx);
+  });
+  var ca = el.querySelector('.carousel-attrib');
+  if (ca && el._attribs) ca.innerHTML = el._attribs[idx] || '';
+}
+
+function loadCarousel(el) {
+  var placeId = el.dataset.place;
+  var query   = el.dataset.query;
+  var num     = el.dataset.num;
+
+  if (placeId) {
+    // Already have place_id — fetch photos directly
+    fetchPhotos(el, placeId);
+  } else if (query) {
+    // Find place first
+    var url = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='
+      + encodeURIComponent(query)
+      + '&inputtype=textquery&fields=place_id,photos&key=' + PLACES_KEY;
+    fetch(url)
+      .then(function(r){ return r.json(); })
+      .then(function(data) {
+        if (data.candidates && data.candidates[0]) {
+          var c = data.candidates[0];
+          el.dataset.place = c.place_id || '';
+          if (c.photos) {
+            buildCarousel(el, c.photos);
+          } else {
+            fetchPhotos(el, c.place_id);
+          }
+        } else {
+          el.innerHTML = '<div class="carousel-loading" style="color:#bbb;">📷 Нет фото</div>';
+        }
+      })
+      .catch(function() {
+        el.innerHTML = '<div class="carousel-loading" style="color:#bbb;">📷 Нет фото</div>';
+      });
+  }
+}
+
+function fetchPhotos(el, placeId) {
+  var url = 'https://maps.googleapis.com/maps/api/place/details/json?place_id='
+    + placeId + '&fields=photos&key=' + PLACES_KEY;
+  fetch(url)
+    .then(function(r){ return r.json(); })
+    .then(function(data) {
+      var photos = data.result && data.result.photos;
+      buildCarousel(el, photos);
+    })
+    .catch(function() {
+      el.innerHTML = '<div class="carousel-loading" style="color:#bbb;">📷 Нет фото</div>';
+    });
+}
+
+// Load carousels lazily using IntersectionObserver
+document.addEventListener('DOMContentLoaded', function() {
+  var carousels = document.querySelectorAll('.card-carousel');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting && !entry.target._loaded) {
+          entry.target._loaded = true;
+          loadCarousel(entry.target);
+        }
+      });
+    }, { rootMargin: '200px' });
+    carousels.forEach(function(el) { observer.observe(el); });
+  } else {
+    carousels.forEach(function(el) { loadCarousel(el); });
+  }
+});
+</script>
+</body>
+</html>
