@@ -365,7 +365,7 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    padding-right: 38px;
+    padding-right: 76px;
   }
 
   /* NO RESULTS */
@@ -553,10 +553,26 @@
   .dd-check:hover { background: var(--sand); }
   .dd-check input[type=checkbox] { accent-color: var(--forest); width: 14px; height: 14px; cursor: pointer; }
 
+  .dislike-filter-btn {
+    flex-shrink: 0;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 13px; color: var(--muted);
+    padding: 7px 12px; border-radius: 20px;
+    border: 1.5px solid var(--sand); background: white;
+    cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .dislike-filter-btn:hover { border-color: #e74c3c; color: #e74c3c; }
+  .dislike-filter-btn.has-dislikes { border-color: #e74c3c; color: #e74c3c; }
+  .dislike-filter-btn.active { background: #fff0f0; border-color: #e74c3c; color: #e74c3c; font-weight: 600; }
+  /* disliked cards hidden by default, shown in dislike-view mode */
+  .card.disliked { display: none; }
+  .card.disliked.show-disliked { display: block; }
+
   /* DISLIKE BUTTON */
   .dislike-btn {
     position: absolute;
-    top: 14px; right: 50px;
+    top: 14px; right: 48px;
     background: none;
     border: none;
     padding: 2px;
@@ -565,10 +581,12 @@
     width: 28px; height: 28px;
     display: flex; align-items: center; justify-content: center;
     transition: transform 0.15s;
+    color: #C0C8D0;
   }
-  .dislike-btn:hover { transform: scale(1.2); }
-  .dislike-btn svg { transition: all 0.18s; }
-  .dislike-btn.active svg path { fill: #e74c3c; stroke: #c0392b; }
+  .dislike-btn:hover { transform: scale(1.2); color: #e74c3c; }
+  .dislike-btn:hover svg path { stroke: #e74c3c; }
+  .dislike-btn.active { color: #e74c3c; }
+  .dislike-btn.active svg path { stroke: #e74c3c; fill: #e74c3c; }
   .dislike-btn.pop { animation: dislike-pop 0.22s ease; }
   @keyframes dislike-pop {
     0%  { transform: scale(1); }
@@ -681,10 +699,10 @@
     </div>
 
     <button class="quick-btn" id="btn-close" onclick="toggleClose(this)">⚡ До 15 мин</button>
+    <button class="dislike-filter-btn" id="btn-show-disliked" onclick="toggleDislikedView(this)">👎 <span id="disliked-filter-count">0</span> скрытых</button>
     <button class="fav-filter-btn" id="btn-favs" onclick="toggleFavFilter(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="#E8A000"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round"/></svg> <span id="fav-count-num">0</span> избранных</button>
 
     <span class="results-count" id="count">26 школ</span>
-    <span class="show-disliked-bar" id="disliked-bar" style="display:none">👎 <span id="disliked-count">0</span> скрыто <button class="show-disliked-btn" onclick="clearDislikes()">показать все</button></span>
     <div class="view-toggle">
       <button class="view-btn active" id="btn-list" onclick="setView('list')" title="Список">☰</button>
       <button class="view-btn" id="btn-map" onclick="setView('map')" title="Карта">🗺</button>
@@ -2337,7 +2355,9 @@
       var closeOk = !activeClose || tags.includes('close');
       var favOk = !showOnlyFavs || favs.indexOf(parseInt(card.querySelector('[class*="card-num"]').textContent)) !== -1;
       var isDisliked = card.classList.contains('disliked');
-      var show = costOk && typeOk && distOk && closeOk && favOk && !isDisliked;
+      // In disliked-view mode: show only disliked; otherwise hide disliked
+      var dislikeOk = showingDislikes ? isDisliked : !isDisliked;
+      var show = costOk && typeOk && distOk && closeOk && favOk && dislikeOk;
       card.classList.toggle('hidden', !show);
       if (show) count++;
     });
@@ -2422,6 +2442,7 @@
     try { return JSON.parse(localStorage.getItem('preschool-dislikes') || '[]'); }
     catch(e) { return []; }
   })();
+  var showingDislikes = false;
 
   function saveDislikes() {
     try { localStorage.setItem('preschool-dislikes', JSON.stringify(dislikes)); } catch(e) {}
@@ -2429,17 +2450,13 @@
 
   function initDislikes() {
     dislikes.forEach(function(num) {
-      applyDislike(num, true);
+      var card = document.querySelector('[id="fav-' + num + '"]');
+      if (card) card = card.closest('.card');
+      var btn = document.getElementById('dislike-' + num);
+      if (card) card.classList.add('disliked');
+      if (btn) btn.classList.add('active');
     });
-    updateDislikeBar();
-  }
-
-  function applyDislike(num, silent) {
-    var card = document.querySelector('[id="fav-' + num + '"]');
-    if (card) card = card.closest('.card');
-    var btn = document.getElementById('dislike-' + num);
-    if (card) card.classList.add('disliked');
-    if (btn) btn.classList.add('active');
+    updateDislikeBtn();
   }
 
   function toggleDislike(num) {
@@ -2449,7 +2466,6 @@
     var btn = document.getElementById('dislike-' + num);
 
     if (idx === -1) {
-      // Add dislike — also remove from favs if present
       dislikes.push(num);
       if (card) card.classList.add('disliked');
       if (btn) { btn.classList.add('active'); btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop'); }
@@ -2463,27 +2479,36 @@
         updateFavCount();
       }
     } else {
-      // Remove dislike — show card again
       dislikes.splice(idx, 1);
-      if (card) card.classList.remove('disliked');
+      if (card) { card.classList.remove('disliked'); card.classList.remove('show-disliked'); }
       if (btn) btn.classList.remove('active');
     }
     saveDislikes();
-    updateDislikeBar();
+    updateDislikeBtn();
     applyFilters();
   }
 
-  function updateDislikeBar() {
-    var bar = document.getElementById('disliked-bar');
-    var cnt = document.getElementById('disliked-count');
-    if (!bar) return;
-    if (dislikes.length > 0) {
-      bar.style.display = 'inline-flex';
-      bar.style.alignItems = 'center';
-      if (cnt) cnt.textContent = dislikes.length;
-    } else {
-      bar.style.display = 'none';
+  function updateDislikeBtn() {
+    var btn = document.getElementById('btn-show-disliked');
+    var cnt = document.getElementById('disliked-filter-count');
+    if (!btn) return;
+    if (cnt) cnt.textContent = dislikes.length;
+    btn.classList.toggle('has-dislikes', dislikes.length > 0);
+    if (dislikes.length === 0 && showingDislikes) {
+      showingDislikes = false;
+      btn.classList.remove('active');
+      document.querySelectorAll('.card.disliked').forEach(function(c){ c.classList.remove('show-disliked'); });
+      applyFilters();
     }
+  }
+
+  function toggleDislikedView(btn) {
+    showingDislikes = !showingDislikes;
+    btn.classList.toggle('active', showingDislikes);
+    document.querySelectorAll('.card.disliked').forEach(function(card) {
+      card.classList.toggle('show-disliked', showingDislikes);
+    });
+    applyFilters();
   }
 
   function clearDislikes() {
@@ -2491,12 +2516,15 @@
       var card = document.querySelector('[id="fav-' + num + '"]');
       if (card) card = card.closest('.card');
       var btn = document.getElementById('dislike-' + num);
-      if (card) card.classList.remove('disliked');
+      if (card) { card.classList.remove('disliked'); card.classList.remove('show-disliked'); }
       if (btn) btn.classList.remove('active');
     });
     dislikes = [];
+    showingDislikes = false;
     saveDislikes();
-    updateDislikeBar();
+    updateDislikeBtn();
+    var fb = document.getElementById('btn-show-disliked');
+    if (fb) fb.classList.remove('active');
     applyFilters();
   }
 
