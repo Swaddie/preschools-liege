@@ -49,7 +49,7 @@
 - [ ] School Saint Hubert — Saint-Nicolas
 - [ ] Saint Louis de Gonzague — Flémalle
 - [ ] École fondamentale du Sartay — Embourg
-- [ ] École Princesse de Liège — Chaudfontaine
+- [x] École Princesse de Liège — Chaudfontaine
 - [ ] École Libre de Theux
 - [ ] École de la Providence — Verviers
 - [ ] École Sinibaldo Basile
@@ -75,7 +75,7 @@
 - [ ] Sainte-Marie de Boirs — Bassenge
 - [ ] École Saint Dominique — Saint-Nicolas
 - [ ] Enfant Jésus — Juprelle
-- [ ] École Princesse de Liège — Chaudfontaine
+- [x] École Princesse de Liège — Chaudfontaine
 - [ ] École Libre de Theux
 - [ ] École Sinibaldo Basile
 - [ ] École de Bierset — Immersion NL
