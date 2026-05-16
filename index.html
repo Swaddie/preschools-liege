@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMzRDVBNDciLz4KICA8cmVjdCB4PSI5IiB5PSIxNyIgd2lkdGg9IjE0IiBoZWlnaHQ9IjkiIHJ4PSIxLjUiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjk1Ii8+CiAgPHBvbHlnb24gcG9pbnRzPSI3LDE3IDE2LDkgMjUsMTciIGZpbGw9IiNFRUY0RjAiLz4KICA8cmVjdCB4PSIxNCIgeT0iMjEiIHdpZHRoPSI0IiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjM0Q1QTQ3Ii8+CiAgPHBhdGggZD0iTTIwLDggTDIzLDcgTDIyLDkgTDIwLDkgWiBNMjAsOCBMMTksMTAgTDIxLDkuNSBaIiBmaWxsPSIjRjZDOTBFIi8+CiAgPGNpcmNsZSBjeD0iMjEiIGN5PSI4IiByPSIwLjgiIGZpbGw9IiNGNkM5MEUiLz4KICA8cGF0aCBkPSJNMTguNSw4LjUgUTIxLDcgMjMsNy41IFEyMSw4LjUgMTguNSw5IFoiIGZpbGw9IiNGNkM5MEUiIG9wYWNpdHk9IjAuOSIvPgo8L3N2Zz4=">
 <link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMzRDVBNDciLz4KICA8cmVjdCB4PSI5IiB5PSIxNyIgd2lkdGg9IjE0IiBoZWlnaHQ9IjkiIHJ4PSIxLjUiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjk1Ii8+CiAgPHBvbHlnb24gcG9pbnRzPSI3LDE3IDE2LDkgMjUsMTciIGZpbGw9IiNFRUY0RjAiLz4KICA8cmVjdCB4PSIxNCIgeT0iMjEiIHdpZHRoPSI0IiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjM0Q1QTQ3Ii8+CiAgPHBhdGggZD0iTTIwLDggTDIzLDcgTDIyLDkgTDIwLDkgWiBNMjAsOCBMMTksMTAgTDIxLDkuNSBaIiBmaWxsPSIjRjZDOTBFIi8+CiAgPGNpcmNsZSBjeD0iMjEiIGN5PSI4IiByPSIwLjgiIGZpbGw9IiNGNkM5MEUiLz4KICA8cGF0aCBkPSJNMTguNSw4LjUgUTIxLDcgMjMsNy41IFEyMSw4LjUgMTguNSw5IFoiIGZpbGw9IiNGNkM5MEUiIG9wYWNpdHk9IjAuOSIvPgo8L3N2Zz4=">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Пре-школы Льежа — Подборка</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -110,6 +111,7 @@
     top: 0;
     z-index: 100;
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    overflow: visible;
   }
   .filters-inner {
     max-width: 900px;
@@ -118,12 +120,8 @@
     flex-wrap: nowrap;
     gap: 8px;
     align-items: center;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    overflow: visible;
   }
-  .filters-inner::-webkit-scrollbar { display: none; }
   .view-toggle { margin-left: auto; flex-shrink: 0; display: flex; gap: 4px; }
   .filter-label {
     font-size: 12px;
@@ -172,7 +170,7 @@
     border: 1px solid var(--sand);
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    z-index: 999;
+    z-index: 1000;
     min-width: 200px;
     max-height: 320px;
     overflow-y: auto;
