@@ -188,7 +188,20 @@
     color: var(--muted);
     pointer-events: none;
   }
-  #district-filters { display: none; }
+  .quick-btn {
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--sand);
+    background: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--dark);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .quick-btn:hover { border-color: var(--forest); color: var(--forest); }
+  .quick-btn.active { background: var(--forest); border-color: var(--forest); color: white; }
 
   .results-count {
     margin-left: auto;
@@ -581,26 +594,38 @@
 
 <div class="filters-bar">
   <div class="filters-inner">
-    <div class="dropdown" id="dd-type">
-      <button class="dropdown-btn" onclick="toggleDropdown('dd-type')">
-        <span id="dd-type-label">Тип: Все</span> <span class="dd-arrow">▾</span>
+
+    <div class="dropdown" id="dd-cost">
+      <button class="dropdown-btn" onclick="toggleDropdown('dd-cost')">
+        <span id="dd-cost-label">💰 Стоимость</span> <span class="dd-arrow">▾</span>
       </button>
       <div class="dropdown-menu">
-        <div class="dd-item active" onclick="filterDropdown('type','all','Все',this)">Все школы</div>
-        <div class="dd-item" onclick="filterDropdown('type','free','Бесплатные',this)">Бесплатные</div>
-        <div class="dd-item" onclick="filterDropdown('type','paid','Платные',this)">Платные / частные</div>
-        <div class="dd-item" onclick="filterDropdown('type','montessori','Монтессори',this)">Монтессори</div>
-        <div class="dd-item" onclick="filterDropdown('type','nature','Природа',this)">🌿 Природа / ферма</div>
-        <div class="dd-item" onclick="filterDropdown('type','close','До 15 мин',this)">⚡ До 15 мин езды</div>
+        <div class="dd-item active" onclick="filterDropdown('cost','all','💰 Стоимость',this)">Все</div>
+        <div class="dd-item" onclick="filterDropdown('cost','free','✅ Бесплатные',this)">✅ Бесплатные</div>
+        <div class="dd-item" onclick="filterDropdown('cost','paid','💳 Платные',this)">💳 Платные / частные</div>
+      </div>
+    </div>
+
+    <div class="dropdown" id="dd-type">
+      <button class="dropdown-btn" onclick="toggleDropdown('dd-type')">
+        <span id="dd-type-label">🎓 Педагогика</span> <span class="dd-arrow">▾</span>
+      </button>
+      <div class="dropdown-menu">
+        <div class="dd-item active" onclick="filterDropdown('type','all','🎓 Педагогика',this)">Все</div>
+        <div class="dd-item" onclick="filterDropdown('type','montessori','Монтессори',this)">🔵 Монтессори</div>
+        <div class="dd-item" onclick="filterDropdown('type','waldorf','Вальдорф',this)">🌱 Вальдорф</div>
+        <div class="dd-item" onclick="filterDropdown('type','nature','Природа / ферма',this)">🌿 Природа / ферма</div>
+        <div class="dd-item" onclick="filterDropdown('type','international','Международная',this)">🌍 Международная IB</div>
+        <div class="dd-item" onclick="filterDropdown('type','catholique','Католическая',this)">✝️ Libre catholique</div>
       </div>
     </div>
 
     <div class="dropdown" id="dd-district">
       <button class="dropdown-btn" onclick="toggleDropdown('dd-district')">
-        <span id="dd-district-label">Район: Все</span> <span class="dd-arrow">▾</span>
+        <span id="dd-district-label">📍 Район</span> <span class="dd-arrow">▾</span>
       </button>
       <div class="dropdown-menu">
-        <div class="dd-item active" onclick="filterDropdown('district','all','Все',this)">Все районы</div>
+        <div class="dd-item active" onclick="filterDropdown('district','all','📍 Район',this)">Все районы</div>
         <div class="dd-separator">— Льеж и пригороды —</div>
         <div class="dd-item" onclick="filterDropdown('district','angleur','Angleur',this)">Angleur</div>
         <div class="dd-item" onclick="filterDropdown('district','chenee','Chênée',this)">Chênée</div>
@@ -624,17 +649,17 @@
         <div class="dd-item" onclick="filterDropdown('district','modave','Modave',this)">Modave</div>
         <div class="dd-item" onclick="filterDropdown('district','tilff','Tilff',this)">Tilff (Neupré)</div>
         <div class="dd-item" onclick="filterDropdown('district','rotheux','Rotheux',this)">Rotheux</div>
-        <div class="dd-item" onclick="filterDropdown('district','maastricht','Maastricht',this)">🌍 Maastricht (NL)</div>
+        <div class="dd-item" onclick="filterDropdown('district','maastricht','Maastricht NL',this)">🌍 Maastricht (NL)</div>
       </div>
     </div>
+
+    <button class="quick-btn" id="btn-close" onclick="toggleClose(this)">⚡ До 15 мин</button>
 
     <span class="results-count" id="count">26 школ</span>
     <div class="view-toggle">
       <button class="view-btn active" id="btn-list" onclick="setView('list')" title="Список">☰</button>
       <button class="view-btn" id="btn-map" onclick="setView('map')" title="Карта">🗺</button>
     </div>
-  </div>
-
   </div>
 </div>
 
@@ -1601,12 +1626,10 @@
   function toggleDropdown(id) {
     var dd = document.getElementById(id);
     var isOpen = dd.classList.contains('open');
-    // Close all
     document.querySelectorAll('.dropdown').forEach(function(d){ d.classList.remove('open'); });
     if (!isOpen) dd.classList.add('open');
   }
 
-  // Close dropdowns on outside click
   document.addEventListener('click', function(e) {
     if (!e.target.closest('.dropdown')) {
       document.querySelectorAll('.dropdown').forEach(function(d){ d.classList.remove('open'); });
@@ -1614,43 +1637,48 @@
   });
 
   function filterDropdown(category, value, label, item) {
-    // Update active item in dropdown
-    var ddId = category === 'type' ? 'dd-type' : 'dd-district';
+    var ddId = 'dd-' + category;
     document.querySelectorAll('#' + ddId + ' .dd-item').forEach(function(i){ i.classList.remove('active'); });
     item.classList.add('active');
-
-    // Update button label and active state
     var btn = document.querySelector('#' + ddId + ' .dropdown-btn');
-    var prefix = category === 'type' ? 'Тип' : 'Район';
-    document.getElementById(ddId + '-label').textContent = prefix + ': ' + label;
+    document.getElementById(ddId + '-label').textContent = label;
     btn.classList.toggle('active', value !== 'all');
-
-    // Close dropdown
     document.getElementById(ddId).classList.remove('open');
-
-    // Update state and apply filters
-    if (category === 'type') activeType = value;
+    if (category === 'cost') activeCost = value;
+    else if (category === 'type') activeType = value;
     else activeDistrict = value;
     applyFilters();
   }
 
-  // ── FILTER ────────────────────────────────────────────────────
+  function toggleClose(btn) {
+    activeClose = !activeClose;
+    btn.classList.toggle('active', activeClose);
+    applyFilters();
+  }
+
+  // ── FILTER STATE ──────────────────────────────────────────────
+  var activeCost = 'all';
   var activeType = 'all';
   var activeDistrict = 'all';
+  var activeClose = false;
 
   function applyFilters() {
     var cards = document.querySelectorAll('.card');
     var count = 0;
     cards.forEach(function(card) {
       var tags = card.dataset.tags || '';
+      var costOk = activeCost === 'all'
+        || (activeCost === 'free' && tags.includes('free'))
+        || (activeCost === 'paid' && tags.includes('paid'));
       var typeOk = activeType === 'all'
-        || (activeType === 'free'       && tags.includes('free'))
-        || (activeType === 'paid'       && tags.includes('paid'))
-        || (activeType === 'montessori' && tags.includes('montessori'))
-        || (activeType === 'nature'     && tags.includes('nature'))
-        || (activeType === 'close'      && tags.includes('close'));
+        || (activeType === 'montessori'    && tags.includes('montessori'))
+        || (activeType === 'waldorf'       && tags.includes('waldorf'))
+        || (activeType === 'nature'        && tags.includes('nature'))
+        || (activeType === 'international' && tags.includes('international'))
+        || (activeType === 'catholique'    && tags.includes('catholique'));
       var distOk = activeDistrict === 'all' || tags.includes(activeDistrict);
-      var show = typeOk && distOk;
+      var closeOk = !activeClose || tags.includes('close');
+      var show = costOk && typeOk && distOk && closeOk;
       card.classList.toggle('hidden', !show);
       if (show) count++;
     });
@@ -1663,14 +1691,18 @@
     if (!window._mapMarkers) return;
     window._mapMarkers.forEach(function(item) {
       var tags = item.tags || '';
+      var costOk = activeCost === 'all'
+        || (activeCost === 'free' && tags.includes('free'))
+        || (activeCost === 'paid' && tags.includes('paid'));
       var typeOk = activeType === 'all'
-        || (activeType === 'free'       && tags.includes('free'))
-        || (activeType === 'paid'       && tags.includes('paid'))
-        || (activeType === 'montessori' && tags.includes('montessori'))
-        || (activeType === 'nature'     && tags.includes('nature'))
-        || (activeType === 'close'      && tags.includes('close'));
+        || (activeType === 'montessori'    && tags.includes('montessori'))
+        || (activeType === 'waldorf'       && tags.includes('waldorf'))
+        || (activeType === 'nature'        && tags.includes('nature'))
+        || (activeType === 'international' && tags.includes('international'))
+        || (activeType === 'catholique'    && tags.includes('catholique'));
       var distOk = activeDistrict === 'all' || tags.includes(activeDistrict);
-      if (typeOk && distOk) item.marker.addTo(window._lmap);
+      var closeOk = !activeClose || tags.includes('close');
+      if (costOk && typeOk && distOk && closeOk) item.marker.addTo(window._lmap);
       else item.marker.remove();
     });
   }
