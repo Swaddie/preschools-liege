@@ -482,6 +482,43 @@
     color: white;
     display: block;
   }
+  /* ── FAVOURITES ──────────────────────────────────────────── */
+  .card { position: relative; }
+  .fav-btn {
+    position: absolute;
+    top: 14px; right: 14px;
+    background: none;
+    border: none;
+    padding: 2px;
+    cursor: pointer;
+    z-index: 2;
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.15s;
+  }
+  .fav-btn:hover { transform: scale(1.25); }
+  .fav-btn .star-empty { display: block; }
+  .fav-btn .star-filled { display: none; }
+  .fav-btn.active .star-empty { display: none; }
+  .fav-btn.active .star-filled { display: block; }
+  .fav-btn.pop { animation: star-pop 0.22s ease; }
+  @keyframes star-pop {
+    0%  { transform: scale(1); }
+    50% { transform: scale(1.45); }
+    100%{ transform: scale(1); }
+  }
+  .fav-filter-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 13px; color: var(--muted);
+    padding: 7px 12px; border-radius: 20px;
+    border: 1.5px solid var(--sand); background: white;
+    cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .fav-filter-btn:hover { border-color: #E8A000; color: #C97B00; }
+  .fav-filter-btn.has-favs { border-color: #E8A000; color: #C97B00; }
+  .fav-filter-btn.active { background: #FFF8E1; border-color: #E8A000; color: #C97B00; font-weight: 600; }
+
 </style>
 
 </head>
@@ -590,7 +627,7 @@
       </div>
       <span class="dist-tag">✈️ 16.1 км · ~14 мин</span>
     
-      <button class="fav-btn" id="fav-1" onclick="toggleFav(1)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-1" onclick="toggleFav(1)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -623,7 +660,7 @@
       </div>
       <span class="dist-tag">✈️ 16.6 км · ~16 мин</span>
     
-      <button class="fav-btn" id="fav-2" onclick="toggleFav(2)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-2" onclick="toggleFav(2)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -657,7 +694,7 @@
       </div>
       <span class="dist-tag">✈️ 11.9 км · ~12 мин</span>
     
-      <button class="fav-btn" id="fav-22" onclick="toggleFav(22)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-22" onclick="toggleFav(22)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -690,7 +727,7 @@
       </div>
       <span class="dist-tag">✈️ 12.7 км · ~12 мин</span>
     
-      <button class="fav-btn" id="fav-23" onclick="toggleFav(23)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-23" onclick="toggleFav(23)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -722,7 +759,7 @@
       </div>
       <span class="dist-tag">✈️ 12.2 км · ~13 мин</span>
     
-      <button class="fav-btn" id="fav-24" onclick="toggleFav(24)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-24" onclick="toggleFav(24)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -754,7 +791,7 @@
       </div>
       <span class="dist-tag">✈️ 16.1 км · ~17 мин</span>
     
-      <button class="fav-btn" id="fav-25" onclick="toggleFav(25)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-25" onclick="toggleFav(25)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -791,7 +828,7 @@
       </div>
       <span class="dist-tag">✈️ 20.4 км · ~19 мин</span>
     
-      <button class="fav-btn" id="fav-3" onclick="toggleFav(3)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-3" onclick="toggleFav(3)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -822,7 +859,7 @@
       </div>
       <span class="dist-tag">✈️ 10.3 км · ~8 мин</span>
     
-      <button class="fav-btn" id="fav-4" onclick="toggleFav(4)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-4" onclick="toggleFav(4)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -856,7 +893,7 @@
       </div>
       <span class="dist-tag">✈️ 9.1 км · ~10 мин</span>
     
-      <button class="fav-btn" id="fav-5" onclick="toggleFav(5)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-5" onclick="toggleFav(5)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -888,7 +925,7 @@
       </div>
       <span class="dist-tag">✈️ 10.0 км · ~12 мин</span>
     
-      <button class="fav-btn" id="fav-10" onclick="toggleFav(10)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-10" onclick="toggleFav(10)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -917,7 +954,7 @@
       </div>
       <span class="dist-tag">✈️ 10.2 км · ~12 мин</span>
     
-      <button class="fav-btn" id="fav-12" onclick="toggleFav(12)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-12" onclick="toggleFav(12)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -948,7 +985,7 @@
       </div>
       <span class="dist-tag">✈️ 10.4 км · ~12 мин</span>
     
-      <button class="fav-btn" id="fav-15" onclick="toggleFav(15)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-15" onclick="toggleFav(15)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -979,7 +1016,7 @@
       </div>
       <span class="dist-tag">✈️ 12.1 км · ~12 мин</span>
     
-      <button class="fav-btn" id="fav-17" onclick="toggleFav(17)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-17" onclick="toggleFav(17)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -1009,7 +1046,7 @@
       </div>
       <span class="dist-tag">✈️ 12.1 км · ~13 мин</span>
     
-      <button class="fav-btn" id="fav-19" onclick="toggleFav(19)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-19" onclick="toggleFav(19)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -1039,7 +1076,7 @@
       </div>
       <span class="dist-tag">✈️ 19.1 км · ~18 мин</span>
     
-      <button class="fav-btn" id="fav-26" onclick="toggleFav(26)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-26" onclick="toggleFav(26)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -1076,7 +1113,7 @@
       </div>
       <span class="dist-tag">✈️ 9.5 км · ~9 мин</span>
     
-      <button class="fav-btn" id="fav-6" onclick="toggleFav(6)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-6" onclick="toggleFav(6)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -1104,7 +1141,7 @@
       </div>
       <span class="dist-tag">✈️ 15.3 км · ~14 мин</span>
     
-      <button class="fav-btn" id="fav-7" onclick="toggleFav(7)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-7" onclick="toggleFav(7)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -1135,7 +1172,7 @@
       </div>
       <span class="dist-tag">✈️ 19.8 км · ~17 мин</span>
     
-      <button class="fav-btn" id="fav-8" onclick="toggleFav(8)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-8" onclick="toggleFav(8)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -1162,7 +1199,7 @@
       </div>
       <span class="dist-tag">✈️ 15.3 км · ~14 мин</span>
     
-      <button class="fav-btn" id="fav-9" onclick="toggleFav(9)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-9" onclick="toggleFav(9)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -1189,7 +1226,7 @@
       </div>
       <span class="dist-tag">✈️ 43.5 км · ~36 мин</span>
     
-      <button class="fav-btn" id="fav-11" onclick="toggleFav(11)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-11" onclick="toggleFav(11)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -1216,7 +1253,7 @@
       </div>
       <span class="dist-tag">✈️ 40.5 км · ~30 мин</span>
     
-      <button class="fav-btn" id="fav-13" onclick="toggleFav(13)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-13" onclick="toggleFav(13)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -1246,7 +1283,7 @@
       </div>
       <span class="dist-tag">✈️ 36.0 км · ~38 мин</span>
     
-      <button class="fav-btn" id="fav-14" onclick="toggleFav(14)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-14" onclick="toggleFav(14)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -1275,7 +1312,7 @@
       </div>
       <span class="dist-tag">✈️ 21.5 км · ~23 мин</span>
     
-      <button class="fav-btn" id="fav-16" onclick="toggleFav(16)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-16" onclick="toggleFav(16)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -1304,7 +1341,7 @@
       </div>
       <span class="dist-tag">✈️ 14.3 км · ~15 мин</span>
     
-      <button class="fav-btn" id="fav-18" onclick="toggleFav(18)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-18" onclick="toggleFav(18)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -1332,7 +1369,7 @@
       </div>
       <span class="dist-tag">✈️ 42.6 км · ~34 мин</span>
     
-      <button class="fav-btn" id="fav-20" onclick="toggleFav(20)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-20" onclick="toggleFav(20)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -1359,7 +1396,7 @@
       </div>
       <span class="dist-tag">✈️ 23.2 км · ~24 мин</span>
     
-      <button class="fav-btn" id="fav-21" onclick="toggleFav(21)" title="В избранное"><span class="star">★</span></button>
+      <button class="fav-btn" id="fav-21" onclick="toggleFav(21)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
     <div class="card-body">
@@ -1657,7 +1694,7 @@
   function initFavs() {
     favs.forEach(function(num) {
       var btn = document.getElementById('fav-' + num);
-      if (btn) btn.classList.add('active');
+      if (btn) btn.classList.add('active'); btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop');
     });
     updateFavCount();
   }
