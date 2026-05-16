@@ -595,16 +595,18 @@
     }
     .photo-gallery {
       width: 100% !important;
-      height: 220px;
+      height: 220px !important;
+      min-height: 220px !important;
     }
     .gallery-track {
-      height: 220px;
+      height: 220px !important;
       width: 100%;
     }
     .gallery-photo {
       width: 100% !important;
       min-width: 100%;
-      height: 220px;
+      height: 220px !important;
+      min-height: 220px !important;
       flex-shrink: 0;
     }
   }
@@ -655,7 +657,8 @@
   .photo-gallery {
     position: relative;
     width: 260px;
-    height: 200px;
+    min-height: 200px;
+    height: 100%;
     flex-shrink: 0;
     border-radius: 0;
     overflow: hidden;
@@ -664,13 +667,14 @@
   }
   .gallery-track {
     display: flex;
-    height: 200px;
+    height: 100%;
     transition: transform 0.3s ease;
   }
   .gallery-photo {
     width: 260px;
     max-width: 100%;
-    height: 200px;
+    height: 100%;
+    min-height: 200px;
     object-fit: cover;
     flex-shrink: 0;
   }
@@ -714,13 +718,14 @@
   .card-with-gallery .card-body-wrap {
     display: flex;
     gap: 16px;
-    align-items: flex-start;
+    align-items: stretch;
     padding: 0;
+    border-bottom: 1px solid var(--sand);
   }
   /* Desc directly after card-body-wrap gets a top separator */
   .card-body-wrap + .card-desc {
     margin-top: 0;
-    border-top: 1px solid var(--sand);
+    border-top: none;
     padding-top: 16px;
   }
   .card-with-gallery .card-body {
