@@ -136,8 +136,15 @@
     cursor: pointer;
     transition: all 0.2s;
   }
-  .filter-btn:hover { border-color: var(--forest); color: var(--forest); }
-  .filter-btn.active { background: var(--forest); border-color: var(--forest); color: white; }
+  #district-filters {
+    flex-wrap: wrap;
+    padding-top: 0 !important;
+    border-top: 1px solid var(--sand);
+    margin-top: -8px;
+  }
+  #district-filters .results-count {
+    margin-left: auto;
+  }
   .results-count {
     margin-left: auto;
     font-size: 13px;
@@ -530,12 +537,31 @@
 <div class="filters-bar">
   <div class="filters-inner">
     <span class="filter-label">Фильтр:</span>
-    <button class="filter-btn active" onclick="filter('all', this)">Все</button>
-    <button class="filter-btn" onclick="filter('free', this)">Бесплатные</button>
-    <button class="filter-btn" onclick="filter('paid', this)">Платные</button>
-    <button class="filter-btn" onclick="filter('montessori', this)">Монтессори</button>
-    <button class="filter-btn" onclick="filter('nature', this)">Природа</button>
-    <button class="filter-btn" onclick="filter('close', this)">До 15 мин</button>
+    <button class="filter-btn active" onclick="filter('type','all', this)">Все</button>
+    <button class="filter-btn" onclick="filter('type','free', this)">Бесплатные</button>
+    <button class="filter-btn" onclick="filter('type','paid', this)">Платные</button>
+    <button class="filter-btn" onclick="filter('type','montessori', this)">Монтессори</button>
+    <button class="filter-btn" onclick="filter('type','nature', this)">Природа</button>
+    <button class="filter-btn" onclick="filter('type','close', this)">До 15 мин</button>
+  </div>
+  <div class="filters" id="district-filters" style="padding-top:0;gap:6px;">
+    <span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;padding:6px 4px 6px 0;white-space:nowrap;">Район:</span>
+    <button class="filter-btn active" onclick="filter('district','all', this)">Все</button>
+    <button class="filter-btn" onclick="filter('district','angleur', this)">Angleur</button>
+    <button class="filter-btn" onclick="filter('district','chenee', this)">Chênée</button>
+    <button class="filter-btn" onclick="filter('district','liege', this)">Льеж центр</button>
+    <button class="filter-btn" onclick="filter('district','cointe', this)">Cointe</button>
+    <button class="filter-btn" onclick="filter('district','saint-nicolas', this)">Saint-Nicolas</button>
+    <button class="filter-btn" onclick="filter('district','seraing', this)">Seraing</button>
+    <button class="filter-btn" onclick="filter('district','herstal', this)">Herstal</button>
+    <button class="filter-btn" onclick="filter('district','flemalle', this)">Flémalle</button>
+    <button class="filter-btn" onclick="filter('district','embourg', this)">Embourg</button>
+    <button class="filter-btn" onclick="filter('district','chaudfontaine', this)">Chaudfontaine</button>
+    <button class="filter-btn" onclick="filter('district','juprelle', this)">Juprelle</button>
+    <button class="filter-btn" onclick="filter('district','bassenge', this)">Bassenge</button>
+    <button class="filter-btn" onclick="filter('district','fleron', this)">Fléron</button>
+    <button class="filter-btn" onclick="filter('district','nature', this)">🌿 Природа/ферма</button>
+    <button class="filter-btn" onclick="filter('district','international', this)">🌍 Международная</button>
     <span class="results-count" id="count">26 школ</span>
     <div class="view-toggle">
       <button class="view-btn active" id="btn-list" onclick="setView('list')" title="Список">☰</button>
@@ -549,7 +575,7 @@
 <div class="grid-container" id="grid">
 
   <!-- 1 -->
-  <div class="card" data-tags="free montessori close liege">
+  <div class="card" data-tags="free montessori close angleur">
     <div class="card-header">
       <div class="card-num">1</div>
       <div class="card-title-area">
@@ -582,7 +608,7 @@
   </div>
 
   <!-- 2 -->
-  <div class="card" data-tags="free montessori close liege">
+  <div class="card" data-tags="free montessori chenee">
     <div class="card-header">
       <div class="card-num">2</div>
       <div class="card-title-area">
@@ -614,7 +640,7 @@
   </div>
 
   <!-- 22 -->
-  <div class="card" data-tags="paid nature montessori alternative">
+  <div class="card" data-tags="paid nature alternative modave">
     <div class="card-header">
       <div class="card-num private">22</div>
       <div class="card-title-area">
@@ -646,7 +672,7 @@
   </div>
 
   <!-- 23 -->
-  <div class="card" data-tags="paid nature montessori close">
+  <div class="card" data-tags="paid nature montessori tilff">
     <div class="card-header">
       <div class="card-num private">23</div>
       <div class="card-title-area">
@@ -677,7 +703,7 @@
   </div>
 
   <!-- 24 -->
-  <div class="card" data-tags="paid nature close waldorf">
+  <div class="card" data-tags="paid nature waldorf rotheux close">
     <div class="card-header">
       <div class="card-num private">24</div>
       <div class="card-title-area">
@@ -709,7 +735,7 @@
   </div>
 
   <!-- 25 -->
-  <div class="card" data-tags="paid international">
+  <div class="card" data-tags="paid international maastricht">
     <div class="card-header">
       <div class="card-num international">25</div>
       <div class="card-title-area">
@@ -744,7 +770,7 @@
 <div class="grid-container">
 
   <!-- 3 -->
-  <div class="card" data-tags="free close seraing">
+  <div class="card" data-tags="free seraing close">
     <div class="card-header">
       <div class="card-num">3</div>
       <div class="card-title-area">
@@ -775,7 +801,7 @@
   </div>
 
   <!-- 4 -->
-  <div class="card" data-tags="free close liege catholique">
+  <div class="card" data-tags="free catholique cointe close">
     <div class="card-header">
       <div class="card-num">4</div>
       <div class="card-title-area">
@@ -807,7 +833,7 @@
   </div>
 
   <!-- 5 -->
-  <div class="card" data-tags="free close liege catholique">
+  <div class="card" data-tags="free catholique liege close">
     <div class="card-header">
       <div class="card-num">5</div>
       <div class="card-title-area">
@@ -838,7 +864,7 @@
   </div>
 
   <!-- 10 -->
-  <div class="card" data-tags="free close catholique saint-nicolas">
+  <div class="card" data-tags="free catholique saint-nicolas close">
     <div class="card-header">
       <div class="card-num">10</div>
       <div class="card-title-area">
@@ -867,7 +893,7 @@
   </div>
 
   <!-- 12 -->
-  <div class="card" data-tags="free nature catholique flemalle">
+  <div class="card" data-tags="free catholique flemalle close">
     <div class="card-header">
       <div class="card-num">12</div>
       <div class="card-title-area">
@@ -897,7 +923,7 @@
   </div>
 
   <!-- 15 -->
-  <div class="card" data-tags="free nature catholique bassenge">
+  <div class="card" data-tags="free catholique bassenge">
     <div class="card-header">
       <div class="card-num">15</div>
       <div class="card-title-area">
@@ -927,7 +953,7 @@
   </div>
 
   <!-- 17 -->
-  <div class="card" data-tags="free nature catholique chaudfontaine close">
+  <div class="card" data-tags="free catholique embourg close">
     <div class="card-header">
       <div class="card-num">17</div>
       <div class="card-title-area">
@@ -956,7 +982,7 @@
   </div>
 
   <!-- 19 -->
-  <div class="card" data-tags="free nature catholique chaudfontaine close">
+  <div class="card" data-tags="free catholique embourg close">
     <div class="card-header">
       <div class="card-num">19</div>
       <div class="card-title-area">
@@ -985,7 +1011,7 @@
   </div>
 
   <!-- 26 -->
-  <div class="card" data-tags="free close catholique fleron">
+  <div class="card" data-tags="free catholique fleron">
     <div class="card-header">
       <div class="card-num">26</div>
       <div class="card-title-area">
@@ -1020,7 +1046,7 @@
 <div class="grid-container">
 
   <!-- 6,7,8 Herstal -->
-  <div class="card" data-tags="free catholique herstal close">
+  <div class="card" data-tags="free catholique herstal">
     <div class="card-header">
       <div class="card-num">6</div>
       <div class="card-title-area">
@@ -1048,7 +1074,7 @@
     </div>
   </div>
 
-  <div class="card" data-tags="free nature catholique herstal close">
+  <div class="card" data-tags="free catholique herstal">
     <div class="card-header">
       <div class="card-num">7</div>
       <div class="card-title-area">
@@ -1156,7 +1182,7 @@
   </div>
 
   <!-- 13, 14 Seraing -->
-  <div class="card" data-tags="free nature catholique seraing close">
+  <div class="card" data-tags="free catholique seraing close">
     <div class="card-header">
       <div class="card-num">13</div>
       <div class="card-title-area">
@@ -1268,7 +1294,7 @@
   </div>
 
   <!-- 20, 21 far -->
-  <div class="card" data-tags="free nature catholique theux">
+  <div class="card" data-tags="free catholique theux">
     <div class="card-header">
       <div class="card-num">20</div>
       <div class="card-title-area">
@@ -1425,6 +1451,8 @@
 
     // Init Leaflet
     var lmap = L.map('leaflet-map').setView([50.632, 5.579], 11);
+    window._lmap = lmap;
+    window._mapMarkers = [];
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a>',
@@ -1472,9 +1500,20 @@
         + '<div style="border-top:1px solid #E8DFD0;padding:8px 14px;background:#F7F3ED;display:flex;gap:6px;flex-wrap:wrap;">'+links+'</div>'
         + '</div>';
 
-      L.marker([s.lat, s.lng], { icon: icon })
+      var mapMarker = L.marker([s.lat, s.lng], { icon: icon })
         .addTo(lmap)
         .bindPopup(popup, { maxWidth: 300, minWidth: 260 });
+
+      // Store marker with school tags for filter sync
+      var schoolCard = document.querySelector('.card [class*="card-num"]:not([class*="private"])');
+      var tags = '';
+      document.querySelectorAll('.card').forEach(function(card) {
+        var numEl = card.querySelector('.card-num');
+        if (numEl && parseInt(numEl.textContent) === s.num) {
+          tags = card.dataset.tags || '';
+        }
+      });
+      window._mapMarkers.push({ marker: mapMarker, tags: tags, num: s.num });
     });
 
     // Legend
@@ -1491,24 +1530,62 @@
   }
 
   // ── FILTER ────────────────────────────────────────────────────
-  function filter(type, btn) {
-    document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  var activeType = 'all';
+  var activeDistrict = 'all';
+
+  function filter(category, value, btn) {
+    // Update active state
+    if (category === 'type') {
+      activeType = value;
+      document.querySelectorAll('#list-view .filters:first-of-type .filter-btn').forEach(function(b){ b.classList.remove('active'); });
+    } else {
+      activeDistrict = value;
+      document.querySelectorAll('#district-filters .filter-btn').forEach(function(b){ b.classList.remove('active'); });
+    }
     btn.classList.add('active');
+
+    // Filter cards
     var cards = document.querySelectorAll('.card');
     var count = 0;
     cards.forEach(function(card) {
       var tags = card.dataset.tags || '';
-      var show = type === 'all'
-        || (type === 'free'       && tags.includes('free'))
-        || (type === 'paid'       && tags.includes('paid'))
-        || (type === 'montessori' && tags.includes('montessori'))
-        || (type === 'nature'     && tags.includes('nature'))
-        || (type === 'close'      && tags.includes('close'));
+      var typeOk = activeType === 'all'
+        || (activeType === 'free'       && tags.includes('free'))
+        || (activeType === 'paid'       && tags.includes('paid'))
+        || (activeType === 'montessori' && tags.includes('montessori'))
+        || (activeType === 'nature'     && tags.includes('nature'))
+        || (activeType === 'close'      && tags.includes('close'));
+      var distOk = activeDistrict === 'all' || tags.includes(activeDistrict);
+      var show = typeOk && distOk;
       card.classList.toggle('hidden', !show);
       if (show) count++;
     });
+
     document.getElementById('count').textContent = count + ' ' + plural(count, 'школа', 'школы', 'школ');
     document.getElementById('noResults').style.display = count === 0 ? 'block' : 'none';
+
+    // Sync map markers if map is open
+    if (mapInitialized) { syncMapMarkers(); }
+  }
+
+  function syncMapMarkers() {
+    if (!window._mapMarkers) return;
+    window._mapMarkers.forEach(function(item) {
+      var tags = item.tags || '';
+      var typeOk = activeType === 'all'
+        || (activeType === 'free'       && tags.includes('free'))
+        || (activeType === 'paid'       && tags.includes('paid'))
+        || (activeType === 'montessori' && tags.includes('montessori'))
+        || (activeType === 'nature'     && tags.includes('nature'))
+        || (activeType === 'close'      && tags.includes('close'));
+      var distOk = activeDistrict === 'all' || tags.includes(activeDistrict);
+      var show = typeOk && distOk;
+      if (show) {
+        item.marker.addTo(window._lmap);
+      } else {
+        item.marker.remove();
+      }
+    });
   }
 
   function plural(n, one, two, five) {
