@@ -553,6 +553,48 @@
   .dd-check:hover { background: var(--sand); }
   .dd-check input[type=checkbox] { accent-color: var(--forest); width: 14px; height: 14px; cursor: pointer; }
 
+  /* DISLIKE BUTTON */
+  .dislike-btn {
+    position: absolute;
+    top: 14px; right: 50px;
+    background: none;
+    border: none;
+    padding: 2px;
+    cursor: pointer;
+    z-index: 2;
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.15s;
+  }
+  .dislike-btn:hover { transform: scale(1.2); }
+  .dislike-btn svg { transition: all 0.18s; }
+  .dislike-btn.active svg path { fill: #e74c3c; stroke: #c0392b; }
+  .dislike-btn.pop { animation: dislike-pop 0.22s ease; }
+  @keyframes dislike-pop {
+    0%  { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100%{ transform: scale(1); }
+  }
+  .card.disliked { display: none; }
+  .show-disliked-bar {
+    text-align: center;
+    padding: 10px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .show-disliked-btn {
+    background: none;
+    border: 1px solid var(--sand);
+    border-radius: 12px;
+    padding: 3px 12px;
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    margin-left: 6px;
+  }
+  .show-disliked-btn:hover { border-color: #e74c3c; color: #e74c3c; }
+
 </style>
 
 </head>
@@ -642,6 +684,7 @@
     <button class="fav-filter-btn" id="btn-favs" onclick="toggleFavFilter(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="#E8A000"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round"/></svg> <span id="fav-count-num">0</span> избранных</button>
 
     <span class="results-count" id="count">26 школ</span>
+    <span class="show-disliked-bar" id="disliked-bar" style="display:none">👎 <span id="disliked-count">0</span> скрыто <button class="show-disliked-btn" onclick="clearDislikes()">показать все</button></span>
     <div class="view-toggle">
       <button class="view-btn active" id="btn-list" onclick="setView('list')" title="Список">☰</button>
       <button class="view-btn" id="btn-map" onclick="setView('map')" title="Карта">🗺</button>
@@ -667,6 +710,7 @@
       </div>
       <span class="dist-tag">✈️ 16.1 км · ~14 мин</span>
     
+      <button class="dislike-btn" id="dislike-1" onclick="toggleDislike(1)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-1" onclick="toggleFav(1)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -701,6 +745,7 @@
       </div>
       <span class="dist-tag">✈️ 16.6 км · ~16 мин</span>
     
+      <button class="dislike-btn" id="dislike-2" onclick="toggleDislike(2)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-2" onclick="toggleFav(2)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -736,6 +781,7 @@
       </div>
       <span class="dist-tag">✈️ 11.9 км · ~12 мин</span>
     
+      <button class="dislike-btn" id="dislike-22" onclick="toggleDislike(22)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-22" onclick="toggleFav(22)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -770,6 +816,7 @@
       </div>
       <span class="dist-tag">✈️ 12.7 км · ~12 мин</span>
     
+      <button class="dislike-btn" id="dislike-23" onclick="toggleDislike(23)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-23" onclick="toggleFav(23)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -803,6 +850,7 @@
       </div>
       <span class="dist-tag">✈️ 12.2 км · ~13 мин</span>
     
+      <button class="dislike-btn" id="dislike-24" onclick="toggleDislike(24)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-24" onclick="toggleFav(24)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -836,6 +884,7 @@
       </div>
       <span class="dist-tag">✈️ 16.1 км · ~17 мин</span>
     
+      <button class="dislike-btn" id="dislike-25" onclick="toggleDislike(25)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-25" onclick="toggleFav(25)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -874,6 +923,7 @@
       </div>
       <span class="dist-tag">✈️ 20.4 км · ~19 мин</span>
     
+      <button class="dislike-btn" id="dislike-3" onclick="toggleDislike(3)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-3" onclick="toggleFav(3)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -906,6 +956,7 @@
       </div>
       <span class="dist-tag">✈️ 10.3 км · ~8 мин</span>
     
+      <button class="dislike-btn" id="dislike-4" onclick="toggleDislike(4)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-4" onclick="toggleFav(4)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -941,6 +992,7 @@
       </div>
       <span class="dist-tag">✈️ 9.1 км · ~10 мин</span>
     
+      <button class="dislike-btn" id="dislike-5" onclick="toggleDislike(5)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-5" onclick="toggleFav(5)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -974,6 +1026,7 @@
       </div>
       <span class="dist-tag">✈️ 10.0 км · ~12 мин</span>
     
+      <button class="dislike-btn" id="dislike-10" onclick="toggleDislike(10)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-10" onclick="toggleFav(10)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1005,6 +1058,7 @@
       </div>
       <span class="dist-tag">✈️ 10.2 км · ~12 мин</span>
     
+      <button class="dislike-btn" id="dislike-12" onclick="toggleDislike(12)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-12" onclick="toggleFav(12)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1037,6 +1091,7 @@
       </div>
       <span class="dist-tag">✈️ 10.4 км · ~12 мин</span>
     
+      <button class="dislike-btn" id="dislike-15" onclick="toggleDislike(15)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-15" onclick="toggleFav(15)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1069,6 +1124,7 @@
       </div>
       <span class="dist-tag">✈️ 12.1 км · ~12 мин</span>
     
+      <button class="dislike-btn" id="dislike-17" onclick="toggleDislike(17)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-17" onclick="toggleFav(17)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1100,6 +1156,7 @@
       </div>
       <span class="dist-tag">✈️ 12.1 км · ~13 мин</span>
     
+      <button class="dislike-btn" id="dislike-19" onclick="toggleDislike(19)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-19" onclick="toggleFav(19)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1131,6 +1188,7 @@
       </div>
       <span class="dist-tag">✈️ 19.1 км · ~18 мин</span>
     
+      <button class="dislike-btn" id="dislike-26" onclick="toggleDislike(26)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-26" onclick="toggleFav(26)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1170,6 +1228,7 @@
       </div>
       <span class="dist-tag">✈️ 9.5 км · ~9 мин</span>
     
+      <button class="dislike-btn" id="dislike-6" onclick="toggleDislike(6)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-6" onclick="toggleFav(6)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1199,6 +1258,7 @@
       </div>
       <span class="dist-tag">✈️ 15.3 км · ~14 мин</span>
     
+      <button class="dislike-btn" id="dislike-7" onclick="toggleDislike(7)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-7" onclick="toggleFav(7)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1231,6 +1291,7 @@
       </div>
       <span class="dist-tag">✈️ 19.8 км · ~17 мин</span>
     
+      <button class="dislike-btn" id="dislike-8" onclick="toggleDislike(8)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-8" onclick="toggleFav(8)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1259,6 +1320,7 @@
       </div>
       <span class="dist-tag">✈️ 15.3 км · ~14 мин</span>
     
+      <button class="dislike-btn" id="dislike-9" onclick="toggleDislike(9)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-9" onclick="toggleFav(9)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1287,6 +1349,7 @@
       </div>
       <span class="dist-tag">✈️ 43.5 км · ~36 мин</span>
     
+      <button class="dislike-btn" id="dislike-11" onclick="toggleDislike(11)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-11" onclick="toggleFav(11)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1316,6 +1379,7 @@
       </div>
       <span class="dist-tag">✈️ 40.5 км · ~30 мин</span>
     
+      <button class="dislike-btn" id="dislike-13" onclick="toggleDislike(13)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-13" onclick="toggleFav(13)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1347,6 +1411,7 @@
       </div>
       <span class="dist-tag">✈️ 36.0 км · ~38 мин</span>
     
+      <button class="dislike-btn" id="dislike-14" onclick="toggleDislike(14)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-14" onclick="toggleFav(14)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1378,6 +1443,7 @@
       </div>
       <span class="dist-tag">✈️ 21.5 км · ~23 мин</span>
     
+      <button class="dislike-btn" id="dislike-16" onclick="toggleDislike(16)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-16" onclick="toggleFav(16)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1408,6 +1474,7 @@
       </div>
       <span class="dist-tag">✈️ 14.3 км · ~15 мин</span>
     
+      <button class="dislike-btn" id="dislike-18" onclick="toggleDislike(18)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-18" onclick="toggleFav(18)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1437,6 +1504,7 @@
       </div>
       <span class="dist-tag">✈️ 42.6 км · ~34 мин</span>
     
+      <button class="dislike-btn" id="dislike-20" onclick="toggleDislike(20)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-20" onclick="toggleFav(20)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1465,6 +1533,7 @@
       </div>
       <span class="dist-tag">✈️ 23.2 км · ~24 мин</span>
     
+      <button class="dislike-btn" id="dislike-21" onclick="toggleDislike(21)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-21" onclick="toggleFav(21)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
@@ -1499,6 +1568,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 5.2 км · ~5 мин</span>
+      <button class="dislike-btn" id="dislike-27" onclick="toggleDislike(27)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-27" onclick="toggleFav(27)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1528,6 +1598,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 2.1 км · ~3 мин</span>
+      <button class="dislike-btn" id="dislike-28" onclick="toggleDislike(28)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-28" onclick="toggleFav(28)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1556,6 +1627,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 4.8 км · ~5 мин</span>
+      <button class="dislike-btn" id="dislike-29" onclick="toggleDislike(29)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-29" onclick="toggleFav(29)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1585,6 +1657,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 3.5 км · ~4 мин</span>
+      <button class="dislike-btn" id="dislike-30" onclick="toggleDislike(30)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-30" onclick="toggleFav(30)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1613,6 +1686,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 4.2 км · ~5 мин</span>
+      <button class="dislike-btn" id="dislike-31" onclick="toggleDislike(31)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-31" onclick="toggleFav(31)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1642,6 +1716,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 4.5 км · ~5 мин</span>
+      <button class="dislike-btn" id="dislike-32" onclick="toggleDislike(32)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-32" onclick="toggleFav(32)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1672,6 +1747,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 3.6 км · ~4 мин</span>
+      <button class="dislike-btn" id="dislike-33" onclick="toggleDislike(33)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-33" onclick="toggleFav(33)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1701,6 +1777,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 4.3 км · ~5 мин</span>
+      <button class="dislike-btn" id="dislike-34" onclick="toggleDislike(34)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-34" onclick="toggleFav(34)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1729,6 +1806,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 8.5 км · ~9 мин</span>
+      <button class="dislike-btn" id="dislike-35" onclick="toggleDislike(35)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-35" onclick="toggleFav(35)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1762,6 +1840,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ ~8 км · ~9 мин</span>
+      <button class="dislike-btn" id="dislike-36" onclick="toggleDislike(36)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-36" onclick="toggleFav(36)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1792,6 +1871,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ ~9 км · ~10 мин</span>
+      <button class="dislike-btn" id="dislike-37" onclick="toggleDislike(37)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-37" onclick="toggleFav(37)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1822,6 +1902,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ ~14 км · ~15 мин</span>
+      <button class="dislike-btn" id="dislike-38" onclick="toggleDislike(38)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-38" onclick="toggleFav(38)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1851,6 +1932,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ ~11 км · ~14 мин</span>
+      <button class="dislike-btn" id="dislike-39" onclick="toggleDislike(39)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-39" onclick="toggleFav(39)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1880,6 +1962,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ ~13 км · ~15 мин</span>
+      <button class="dislike-btn" id="dislike-40" onclick="toggleDislike(40)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-40" onclick="toggleFav(40)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1915,6 +1998,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ ~14 км · ~15 мин</span>
+      <button class="dislike-btn" id="dislike-41" onclick="toggleDislike(41)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-41" onclick="toggleFav(41)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -1945,6 +2029,7 @@
         </div>
       </div>
       <span class="dist-tag">✈️ ~12 км · ~12 мин</span>
+      <button class="dislike-btn" id="dislike-42" onclick="toggleDislike(42)" title="Не подходит"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17" stroke="#C0C8D0" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       <button class="fav-btn" id="fav-42" onclick="toggleFav(42)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
     <div class="card-body">
@@ -2251,7 +2336,8 @@
       var distOk = allChecked || checkedDistricts.some(function(d){ return tags.includes(d); });
       var closeOk = !activeClose || tags.includes('close');
       var favOk = !showOnlyFavs || favs.indexOf(parseInt(card.querySelector('[class*="card-num"]').textContent)) !== -1;
-      var show = costOk && typeOk && distOk && closeOk && favOk;
+      var isDisliked = card.classList.contains('disliked');
+      var show = costOk && typeOk && distOk && closeOk && favOk && !isDisliked;
       card.classList.toggle('hidden', !show);
       if (show) count++;
     });
@@ -2331,7 +2417,94 @@
     applyFilters();
   }
 
-  document.addEventListener('DOMContentLoaded', initFavs);
+  // ── DISLIKES ──────────────────────────────────────────────────
+  var dislikes = (function() {
+    try { return JSON.parse(localStorage.getItem('preschool-dislikes') || '[]'); }
+    catch(e) { return []; }
+  })();
+
+  function saveDislikes() {
+    try { localStorage.setItem('preschool-dislikes', JSON.stringify(dislikes)); } catch(e) {}
+  }
+
+  function initDislikes() {
+    dislikes.forEach(function(num) {
+      applyDislike(num, true);
+    });
+    updateDislikeBar();
+  }
+
+  function applyDislike(num, silent) {
+    var card = document.querySelector('[id="fav-' + num + '"]');
+    if (card) card = card.closest('.card');
+    var btn = document.getElementById('dislike-' + num);
+    if (card) card.classList.add('disliked');
+    if (btn) btn.classList.add('active');
+  }
+
+  function toggleDislike(num) {
+    var idx = dislikes.indexOf(num);
+    var card = document.querySelector('[id="fav-' + num + '"]');
+    if (card) card = card.closest('.card');
+    var btn = document.getElementById('dislike-' + num);
+
+    if (idx === -1) {
+      // Add dislike — also remove from favs if present
+      dislikes.push(num);
+      if (card) card.classList.add('disliked');
+      if (btn) { btn.classList.add('active'); btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop'); }
+      // Remove from favs
+      var fi = favs.indexOf(num);
+      if (fi !== -1) {
+        favs.splice(fi, 1);
+        saveFavs();
+        var fb = document.getElementById('fav-' + num);
+        if (fb) fb.classList.remove('active');
+        updateFavCount();
+      }
+    } else {
+      // Remove dislike — show card again
+      dislikes.splice(idx, 1);
+      if (card) card.classList.remove('disliked');
+      if (btn) btn.classList.remove('active');
+    }
+    saveDislikes();
+    updateDislikeBar();
+    applyFilters();
+  }
+
+  function updateDislikeBar() {
+    var bar = document.getElementById('disliked-bar');
+    var cnt = document.getElementById('disliked-count');
+    if (!bar) return;
+    if (dislikes.length > 0) {
+      bar.style.display = 'inline-flex';
+      bar.style.alignItems = 'center';
+      if (cnt) cnt.textContent = dislikes.length;
+    } else {
+      bar.style.display = 'none';
+    }
+  }
+
+  function clearDislikes() {
+    dislikes.forEach(function(num) {
+      var card = document.querySelector('[id="fav-' + num + '"]');
+      if (card) card = card.closest('.card');
+      var btn = document.getElementById('dislike-' + num);
+      if (card) card.classList.remove('disliked');
+      if (btn) btn.classList.remove('active');
+    });
+    dislikes = [];
+    saveDislikes();
+    updateDislikeBar();
+    applyFilters();
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    initFavs();
+    initDislikes();
+  });
+
 
   function plural(n, one, two, five) {
     n = Math.abs(n) % 100;
