@@ -562,6 +562,7 @@
     </div>
 
     <button class="quick-btn" id="btn-close" onclick="toggleClose(this)">⚡ До 15 мин</button>
+    <button class="fav-count" id="btn-favs" onclick="toggleFavFilter(this)">♥ <span id="fav-count-num">0</span> избранных</button>
 
     <span class="results-count" id="count">26 школ</span>
     <div class="view-toggle">
@@ -588,6 +589,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 16.1 км · ~14 мин</span>
+    
+      <button class="fav-btn" id="fav-1" onclick="toggleFav(1)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -619,6 +622,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 16.6 км · ~16 мин</span>
+    
+      <button class="fav-btn" id="fav-2" onclick="toggleFav(2)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -651,6 +656,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 11.9 км · ~12 мин</span>
+    
+      <button class="fav-btn" id="fav-22" onclick="toggleFav(22)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -682,6 +689,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 12.7 км · ~12 мин</span>
+    
+      <button class="fav-btn" id="fav-23" onclick="toggleFav(23)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -712,6 +721,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 12.2 км · ~13 мин</span>
+    
+      <button class="fav-btn" id="fav-24" onclick="toggleFav(24)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -742,6 +753,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 16.1 км · ~17 мин</span>
+    
+      <button class="fav-btn" id="fav-25" onclick="toggleFav(25)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -777,6 +790,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 20.4 км · ~19 мин</span>
+    
+      <button class="fav-btn" id="fav-3" onclick="toggleFav(3)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -806,6 +821,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 10.3 км · ~8 мин</span>
+    
+      <button class="fav-btn" id="fav-4" onclick="toggleFav(4)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -838,6 +855,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 9.1 км · ~10 мин</span>
+    
+      <button class="fav-btn" id="fav-5" onclick="toggleFav(5)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -868,6 +887,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 10.0 км · ~12 мин</span>
+    
+      <button class="fav-btn" id="fav-10" onclick="toggleFav(10)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -895,6 +916,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 10.2 км · ~12 мин</span>
+    
+      <button class="fav-btn" id="fav-12" onclick="toggleFav(12)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -924,6 +947,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 10.4 км · ~12 мин</span>
+    
+      <button class="fav-btn" id="fav-15" onclick="toggleFav(15)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -953,6 +978,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 12.1 км · ~12 мин</span>
+    
+      <button class="fav-btn" id="fav-17" onclick="toggleFav(17)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -981,6 +1008,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 12.1 км · ~13 мин</span>
+    
+      <button class="fav-btn" id="fav-19" onclick="toggleFav(19)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -1009,6 +1038,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 19.1 км · ~18 мин</span>
+    
+      <button class="fav-btn" id="fav-26" onclick="toggleFav(26)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -1044,6 +1075,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 9.5 км · ~9 мин</span>
+    
+      <button class="fav-btn" id="fav-6" onclick="toggleFav(6)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -1070,6 +1103,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 15.3 км · ~14 мин</span>
+    
+      <button class="fav-btn" id="fav-7" onclick="toggleFav(7)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -1099,6 +1134,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 19.8 км · ~17 мин</span>
+    
+      <button class="fav-btn" id="fav-8" onclick="toggleFav(8)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -1124,6 +1161,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 15.3 км · ~14 мин</span>
+    
+      <button class="fav-btn" id="fav-9" onclick="toggleFav(9)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -1149,6 +1188,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 43.5 км · ~36 мин</span>
+    
+      <button class="fav-btn" id="fav-11" onclick="toggleFav(11)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -1174,6 +1215,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 40.5 км · ~30 мин</span>
+    
+      <button class="fav-btn" id="fav-13" onclick="toggleFav(13)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -1202,6 +1245,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 36.0 км · ~38 мин</span>
+    
+      <button class="fav-btn" id="fav-14" onclick="toggleFav(14)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -1229,6 +1274,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 21.5 км · ~23 мин</span>
+    
+      <button class="fav-btn" id="fav-16" onclick="toggleFav(16)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -1256,6 +1303,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 14.3 км · ~15 мин</span>
+    
+      <button class="fav-btn" id="fav-18" onclick="toggleFav(18)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -1282,6 +1331,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 42.6 км · ~34 мин</span>
+    
+      <button class="fav-btn" id="fav-20" onclick="toggleFav(20)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -1307,6 +1358,8 @@
         </div>
       </div>
       <span class="dist-tag">✈️ 23.2 км · ~24 мин</span>
+    
+      <button class="fav-btn" id="fav-21" onclick="toggleFav(21)" title="В избранное"><span class="heart">♥</span></button>
     </div>
 
     <div class="card-body">
@@ -1560,7 +1613,8 @@
         || (activeType === 'catholique'    && tags.includes('catholique'));
       var distOk = activeDistrict === 'all' || tags.includes(activeDistrict);
       var closeOk = !activeClose || tags.includes('close');
-      var show = costOk && typeOk && distOk && closeOk;
+      var favOk = !showOnlyFavs || favs.indexOf(parseInt(card.querySelector('.card-num, [class*="card-num"]').textContent)) !== -1;
+      var show = costOk && typeOk && distOk && closeOk && favOk;
       card.classList.toggle('hidden', !show);
       if (show) count++;
     });
@@ -1589,6 +1643,56 @@
     });
   }
 
+  // ── FAVOURITES ────────────────────────────────────────────────
+  var favs = (function() {
+    try { return JSON.parse(localStorage.getItem('preschool-favs') || '[]'); }
+    catch(e) { return []; }
+  })();
+  var showOnlyFavs = false;
+
+  function saveFavs() {
+    try { localStorage.setItem('preschool-favs', JSON.stringify(favs)); } catch(e) {}
+  }
+
+  function initFavs() {
+    favs.forEach(function(num) {
+      var btn = document.getElementById('fav-' + num);
+      if (btn) btn.classList.add('active');
+    });
+    updateFavCount();
+  }
+
+  function toggleFav(num) {
+    var idx = favs.indexOf(num);
+    var btn = document.getElementById('fav-' + num);
+    if (idx === -1) {
+      favs.push(num);
+      btn.classList.add('active');
+    } else {
+      favs.splice(idx, 1);
+      btn.classList.remove('active');
+    }
+    saveFavs();
+    updateFavCount();
+    if (showOnlyFavs) applyFilters();
+  }
+
+  function updateFavCount() {
+    var countEl = document.getElementById('fav-count-num');
+    var btn = document.getElementById('btn-favs');
+    if (countEl) countEl.textContent = favs.length;
+    if (btn) btn.classList.toggle('has-favs', favs.length > 0);
+  }
+
+  function toggleFavFilter(btn) {
+    showOnlyFavs = !showOnlyFavs;
+    btn.classList.toggle('has-favs', showOnlyFavs);
+    btn.style.fontWeight = showOnlyFavs ? '700' : '';
+    applyFilters();
+  }
+
+  document.addEventListener('DOMContentLoaded', initFavs);
+
   function plural(n, one, two, five) {
     n = Math.abs(n) % 100;
     var n1 = n % 10;
@@ -1597,15 +1701,6 @@
     if (n1 === 1) return one;
     return five;
   }
-</script>
-<script>
-
-
-document.addEventListener('DOMContentLoaded', function() {
-
-
-  // Dynamic photo loading disabled (CORS)
-});
 </script>
 </body>
 </html>
