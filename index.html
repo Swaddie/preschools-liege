@@ -919,7 +919,7 @@
     <button class="dislike-filter-btn" id="btn-show-disliked" onclick="toggleDislikedView(this)">👎 <span id="disliked-filter-count">0</span> скрытых</button>
     <button class="fav-filter-btn" id="btn-favs" onclick="toggleFavFilter(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="#E8A000"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round"/></svg> <span id="fav-count-num">0</span> избранных</button>
 
-    <span class="results-count" id="count">26 школ</span>
+    <span class="results-count" id="count">40 школ</span>
     <div class="view-toggle">
       <button class="view-btn active" id="btn-list" onclick="setView('list')" title="Список">☰</button>
       <button class="view-btn" id="btn-map" onclick="setView('map')" title="Карта">🗺</button>
@@ -2877,7 +2877,7 @@
     // Sidebar
     var sidebar = document.createElement('div');
     sidebar.style.cssText = 'width:260px;min-width:0;height:100%;overflow-y:auto;background:white;border-right:1px solid #E8DFD0;font-family:sans-serif;flex-shrink:0;';
-    sidebar.innerHTML = '<div style="padding:12px 14px;border-bottom:1px solid #E8DFD0;background:#F7F3ED;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#7A7068;font-weight:500;">26 школ · нажмите ↗</div>';
+    sidebar.innerHTML = '<div style="padding:12px 14px;border-bottom:1px solid #E8DFD0;background:#F7F3ED;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#7A7068;font-weight:500;">' + schools.length + ' школ · нажмите ↗</div>';
 
     schools.forEach(function(s) {
       var color = s.priv ? '#C4714A' : s.intl ? '#B8963E' : '#3D5A47';
