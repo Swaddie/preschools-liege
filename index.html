@@ -750,6 +750,36 @@
   .lightbox-prev:hover, .lightbox-next:hover { background: rgba(255,255,255,0.3); }
   .lightbox-counter { color: rgba(255,255,255,0.7); font-size: 14px; min-width: 40px; text-align: center; }
 
+  /* ENROLLMENT STATUS */
+  .enroll-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .enroll-open    { background: #E8F5E9; color: #2E7D32; }
+  .enroll-limited { background: #FFF8E1; color: #F57F17; }
+  .enroll-contact { background: #E3F2FD; color: #1565C0; }
+  .enroll-criteria{ background: #F3E5F5; color: #6A1B9A; }
+  .card-enroll {
+    padding: 0 24px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .enroll-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+
 </style>
 
 </head>
@@ -876,6 +906,10 @@
       <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–6 лет</span></div>
       <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">Пн–Пт 07:00–18:00</span></div>
     </div>
+    <div class="card-enroll">
+      <span class="enroll-label">Набор 2026/27:</span>
+      <span class="enroll-badge enroll-open" title="Подтверждено на Facebook — info@belle-jardiniere.be">✅ Есть места</span>
+    </div>
     <div class="card-desc">2 внешних двора + крытый, зал психомоторики, ~30 велосипедов. Всего 2 класса-maternelle, дети ротируются между тремя залами. <strong>Angleur</strong> — один из самых зелёных и безопасных районов Льежа (рядом с CHU): лишь 18.7% жителей чувствуют себя небезопасно vs 42% в центре города.</div>
     <div class="card-footer">
       <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.6123,5.5901" target="_blank">🚶 Street View</a>
@@ -910,6 +944,10 @@
       <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 229 52 22</span></div>
       <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–12 лет</span></div>
       <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">07:30–17:30</span></div>
+    </div>
+    <div class="card-enroll">
+      <span class="enroll-label">Набор 2026/27:</span>
+      <span class="enroll-badge enroll-contact" title="Инскрипции янв–фев, уточните на ecole-montessori-liege.be">📋 Запись открыта</span>
     </div>
     <div class="card-desc">Основана в 2014, Монтессори с 2017. Maternelle + primaire, вертикальные смешанные классы. Платформа Smartschool для связи с родителями. Богатый дидактический материал: бусы, деревянные пазлы, языковые игры. <strong>Chênée</strong> — тихий семейный квартал на юго-востоке Льежа, рядом с Angleur. Спокойно, хорошая доступность.</div>
     <div class="card-footer">
@@ -1025,6 +1063,10 @@
     
     </div>
     </div>
+    <div class="card-enroll">
+      <span class="enroll-label">Набор 2026/27:</span>
+      <span class="enroll-badge enroll-contact" title="Маленькая школа (1 класс), мест ограничено — пишите напрямую">📋 Уточнить</span>
+    </div>
     <div class="card-desc">Одна вертикальная класс (3–6 лет), очень маленькая. Natura 2000, этанд, луг, огород, фруктовый сад, куры, кролики, овцы. Каждый ребёнок ухаживает за своей грядкой. Среда только до 12:00. <strong>Tilff (Neupré)</strong> — живописная деревня в долине Урт, рядом с Esneux. Очень зелено и тихо.</div>
     
     <div class="card-footer">
@@ -1075,6 +1117,10 @@
       <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–6 лет (макс. 10 детей)</span></div>
       <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">9:00–16:00, нет среды</span></div>
     </div>
+    </div>
+    <div class="card-enroll">
+      <span class="enroll-label">Набор 2026/27:</span>
+      <span class="enroll-badge enroll-limited" title="Очень маленькая группа — уточните наличие мест">⚠️ Макс. 10 детей</span>
     </div>
     <div class="card-desc">Макс. 10 детей. Первый Вальдорф-сад провинции Льеж (с 2015). Биодинамическая ферма с 1927 года — ежедневный контакт с животными, огородом, сезонными работами. Педагог Eline Pont — психолог с парижской подготовкой и опытом в Швейцарии. Признан ONE. 3 дня — 232€/мес, 4 дня — 260€/мес. Нет среды. <strong>Rotheux-Rimière</strong> — тихая деревня в регионе Кондроз.</div>
     <div class="card-footer">
@@ -1131,6 +1177,10 @@
       <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">4–19 лет (PYP с 4 лет)</span></div>
       <div class="card-row"><span class="card-row-label">Программа</span><span class="card-row-val">IB PYP / MYP / DP</span></div>
     </div>
+    </div>
+    <div class="card-enroll">
+      <span class="enroll-label">Набор 2026/27:</span>
+      <span class="enroll-badge enroll-criteria" title="Нужно соответствовать критериям — живёте в регионе Маастрихт">📋 Приём открыт</span>
     </div>
     <div class="card-desc">100+ национальностей, обучение полностью на английском. IB Primary Years Programme с 4 лет. Зелёный кампус рядом с природным заповедником. Школа в Нидерландах — ежедневное пересечение границы. <strong>Маастрихт</strong> — красивый исторический город на реке Маас, 42 км от аэропорта LGG.</div>
     <div class="card-footer">
