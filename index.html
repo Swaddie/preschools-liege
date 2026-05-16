@@ -316,14 +316,6 @@
     border-top: none;
     padding-top: 0;
   }
-  .card-desc-inline {
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.6;
-    border-top: 1px solid var(--sand);
-    margin-top: 8px;
-    padding-top: 10px;
-  }
 
   .card-footer {
     padding: 12px 24px;
@@ -629,21 +621,24 @@
   .photo-gallery {
     position: relative;
     width: 260px;
-    height: 200px;
+    min-height: 200px;
     flex-shrink: 0;
     border-radius: 0;
     overflow: hidden;
     background: var(--sand);
     cursor: zoom-in;
+    align-self: stretch;
   }
   .gallery-track {
     display: flex;
     height: 100%;
+    min-height: 200px;
     transition: transform 0.3s ease;
   }
   .gallery-photo {
     width: 260px;
-    height: 200px;
+    height: 100%;
+    min-height: 200px;
     object-fit: cover;
     flex-shrink: 0;
   }
@@ -687,7 +682,7 @@
   .card-with-gallery .card-body-wrap {
     display: flex;
     gap: 16px;
-    align-items: flex-start;
+    align-items: stretch;
     padding: 0;
   }
   .card-with-gallery .card-body {
@@ -1000,9 +995,9 @@
           </span>
         </span></div>
     
-      <div class="card-desc-inline">Одна вертикальная класс (3–6 лет), очень маленькая. Natura 2000, этанд, луг, огород, фруктовый сад, куры, кролики, овцы. Каждый ребёнок ухаживает за своей грядкой. Среда только до 12:00. <strong>Tilff (Neupré)</strong> — живописная деревня в долине Урт, рядом с Esneux. Очень зелено и тихо.</div>
     </div>
     </div>
+    <div class="card-desc">Одна вертикальная класс (3–6 лет), очень маленькая. Natura 2000, этанд, луг, огород, фруктовый сад, куры, кролики, овцы. Каждый ребёнок ухаживает за своей грядкой. Среда только до 12:00. <strong>Tilff (Neupré)</strong> — живописная деревня в долине Урт, рядом с Esneux. Очень зелено и тихо.</div>
     
     <div class="card-footer">
       <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.546,5.571" target="_blank">🚶 Street View</a>
