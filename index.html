@@ -527,6 +527,24 @@
   .badge-lang-en { background: #FFF0E0; color: #C05621; }
   .badge-lang-bilingual { background: #E8F5E9; color: #2E7D32; font-weight: 600; }
 
+  /* MULTISELECT DISTRICT */
+  .dd-multiselect { padding: 0; min-width: 220px; max-height: 340px; overflow-y: auto; }
+  .dd-ms-header { display: flex; gap: 6px; padding: 8px 10px 6px; border-bottom: 1px solid var(--sand); }
+  .dd-ms-all, .dd-ms-none {
+    flex: 1; padding: 3px 8px; font-size: 11px; border-radius: 4px; cursor: pointer;
+    border: 1px solid var(--sand); background: var(--sand); font-family: 'DM Sans', sans-serif;
+    color: var(--dark); transition: background 0.15s;
+  }
+  .dd-ms-all:hover { background: var(--forest); color: white; border-color: var(--forest); }
+  .dd-ms-none:hover { background: #eee; }
+  .dd-check {
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 12px; font-size: 13px; cursor: pointer;
+    transition: background 0.1s; color: var(--dark);
+  }
+  .dd-check:hover { background: var(--sand); }
+  .dd-check input[type=checkbox] { accent-color: var(--forest); width: 14px; height: 14px; cursor: pointer; }
+
 </style>
 
 </head>
@@ -538,7 +556,7 @@
     <h1>Пре-школы<br>для дочери</h1>
     <p>Полная подборка école maternelle в радиусе 30–40 минут от Льежа — от бесплатных субсидируемых до частных альтернативных.</p>
     <div class="header-stats">
-      <div class="stat"><span class="stat-num">40</span><span class="stat-label">школ в списке</span></div>
+      <div class="stat"><span class="stat-num">42</span><span class="stat-label">школ в списке</span></div>
       <div class="stat"><span class="stat-num">3</span><span class="stat-label">частные платные</span></div>
       <div class="stat"><span class="stat-num">40</span><span class="stat-label">мин макс. езды</span></div>
     </div>
@@ -577,33 +595,41 @@
       <button class="dropdown-btn" onclick="toggleDropdown('dd-district')">
         <span id="dd-district-label">📍 Район</span> <span class="dd-arrow">▾</span>
       </button>
-      <div class="dropdown-menu">
-        <div class="dd-item active" onclick="filterDropdown('district','all','📍 Район',this)">Все районы</div>
+      <div class="dropdown-menu dd-multiselect">
+        <div class="dd-ms-header">
+          <button class="dd-ms-all" onclick="districtSelectAll()">Все</button>
+          <button class="dd-ms-none" onclick="districtSelectNone()">Снять</button>
+        </div>
+        <label class="dd-check"><input type="checkbox" value="grace-hollogne" onchange="districtChanged()" checked> Grâce-Hollogne</label>
+        <label class="dd-check"><input type="checkbox" value="awans" onchange="districtChanged()" checked> Awans</label>
+        <label class="dd-check"><input type="checkbox" value="ans" onchange="districtChanged()" checked> Ans / Loncin</label>
         <div class="dd-separator">— Льеж и пригороды —</div>
-        <div class="dd-item" onclick="filterDropdown('district','angleur','Angleur',this)">Angleur</div>
-        <div class="dd-item" onclick="filterDropdown('district','chenee','Chênée',this)">Chênée</div>
-        <div class="dd-item" onclick="filterDropdown('district','liege','Льеж центр',this)">Льеж центр</div>
-        <div class="dd-item" onclick="filterDropdown('district','cointe','Cointe',this)">Cointe</div>
-        <div class="dd-item" onclick="filterDropdown('district','fleron','Fléron',this)">Fléron</div>
+        <label class="dd-check"><input type="checkbox" value="angleur" onchange="districtChanged()" checked> Angleur</label>
+        <label class="dd-check"><input type="checkbox" value="chenee" onchange="districtChanged()" checked> Chênée</label>
+        <label class="dd-check"><input type="checkbox" value="liege" onchange="districtChanged()" checked> Льеж центр</label>
+        <label class="dd-check"><input type="checkbox" value="cointe" onchange="districtChanged()" checked> Cointe</label>
+        <label class="dd-check"><input type="checkbox" value="fleron" onchange="districtChanged()" checked> Fléron</label>
         <div class="dd-separator">— Север —</div>
-        <div class="dd-item" onclick="filterDropdown('district','saint-nicolas','Saint-Nicolas',this)">Saint-Nicolas</div>
-        <div class="dd-item" onclick="filterDropdown('district','herstal','Herstal',this)">Herstal</div>
-        <div class="dd-item" onclick="filterDropdown('district','juprelle','Juprelle',this)">Juprelle</div>
-        <div class="dd-item" onclick="filterDropdown('district','bassenge','Bassenge',this)">Bassenge</div>
+        <label class="dd-check"><input type="checkbox" value="saint-nicolas" onchange="districtChanged()" checked> Saint-Nicolas</label>
+        <label class="dd-check"><input type="checkbox" value="herstal" onchange="districtChanged()" checked> Herstal</label>
+        <label class="dd-check"><input type="checkbox" value="juprelle" onchange="districtChanged()" checked> Juprelle</label>
+        <label class="dd-check"><input type="checkbox" value="bassenge" onchange="districtChanged()" checked> Bassenge</label>
         <div class="dd-separator">— Запад —</div>
-        <div class="dd-item" onclick="filterDropdown('district','flemalle','Flémalle',this)">Flémalle</div>
+        <label class="dd-check"><input type="checkbox" value="flemalle" onchange="districtChanged()" checked> Flémalle</label>
         <div class="dd-separator">— Юг —</div>
-        <div class="dd-item" onclick="filterDropdown('district','seraing','Seraing',this)">Seraing</div>
-        <div class="dd-item" onclick="filterDropdown('district','embourg','Embourg',this)">Embourg</div>
-        <div class="dd-item" onclick="filterDropdown('district','chaudfontaine','Chaudfontaine',this)">Chaudfontaine</div>
+        <label class="dd-check"><input type="checkbox" value="seraing" onchange="districtChanged()" checked> Seraing</label>
+        <label class="dd-check"><input type="checkbox" value="embourg" onchange="districtChanged()" checked> Embourg</label>
+        <label class="dd-check"><input type="checkbox" value="chaudfontaine" onchange="districtChanged()" checked> Chaudfontaine</label>
         <div class="dd-separator">— Далеко —</div>
-        <div class="dd-item" onclick="filterDropdown('district','theux','Theux',this)">Theux</div>
-        <div class="dd-item" onclick="filterDropdown('district','verviers','Verviers',this)">Verviers</div>
-        <div class="dd-item" onclick="filterDropdown('district','modave','Modave',this)">Modave</div>
-        <div class="dd-item" onclick="filterDropdown('district','tilff','Tilff',this)">Tilff (Neupré)</div>
-        <div class="dd-item" onclick="filterDropdown('district','rotheux','Rotheux',this)">Rotheux</div>
-        <div class="dd-item" onclick="filterDropdown('district','maastricht','Maastricht NL',this)">🌍 Maastricht (NL)</div>
+        <label class="dd-check"><input type="checkbox" value="theux" onchange="districtChanged()" checked> Theux</label>
+        <label class="dd-check"><input type="checkbox" value="verviers" onchange="districtChanged()" checked> Verviers</label>
+        <label class="dd-check"><input type="checkbox" value="modave" onchange="districtChanged()" checked> Modave</label>
+        <label class="dd-check"><input type="checkbox" value="tilff" onchange="districtChanged()" checked> Tilff (Neupré)</label>
+        <label class="dd-check"><input type="checkbox" value="rotheux" onchange="districtChanged()" checked> Rotheux</label>
+        <label class="dd-check"><input type="checkbox" value="maastricht" onchange="districtChanged()" checked> 🌍 Maastricht (NL)</label>
       </div>
+    </div>
+
     </div>
 
     <button class="quick-btn" id="btn-close" onclick="toggleClose(this)">⚡ До 15 мин</button>
@@ -1867,6 +1893,73 @@
 
 </div>
 
+
+<div class="section-divider"><p class="section-title">🌐 Иммерсия &amp; лучшие пропущенные</p></div>
+<div class="grid-container">
+
+  <!-- 41 -->
+  <div class="card" data-tags="free immersion seraing">
+    <div class="card-header">
+      <div class="card-num">41</div>
+      <div class="card-title-area">
+        <div class="card-name">École Joseph Distexhe — Immersion NL</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Communale · Immersion</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ ~14 км · ~15 мин</span>
+      <button class="fav-btn" id="fav-41" onclick="toggleFav(41)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
+    </div>
+    <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Avenue du Centenaire 27, 4102 Ougrée (Seraing)</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 336 59 34</span></div>
+      <div class="card-row"><span class="card-row-label">Email</span><span class="card-row-val">ec002119@adm.cfwb.be</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–12 лет (maternelle + primaire)</span></div>
+      <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">Пн–Пт 07:30–17:30</span></div>
+      <div class="card-row"><span class="card-row-label">Язык</span><span class="card-row-val"><span class="badge badge-lang-bilingual">🇫🇷🇳🇱 Фр. + Нидерл.</span> <span style="font-size:11px;color:var(--muted);">(19 пер. нидерландского + 7 фр. с 3-й maternelle)</span></span></div>
+    </div>
+    <div class="card-desc">🏆 Единственная школа с <strong>полной иммерсией нидерландского</strong> в Seraing. С 3-й maternelle: 19 периодов нидерландского в неделю от native speakers + 7 французского + 2 психомоторики. Co-titulariat: в каждом классе франкоязычный и нидерландоязычный учитель. Работает с 2000 года, ~280 детей, 20 учителей. Ougrée — район Seraing у Мааса, 15 мин от аэропорта.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.601,5.508" target="_blank">🚶 Street View</a>
+      <a class="link-btn" href="http://www.ecolescommunalesjosephdistexhe.sitew.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Avenue+du+Centenaire+27+Ougree+Seraing" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+  <!-- 42 -->
+  <div class="card" data-tags="free herstal close">
+    <div class="card-header">
+      <div class="card-num">42</div>
+      <div class="card-title-area">
+        <div class="card-name">École Jacques Brel — Herstal</div>
+        <div class="card-badges">
+          <span class="badge badge-type">Communale</span>
+          <span class="badge badge-free">Бесплатно</span>
+        </div>
+      </div>
+      <span class="dist-tag">✈️ ~12 км · ~12 мин</span>
+      <button class="fav-btn" id="fav-42" onclick="toggleFav(42)" title="В избранное"><span class="star-empty"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
+    </div>
+    <div class="card-body">
+      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Place Jacques Brel 1, 4040 Herstal</span></div>
+      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 256 86 68</span></div>
+      <div class="card-row"><span class="card-row-label">Email</span><span class="card-row-val">ecole.jacques.brel@herstal.be</span></div>
+      <div class="card-row"><span class="card-row-label">Возраст</span><span class="card-row-val">2.5–12 лет (maternelle + primaire)</span></div>
+      <div class="card-row"><span class="card-row-label">Часы</span><span class="card-row-val">Пн–Пт 07:30–17:30</span></div>
+      <div class="card-row"><span class="card-row-label">Язык</span><span class="card-row-val"><span class="badge badge-lang-fr">🇫🇷 Французский</span></span></div>
+    </div>
+    <div class="card-desc">Лучшая коммунальная школа Херсталя — недавно расширена и отремонтирована (проект завершается в 2027). Просторная cour maternelle с игровыми модулями, типи и домиками. Мини-пруд, огород, спортивный маршрут. Пешеходно-велосипедный проход к железнодорожной дорожке. <strong>Herstal</strong> — к северу от Льежа, 12 мин от аэропорта LGG.</div>
+    <div class="card-footer">
+      <a class="link-btn" href="https://www.facebook.com/p/%C3%89cole-Jacques-Brel-100057313065015/" target="_blank">📘 Facebook</a>
+      <a class="link-btn" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=50.668,5.630" target="_blank">🚶 Street View</a>
+      <a class="link-btn" href="http://www.ecolejacquesbrel.be/" target="_blank">🌐 Сайт</a>
+      <a class="link-btn" href="https://www.google.com/maps/search/Place+Jacques+Brel+1+Herstal" target="_blank">🗺 Карта</a>
+    </div>
+  </div>
+
+</div>
+
 <div class="no-results" id="noResults">Нет школ по выбранному фильтру.</div>
 </div><!-- end list-view -->
 
@@ -2088,8 +2181,36 @@
     document.getElementById(ddId).classList.remove('open');
     if (category === 'cost') activeCost = value;
     else if (category === 'type') activeType = value;
-    else activeDistrict = value;
     applyFilters();
+  }
+
+  // ── DISTRICT MULTISELECT ─────────────────────────────────────────────────
+  function getCheckedDistricts() {
+    var boxes = document.querySelectorAll('#dd-district input[type=checkbox]');
+    var checked = [];
+    boxes.forEach(function(b){ if (b.checked) checked.push(b.value); });
+    return checked;
+  }
+
+  function districtChanged() {
+    var all = document.querySelectorAll('#dd-district input[type=checkbox]');
+    var checked = getCheckedDistricts();
+    var label = '📍 Район';
+    if (checked.length === 0) label = '📍 Район (0)';
+    else if (checked.length < all.length) label = '📍 Районы: ' + checked.length;
+    document.getElementById('dd-district-label').textContent = label;
+    document.querySelector('#dd-district .dropdown-btn').classList.toggle('active', checked.length < all.length);
+    applyFilters();
+  }
+
+  function districtSelectAll() {
+    document.querySelectorAll('#dd-district input[type=checkbox]').forEach(function(b){ b.checked = true; });
+    districtChanged();
+  }
+
+  function districtSelectNone() {
+    document.querySelectorAll('#dd-district input[type=checkbox]').forEach(function(b){ b.checked = false; });
+    districtChanged();
   }
 
   function toggleClose(btn) {
@@ -2101,10 +2222,13 @@
   // ── FILTER STATE ──────────────────────────────────────────────
   var activeCost = 'all';
   var activeType = 'all';
-  var activeDistrict = 'all';
   var activeClose = false;
 
   function applyFilters() {
+    var checkedDistricts = getCheckedDistricts();
+    var allDistricts = document.querySelectorAll('#dd-district input[type=checkbox]').length;
+    var allChecked = checkedDistricts.length === allDistricts;
+
     var cards = document.querySelectorAll('.card');
     var count = 0;
     cards.forEach(function(card) {
@@ -2118,9 +2242,9 @@
         || (activeType === 'nature'        && tags.includes('nature'))
         || (activeType === 'international' && tags.includes('international'))
         || (activeType === 'catholique'    && tags.includes('catholique'));
-      var distOk = activeDistrict === 'all' || tags.includes(activeDistrict);
+      var distOk = allChecked || checkedDistricts.some(function(d){ return tags.includes(d); });
       var closeOk = !activeClose || tags.includes('close');
-      var favOk = !showOnlyFavs || favs.indexOf(parseInt(card.querySelector('.card-num, [class*="card-num"]').textContent)) !== -1;
+      var favOk = !showOnlyFavs || favs.indexOf(parseInt(card.querySelector('[class*="card-num"]').textContent)) !== -1;
       var show = costOk && typeOk && distOk && closeOk && favOk;
       card.classList.toggle('hidden', !show);
       if (show) count++;
@@ -2132,6 +2256,9 @@
 
   function syncMapMarkers() {
     if (!window._mapMarkers) return;
+    var checkedDistricts = getCheckedDistricts();
+    var allDistricts = document.querySelectorAll('#dd-district input[type=checkbox]').length;
+    var allChecked = checkedDistricts.length === allDistricts;
     window._mapMarkers.forEach(function(item) {
       var tags = item.tags || '';
       var costOk = activeCost === 'all'
@@ -2143,7 +2270,7 @@
         || (activeType === 'nature'        && tags.includes('nature'))
         || (activeType === 'international' && tags.includes('international'))
         || (activeType === 'catholique'    && tags.includes('catholique'));
-      var distOk = activeDistrict === 'all' || tags.includes(activeDistrict);
+      var distOk = allChecked || checkedDistricts.some(function(d){ return tags.includes(d); });
       var closeOk = !activeClose || tags.includes('close');
       if (costOk && typeOk && distOk && closeOk) item.marker.addTo(window._lmap);
       else item.marker.remove();
