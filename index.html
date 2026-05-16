@@ -304,12 +304,17 @@
   .card-row-val a:hover { text-decoration: underline; }
 
   .card-desc {
-    padding: 0 24px 16px;
+    padding: 0 24px 20px;
     font-size: 13.5px;
     color: var(--muted);
     line-height: 1.6;
     border-top: 1px solid var(--sand);
-    padding-top: 14px;
+    padding-top: 16px;
+    margin-top: 16px;
+  }
+  /* Gallery card: desc sits flush after the gallery row */
+  .card-with-gallery .card-desc {
+    margin-top: 0;
   }
   .card-with-gallery > .card-desc {
     margin-top: 0;
@@ -682,8 +687,14 @@
   .card-with-gallery .card-body-wrap {
     display: flex;
     gap: 16px;
-    align-items: stretch;
+    align-items: flex-start;
     padding: 0;
+  }
+  /* Desc directly after card-body-wrap gets a top separator */
+  .card-body-wrap + .card-desc {
+    margin-top: 0;
+    border-top: 1px solid var(--sand);
+    padding-top: 16px;
   }
   .card-with-gallery .card-body {
     flex: 1;
