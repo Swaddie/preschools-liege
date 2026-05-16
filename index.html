@@ -2814,7 +2814,7 @@
       mapEl.classList.add('visible');
       btnList.classList.remove('active');
       btnMap.classList.add('active');
-      if (!mapInitialized) { initMap(); mapInitialized = true; }
+      if (!mapInitialized) { initMap(); mapInitialized = true; syncMapMarkers(); }
     } else {
       listEl.classList.remove('hidden');
       mapEl.classList.remove('visible');
