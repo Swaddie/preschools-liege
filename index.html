@@ -316,6 +316,8 @@
   /* Gallery card: desc sits flush after the gallery row */
   .card-with-gallery .card-desc {
     margin-top: 0;
+    border-top: none;
+    padding-top: 0;
   }
   .card-with-gallery > .card-desc {
     margin-top: 0;
@@ -721,6 +723,7 @@
     align-items: stretch;
     padding: 0;
     border-bottom: 1px solid var(--sand);
+    margin-bottom: 0;
   }
   /* Desc directly after card-body-wrap gets a top separator */
   .card-body-wrap + .card-desc {
@@ -728,12 +731,18 @@
     border-top: none;
     padding-top: 16px;
   }
+  /* Enroll section directly after card-body-wrap */
+  .card-body-wrap + .card-enroll {
+    padding-top: 14px;
+  }
   .card-with-gallery .card-body {
     flex: 1;
     min-width: 0;
   }
   .card-with-gallery .card-desc {
     margin-top: 0;
+    border-top: none;
+    padding-top: 0;
   }
 
   /* LIGHTBOX POPUP */
@@ -801,7 +810,7 @@
   .enroll-contact { background: #E3F2FD; color: #1565C0; }
   .enroll-criteria{ background: #F3E5F5; color: #6A1B9A; }
   .card-enroll {
-    padding: 0 24px 12px;
+    padding: 12px 24px 10px;
     display: flex;
     align-items: center;
     gap: 8px;
