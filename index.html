@@ -2193,7 +2193,7 @@
   </div>
 
   <!-- 18 Chaudfontaine -->
-  <div class="card" data-tags="free chaudfontaine close">
+  <div class="card card-with-gallery" data-tags="free chaudfontaine close">
     <div class="card-header">
       <div class="card-num">24</div>
       <div class="card-title-area">
@@ -2209,10 +2209,29 @@
       <button class="fav-btn" id="fav-24" onclick="toggleFav(24)" title="В избранное"><span class="star-empty"><svg width="3" height="3" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#C0C8D0" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg></span><span class="star-filled"><svg width="3" height="3" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#FDD835" stroke="#E8A000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg></span></button>
     </div>
 
-    <div class="card-body">
-      <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Avenue du Centenaire 6, Chaudfontaine</span></div>
-      <div class="card-row"><span class="card-row-label">Язык</span><span class="card-row-val"><span class="badge badge-lang-fr">🇫🇷 Французский</span></span></div>
-      <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 361 56 50</span></div>
+    <div class="card-body-wrap">
+      <div class="photo-gallery" id="gallery-24" onclick="openLightbox('24', _galIdx['24']||0)">
+        <div class="gallery-track" id="gallery-track-24">
+          <img class="gallery-photo" src="images/princesse_01.png" alt="École Princesse de Liège — здание школы" loading="lazy">
+          <img class="gallery-photo" src="images/princesse_02.png" alt="Урок по производству яблочного сока» loading="lazy">
+          <img class="gallery-photo" src="images/princesse_03.png" alt="Праздник пасхального кролика» loading="lazy">
+          <img class="gallery-photo" src="images/princesse_04.png" alt="Двор школы с высоты» loading="lazy">
+        </div>
+        <button class="gallery-prev" onclick="event.stopPropagation();gallerySlide('24',-1)">&#8249;</button>
+        <button class="gallery-next" onclick="event.stopPropagation();gallerySlide('24',1)">&#8250;</button>
+        <div class="gallery-dots" id="gallery-dots-24">
+          <span class="gallery-dot active" onclick="galleryGo('24',0)"></span>
+          <span class="gallery-dot" onclick="galleryGo('24',1)"></span>
+          <span class="gallery-dot" onclick="galleryGo('24',2)"></span>
+          <span class="gallery-dot" onclick="galleryGo('24',3)"></span>
+        </div>
+        <div class="gallery-count">4 фото</div>
+      </div>
+      <div class="card-body">
+        <div class="card-row"><span class="card-row-label">Адрес</span><span class="card-row-val">Avenue du Centenaire 6, Chaudfontaine</span></div>
+        <div class="card-row"><span class="card-row-label">Язык</span><span class="card-row-val"><span class="badge badge-lang-fr">🇫🇷 Французский</span></span></div>
+        <div class="card-row"><span class="card-row-label">Телефон</span><span class="card-row-val">+32 4 361 56 50</span></div>
+      </div>
     </div>
     <div class="card-desc">Communale maternelle + primaire. Школа носит имя принцессы Льежской, ведёт активную внеклассную жизнь. <strong>Chaudfontaine</strong> — курортный городок в долине реки Урт, один из зелёных пригородов Льежа.</div>
     <div class="card-footer">
