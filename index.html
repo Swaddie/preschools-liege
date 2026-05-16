@@ -32,6 +32,7 @@
 
   /* HEADER */
   header {
+    overflow: hidden;
     background: var(--forest);
     color: var(--cream);
     padding: 60px 40px 50px;
@@ -395,7 +396,8 @@
   }
 
   @media (max-width: 600px) {
-    header { padding: 40px 20px 36px; }
+    header {
+    overflow: hidden; padding: 40px 20px 36px; }
     .filters-bar { padding: 12px 20px; }
     .grid-container { padding: 0 16px 40px; margin-top: 24px; }
     .section-divider { padding: 0 16px; }
@@ -404,6 +406,10 @@
     .card-header { flex-wrap: wrap; }
     .card-name { font-size: 15px; }
     .enroll-note { display: none; }
+    .card { max-width: 100%; overflow: hidden; }
+    .card-body { grid-template-columns: 1fr; }
+    .card-footer { flex-wrap: wrap; }
+    .dist-tag { padding-right: 76px; max-width: calc(100% - 80px); }
   }
 
   /* VIEW TOGGLE */
@@ -663,6 +669,7 @@
   }
   .gallery-photo {
     width: 260px;
+    max-width: 100%;
     height: 200px;
     object-fit: cover;
     flex-shrink: 0;
@@ -804,6 +811,11 @@
     letter-spacing: 0.04em;
     font-weight: 500;
   }
+
+  /* Force no horizontal overflow anywhere */
+  * { max-width: 100%; }
+  img { max-width: 100%; }
+  pre, code { white-space: pre-wrap; }
 
 </style>
 
@@ -2579,7 +2591,7 @@
       if (s.ig)    links += '<a href="'+s.ig+'" target="_blank" style="font-size:11px;color:#3D5A47;text-decoration:none;padding:4px 8px;border-radius:6px;background:white;border:1px solid #E8DFD0;font-weight:500;">📸 IG</a> ';
       links += '<a href="https://www.google.com/maps/search/'+encodeURIComponent(s.addr)+'" target="_blank" style="font-size:11px;color:#3D5A47;text-decoration:none;padding:4px 8px;border-radius:6px;background:white;border:1px solid #E8DFD0;font-weight:500;">🗺 Карта</a>';
 
-      var popup = '<div style="font-family:sans-serif;min-width:240px;">'
+      var popup = '<div style="font-family:sans-serif;min-width:0;max-width:280px;width:280px;">'
         + '<div style="padding:14px 16px 10px;">'
         + '<div style="width:24px;height:24px;border-radius:6px;background:'+color+';color:white;font-family:serif;font-size:12px;font-weight:700;text-align:center;line-height:24px;margin-bottom:8px;">'+s.num+'</div>'
         + '<div style="font-size:14px;font-weight:600;color:#1E2420;margin-bottom:4px;">'+s.name+'</div>'
