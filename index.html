@@ -578,7 +578,23 @@
   .card.disliked { display: none; }
   .card.disliked.show-disliked { display: block; }
 
-  /* DISLIKE BUTTON */
+  /* MOBILE: gallery cards stack vertically */
+  @media (max-width: 600px) {
+    .card-with-gallery .card-body-wrap {
+      flex-direction: column;
+    }
+    .photo-gallery {
+      width: 100%;
+      height: 220px;
+    }
+    .gallery-photo {
+      width: 100%;
+      height: 220px;
+    }
+    .gallery-track {
+      height: 220px;
+    }
+  }
   .dislike-btn {
     position: absolute;
     top: 14px; right: 48px;
@@ -2784,7 +2800,9 @@
   function galleryRender(id, n) {
     var idx = _galIdx[id] || 0;
     var track = document.getElementById('gallery-track-' + id);
-    track.style.transform = 'translateX(-' + (idx * 260) + 'px)';
+    var gallery = document.getElementById('gallery-' + id);
+    var w = gallery ? gallery.offsetWidth : 260;
+    track.style.transform = 'translateX(-' + (idx * w) + 'px)';
     var dots = document.querySelectorAll('#gallery-dots-' + id + ' .gallery-dot');
     dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
   }
