@@ -438,7 +438,7 @@
 
   /* MAP CONTAINER */
   #map-view { display: none; }
-  #map-view.visible { display: flex; }
+  #map-view.visible { display: block; }
   #list-view.hidden { display: none; }
 
   #map {
@@ -2898,8 +2898,8 @@
 
   // ── MAP INIT ─────────────────────────────────────────────────
   function initMap() {
-    var mapDiv = document.getElementById('map-view');
-    mapDiv.style.cssText = 'display:flex !important; height:calc(100vh - 120px);';
+    var mapDiv = document.getElementById('map');
+    mapDiv.style.cssText = 'display:flex; height:calc(100vh - 120px); width:100%;';
 
     // Sidebar
     var sidebar = document.createElement('div');
