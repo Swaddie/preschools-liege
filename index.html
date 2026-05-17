@@ -2934,6 +2934,12 @@
     // Init Leaflet
     var lmap = L.map('leaflet-map').setView([50.632, 5.579], 11);
     window._lmap = lmap;
+    lmap.on('popupopen', function(e) {
+      var btn = e.popup._contentNode && e.popup._contentNode.querySelector('.panel-btn');
+      if (btn) btn.addEventListener('click', function() {
+        openSchoolPanel(parseInt(this.getAttribute('data-num')));
+      });
+    });
     window._mapMarkers = [];
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -2968,7 +2974,7 @@
         + '<span style="background:'+bg2+';color:'+color2+';font-size:11px;padding:3px 8px;border-radius:8px;font-weight:600;">'+s.cost+'</span>'
         + (s.rating ? '<span style="background:#E8DFD0;color:#1E2420;font-size:11px;padding:3px 8px;border-radius:8px;">'+s.rating+'</span>' : '')
         + '</div></div>'
-        + '<div style="border-top:1px solid #E8DFD0;padding:8px 14px;background:#F7F3ED;display:flex;gap:6px;flex-wrap:wrap;align-items:center;">'+links+'<button onclick="openSchoolPanel('+s.num+');" style="font-size:11px;color:white;background:#3D5A47;border:none;padding:4px 10px;border-radius:6px;font-weight:500;cursor:pointer;margin-left:auto;">📋 Подробнее</button></div>'
+        + '<div style="border-top:1px solid #E8DFD0;padding:8px 14px;background:#F7F3ED;display:flex;gap:6px;flex-wrap:wrap;align-items:center;">'+links+'<button class="panel-btn" data-num="'+s.num+'" style="font-size:11px;color:white;background:#3D5A47;border:none;padding:4px 10px;border-radius:6px;font-weight:500;cursor:pointer;margin-left:auto;">📋 Подробнее</button></div>'
         + '</div>';
 
       var mapMarker = L.marker([s.lat, s.lng], { icon: icon })
