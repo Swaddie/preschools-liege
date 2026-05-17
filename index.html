@@ -2833,7 +2833,7 @@
       mapEl.classList.add('visible');
       btnList.classList.remove('active');
       btnMap.classList.add('active');
-      if (!mapInitialized) { initMap(); mapInitialized = true; syncMapMarkers(); }
+      if (!mapInitialized) { initMap(); mapInitialized = true; }
     } else {
       listEl.classList.remove('hidden');
       mapEl.classList.remove('visible');
@@ -2946,8 +2946,7 @@
         html: '<div style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4))">'
           + '<svg width="34" height="44" viewBox="0 0 34 44" xmlns="http://www.w3.org/2000/svg">'
           + '<path d="M17 0C7.6 0 0 7.6 0 17c0 13 17 27 17 27s17-14 17-27C34 7.6 26.4 0 17 0z" fill="'+color+'"/>'
-          + '<circle cx="13" cy="13" r="20" fill="rgba(255,255,255,0.25)"/>'
-          + '<text x="13" y="3" text-anchor="middle" font-family="Georgia,serif" font-size="'+fs+'" font-weight="700" fill="white">'+s.num+'</text>'
+          + '<text x="17" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,serif" font-size="'+fs+'" font-weight="700" fill="white">'+s.num+'</text>'
           + '</svg></div>',
         iconSize: [34, 44],
         iconAnchor: [17, 44],
