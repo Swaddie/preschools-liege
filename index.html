@@ -2946,17 +2946,7 @@
       var color = s.priv ? '#C4714A' : s.intl ? '#B8963E' : '#3D5A47';
       var fs = s.num >= 10 ? '10' : '21';
 
-      var icon = L.divIcon({
-        className: 'leaflet-div-icon',
-        html: '<div style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));width:34px;height:44px;display:block;background:red;">'
-          + '<svg width="34" height="44" viewBox="0 0 34 44" xmlns="http://www.w3.org/2000/svg">'
-          + '<path d="M17 0C7.6 0 0 7.6 0 17c0 13 17 27 17 27s17-14 17-27C34 7.6 26.4 0 17 0z" fill="'+color+'"/>'
-          + '<text x="17" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,serif" font-size="'+fs+'" font-weight="700" fill="white">'+s.num+'</text>'
-          + '</svg></div>',
-        iconSize: [34, 44],
-        iconAnchor: [17, 44],
-        popupAnchor: [0, -46]
-      });
+      var icon = new L.Icon.Default();
 
       var color2 = s.priv ? '#C4714A' : s.intl ? '#B8963E' : '#3D5A47';
       var bg2    = s.priv ? '#FBF0EB' : s.intl ? '#FBF6EB' : '#EEF4F0';
