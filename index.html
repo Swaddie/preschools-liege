@@ -2834,7 +2834,11 @@
       btnList.classList.remove('active');
       btnMap.classList.add('active');
       if (!mapInitialized) { initMap(); mapInitialized = true; }
-      setTimeout(function(){ if (window._lmap) { window._lmap.invalidateSize(); } }, 200);
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          if (window._lmap) window._lmap.invalidateSize();
+        });
+      });
     } else {
       listEl.classList.remove('hidden');
       mapEl.classList.remove('visible');
