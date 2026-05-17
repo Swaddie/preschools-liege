@@ -3368,17 +3368,18 @@
   }
 
   function openSchoolPanel(num) {
-    var card = Array.from(document.querySelectorAll('#list-view .card')).find(function(c){
+    var card = Array.from(document.querySelectorAll('.card')).find(function(c){
       var n = c.querySelector('.card-num');
       return n && parseInt(n.textContent) === num;
     });
-    if (!card) return;
-    var panel = document.getElementById('school-panel');
-    panel.innerHTML = '<button onclick="closeSchoolPanel()" style="position:sticky;top:0;display:block;width:100%;padding:12px 16px;background:#F7F3ED;border:none;border-bottom:1px solid #E8DFD0;cursor:pointer;text-align:left;font-size:13px;color:#3D5A47;font-weight:600;">← Закрыть</button>'
-      + '<div style="padding:0;">' + card.outerHTML + '</div>';
-    panel.querySelector('.dislike-btn') && panel.querySelector('.dislike-btn').remove();
-    panel.querySelector('.fav-btn') && panel.querySelector('.fav-btn').remove();
-    panel.style.right = '0';
+    if (!card) { console.log('Card not found for num', num); return; }
+    var clone = card.cloneNode(true);
+    var db = clone.querySelector('.dislike-btn'); if (db) db.remove();
+    var fb = clone.querySelector('.fav-btn'); if (fb) fb.remove();
+    var content = document.getElementById('school-panel-content');
+    content.innerHTML = '';
+    content.appendChild(clone);
+    document.getElementById('school-panel').style.right = '0';
     document.getElementById('school-panel-overlay').style.display = 'block';
   }
   function closeSchoolPanel() {
@@ -3398,7 +3399,13 @@
 </div>
 
 
-<div id="school-panel" style="position:fixed;top:0;right:-440px;width:420px;max-width:95vw;height:100vh;background:white;box-shadow:-4px 0 32px rgba(0,0,0,0.18);z-index:10000;transition:right 0.3s ease;overflow-y:auto;"></div>
+<div id="school-panel" style="position:fixed;top:0;right:-440px;width:420px;max-width:95vw;height:100vh;background:white;box-shadow:-4px 0 32px rgba(0,0,0,0.18);z-index:10000;transition:right 0.3s ease;overflow-y:auto;display:flex;flex-direction:column;">
+  <div style="padding:12px 16px;background:#F7F3ED;border-bottom:1px solid #E8DFD0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+    <span style="font-size:13px;color:#3D5A47;font-weight:600;">Карточка школы</span>
+    <button onclick="closeSchoolPanel()" style="background:none;border:none;cursor:pointer;font-size:20px;color:#7A7068;line-height:1;padding:0 4px;">✕</button>
+  </div>
+  <div id="school-panel-content" style="overflow-y:auto;flex:1;"></div>
+</div>
 <div id="school-panel-overlay" onclick="closeSchoolPanel()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.25);z-index:9999;"></div>
 </body>
 </html>
