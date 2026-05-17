@@ -497,7 +497,6 @@
   .custom-popup .leaflet-popup-content { margin: 0; }
   .custom-popup .leaflet-popup-tip { background: white; }
   .leaflet-div-icon { background: none !important; border: none !important; }
-  .smap-icon { background: none !important; border: none !important; width: 28px !important; height: 28px !important; }
   .marker-pin {
     width: 32px; height: 32px;
     border-radius: 50% 50% 50% 0;
@@ -2947,8 +2946,7 @@
       var color = s.priv ? '#C4714A' : s.intl ? '#B8963E' : '#3D5A47';
       var fs = s.num >= 10 ? '10' : '21';
 
-      var markerHtml = '<div style="width:28px;height:28px;border-radius:50%;background:'+color+';border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:'+fs+'px;font-weight:700;color:white;line-height:1;">'+s.num+'</div>';
-      var icon = L.divIcon({ className: 'smap-icon', html: markerHtml, iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -16] });
+      var icon = new L.Icon.Default();
 
       var color2 = s.priv ? '#C4714A' : s.intl ? '#B8963E' : '#3D5A47';
       var bg2    = s.priv ? '#FBF0EB' : s.intl ? '#FBF6EB' : '#EEF4F0';
@@ -2970,13 +2968,12 @@
         + '<span style="background:'+bg2+';color:'+color2+';font-size:11px;padding:3px 8px;border-radius:8px;font-weight:600;">'+s.cost+'</span>'
         + (s.rating ? '<span style="background:#E8DFD0;color:#1E2420;font-size:11px;padding:3px 8px;border-radius:8px;">'+s.rating+'</span>' : '')
         + '</div></div>'
-        + '<div style="border-top:1px solid #E8DFD0;padding:8px 14px;background:#F7F3ED;display:flex;gap:6px;flex-wrap:wrap;">'+links+'<button onclick="openSchoolPanel('+s.num+')" style="font-size:11px;color:white;background:#3D5A47;border:none;padding:4px 10px;border-radius:6px;font-weight:500;cursor:pointer;">📋 Карточка</button></div>'
+        + '<div style="border-top:1px solid #E8DFD0;padding:8px 14px;background:#F7F3ED;display:flex;gap:6px;flex-wrap:wrap;align-items:center;">'+links+'<button onclick="openSchoolPanel('+s.num+');" style="font-size:11px;color:white;background:#3D5A47;border:none;padding:4px 10px;border-radius:6px;font-weight:500;cursor:pointer;margin-left:auto;">📋 Подробнее</button></div>'
         + '</div>';
 
       var mapMarker = L.marker([s.lat, s.lng], { icon: icon })
         .addTo(lmap)
         .bindPopup(popup, { maxWidth: 300, minWidth: 260 });
-
 
       // Store marker with school tags for filter sync
       var schoolCard = document.querySelector('.card [class*="card-num"]:not([class*="private"])');
@@ -3371,24 +3368,23 @@
   }
 
   function openSchoolPanel(num) {
-    var card = Array.from(document.querySelectorAll('.card')).find(function(c){
-      var n = c.querySelector('.card-num'); return n && parseInt(n.textContent) === num;
+    var card = Array.from(document.querySelectorAll('#list-view .card')).find(function(c){
+      var n = c.querySelector('.card-num');
+      return n && parseInt(n.textContent) === num;
     });
     if (!card) return;
-    var content = document.getElementById('school-panel-content');
-    content.innerHTML = card.outerHTML;
-    // Remove dislike/fav buttons from panel clone
-    content.querySelectorAll('.dislike-btn,.fav-btn').forEach(function(b){ b.style.display='none'; });
-    document.getElementById('school-panel').style.right = '0';
+    var panel = document.getElementById('school-panel');
+    panel.innerHTML = '<button onclick="closeSchoolPanel()" style="position:sticky;top:0;display:block;width:100%;padding:12px 16px;background:#F7F3ED;border:none;border-bottom:1px solid #E8DFD0;cursor:pointer;text-align:left;font-size:13px;color:#3D5A47;font-weight:600;">← Закрыть</button>'
+      + '<div style="padding:0;">' + card.outerHTML + '</div>';
+    panel.querySelector('.dislike-btn') && panel.querySelector('.dislike-btn').remove();
+    panel.querySelector('.fav-btn') && panel.querySelector('.fav-btn').remove();
+    panel.style.right = '0';
     document.getElementById('school-panel-overlay').style.display = 'block';
-    document.body.style.overflow = 'hidden';
   }
   function closeSchoolPanel() {
-    document.getElementById('school-panel').style.right = '-420px';
+    document.getElementById('school-panel').style.right = '-440px';
     document.getElementById('school-panel-overlay').style.display = 'none';
-    document.body.style.overflow = '';
   }
-
 </script>
 
 <div class="lightbox" id="lightbox" onclick="lightboxClose(event)">
@@ -3402,11 +3398,7 @@
 </div>
 
 
-<!-- School slide-out panel -->
-<div id="school-panel" style="position:fixed;top:0;right:-420px;width:420px;max-width:100vw;height:100vh;background:white;box-shadow:-4px 0 32px rgba(0,0,0,0.15);z-index:9999;transition:right 0.3s ease;overflow-y:auto;font-family:'DM Sans',sans-serif;">
-  <button onclick="closeSchoolPanel()" style="position:sticky;top:12px;left:calc(100% - 48px);display:block;width:36px;height:36px;border-radius:50%;background:#F7F3ED;border:none;cursor:pointer;font-size:18px;line-height:36px;text-align:center;z-index:1;">✕</button>
-  <div id="school-panel-content" style="padding:0 24px 32px;margin-top:-36px;"></div>
-</div>
-<div id="school-panel-overlay" onclick="closeSchoolPanel()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:9998;"></div>
+<div id="school-panel" style="position:fixed;top:0;right:-440px;width:420px;max-width:95vw;height:100vh;background:white;box-shadow:-4px 0 32px rgba(0,0,0,0.18);z-index:10000;transition:right 0.3s ease;overflow-y:auto;"></div>
+<div id="school-panel-overlay" onclick="closeSchoolPanel()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.25);z-index:9999;"></div>
 </body>
 </html>
