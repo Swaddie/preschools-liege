@@ -2898,8 +2898,8 @@
 
   // ── MAP INIT ─────────────────────────────────────────────────
   function initMap() {
-    var mapDiv = document.getElementById('map');
-    mapDiv.style.display = 'flex';
+    var mapDiv = document.getElementById('map-view');
+    mapDiv.style.cssText = 'display:flex !important; height:calc(100vh - 120px);';
 
     // Sidebar
     var sidebar = document.createElement('div');
