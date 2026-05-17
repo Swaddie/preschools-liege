@@ -438,7 +438,7 @@
 
   /* MAP CONTAINER */
   #map-view { display: none; }
-  #map-view.visible { display: block; }
+  #map-view.visible { display: flex; height: calc(100vh - 60px); }
   #list-view.hidden { display: none; }
 
   #map {
@@ -2834,6 +2834,7 @@
       btnList.classList.remove('active');
       btnMap.classList.add('active');
       if (!mapInitialized) { initMap(); mapInitialized = true; }
+      setTimeout(function(){ if (window._lmap) { window._lmap.invalidateSize(); } }, 200);
     } else {
       listEl.classList.remove('hidden');
       mapEl.classList.remove('visible');
@@ -2862,6 +2863,7 @@
     { num:23, name:"École de l'Enfant Jésus", addr:'Rue du Pairoux 2, Juprelle', lat:50.6710, lng:5.5420, type:'Libre catholique', cost:'Бесплатно', dist:'9.5 км · ~9 мин', site:'https://www.eej.be/' },
     { num:13, name:'Notre-Dame de Méhagne', addr:'Rue des Coquelicots 12, Embourg', lat:50.5895, lng:5.5760, type:'Libre catholique', cost:'Бесплатно', dist:'15.3 км · ~14 мин', site:'http://endm.be/' },
     { num:24, name:'École Princesse de Liège', addr:'Avenue du Centenaire 6, Chaudfontaine', lat:50.5920, lng:5.6020, type:'Communale', cost:'Бесплатно', dist:'19.8 км · ~17 мин', site:'http://www.ecoleprincessedeliege.be/' },
+    { num:15, name:'École du Haut', addr:'Rue Eugène Jehaes 9a, Fléron', lat:50.6100, lng:5.6720, type:'Libre catholique', cost:'Бесплатно', dist:'23.2 км · ~24 мин', site:'https://ecoleduhaut.be/' },
     { num:14, name:'École fondamentale du Sartay', addr:'Rue de Sélys 51, Embourg', lat:50.5915, lng:5.5700, type:'Libre catholique', cost:'Бесплатно', dist:'15.3 км · ~14 мин', site:'http://www.sartay-fondamental.be/' },
     { num:25, name:'École Libre de Theux', addr:'Rue Hóvemont 30B, Theux', lat:50.5320, lng:5.8170, type:'Libre catholique', cost:'Бесплатно', dist:'43.5 км · ~36 мин', site:'https://ecole-libre-de-theux.webnode.be/' },
     { num:26, name:'École de la Providence', addr:'Rue de Dison 139, Verviers', lat:50.5900, lng:5.8600, type:'Libre catholique', cost:'Бесплатно', dist:'40.5 км · ~30 мин', fb:'https://www.facebook.com/providence.verviers' },
@@ -2887,7 +2889,6 @@
     { num:40, name:'École sportive Régis Genaux', addr:'Rue Houlbouse 81, Flémalle', lat:50.5720, lng:5.4680, type:'Communale · Sport', cost:'Бесплатно', dist:'~13 км · ~15 мин' },
     { num:41, name:'École Joseph Distexhe — Immersion NL', addr:'Avenue du Centenaire 27, Ougrée', lat:50.5960, lng:5.5290, type:'Communale · Immersion', cost:'Бесплатно', dist:'~14 км · ~15 мин' },
     { num:42, name:'École Jacques Brel — Herstal', addr:'Place Jacques Brel 1, Herstal', lat:50.6710, lng:5.6120, type:'Communale', cost:'Бесплатно', dist:'~12 км · ~12 мин' },
-    { num:15, name:'École du Haut', addr:'Rue Eugène Jehaes 9a, Fléron', lat:50.6100, lng:5.6720, type:'Libre catholique', cost:'Бесплатно', dist:'23.2 км · ~24 мин', site:'https://ecoleduhaut.be/' }
   ];
 
   // ── MAP INIT ─────────────────────────────────────────────────
@@ -2929,6 +2930,7 @@
     // Init Leaflet
     var lmap = L.map('leaflet-map').setView([50.632, 5.579], 11);
     window._lmap = lmap;
+    console.log("Leaflet map created, schools:", schools.length);
     window._mapMarkers = [];
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -2990,6 +2992,7 @@
         }
       });
       window._mapMarkers.push({ marker: mapMarker, tags: tags, num: s.num });
+      console.log("Marker added:", s.num, s.name, "at", s.lat, s.lng);
     });
 
     // Legend
