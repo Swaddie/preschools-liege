@@ -2908,16 +2908,15 @@
 
     schools.forEach(function(s) {
       var color = s.priv ? '#C4714A' : s.intl ? '#B8963E' : '#3D5A47';
-      var a = document.createElement('a');
-      a.href = 'https://www.google.com/maps/search/' + encodeURIComponent(s.addr);
-      a.target = '_blank';
-      a.style.cssText = 'display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid #F0EAE0;text-decoration:none;background:white;';
+      var a = document.createElement('div');
+      a.style.cssText = 'display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid #F0EAE0;background:white;cursor:pointer;';
       a.onmouseenter = function(){ a.style.background='#F7F3ED'; };
       a.onmouseleave = function(){ a.style.background='white'; };
-      a.innerHTML = '<div style="width:26px;height:26px;border-radius:50%;background:'+color+';color:white;font-family:serif;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'+s.num+'</div>'
-        + '<div style="min-width:0;flex:1;"><div style="font-size:12px;font-weight:600;color:#1E2420;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+s.name+'</div>'
-        + '<div style="font-size:11px;color:#7A7068;">'+s.dist+' · <span style="color:'+color+';font-weight:500;">'+s.cost+'</span></div></div>'
-        + '<span style="color:#ccc;font-size:11px;">↗</span>';
+      a.innerHTML = '<div style="width:26px;height:26px;border-radius:50%;background:'+color+';color:white;font-family:serif;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'+s.num+'</div>'        + '<div style="min-width:0;flex:1;"><div style="font-size:12px;font-weight:600;color:#1E2420;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+s.name+'</div>'        + '<div style="font-size:11px;color:#7A7068;">'+s.dist+' · <span style="color:'+color+';font-weight:500;">'+s.cost+'</span></div></div>'        + '<span style="color:#ccc;font-size:11px;">↗</span>';
+      (function(sc){ a.onclick = function(){
+        var m = window._mapMarkers && window._mapMarkers.find(function(x){ return x.num === sc.num; });
+        if (m) { lmap.setView([sc.lat, sc.lng], 15); m.marker.openPopup(); }
+      }; })(s);
       sidebar.appendChild(a);
     });
 
@@ -2935,7 +2934,6 @@
     // Init Leaflet
     var lmap = L.map('leaflet-map').setView([50.632, 5.579], 11);
     window._lmap = lmap;
-    console.log("Leaflet map created, schools:", schools.length);
     window._mapMarkers = [];
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -2950,7 +2948,7 @@
 
       var icon = L.divIcon({
         className: 'leaflet-div-icon',
-        html: '<div style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4))">'
+        html: '<div style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));width:34px;height:44px;display:block;">'
           + '<svg width="34" height="44" viewBox="0 0 34 44" xmlns="http://www.w3.org/2000/svg">'
           + '<path d="M17 0C7.6 0 0 7.6 0 17c0 13 17 27 17 27s17-14 17-27C34 7.6 26.4 0 17 0z" fill="'+color+'"/>'
           + '<text x="17" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,serif" font-size="'+fs+'" font-weight="700" fill="white">'+s.num+'</text>'
@@ -2997,7 +2995,6 @@
         }
       });
       window._mapMarkers.push({ marker: mapMarker, tags: tags, num: s.num });
-      console.log("Marker added:", s.num, s.name, "at", s.lat, s.lng);
     });
 
     // Legend
