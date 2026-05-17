@@ -438,7 +438,7 @@
 
   /* MAP CONTAINER */
   #map-view { display: none; }
-  #map-view.visible { display: block; }
+  #map-view.visible { display: flex; }
   #list-view.hidden { display: none; }
 
   #map {
@@ -496,7 +496,7 @@
   }
   .custom-popup .leaflet-popup-content { margin: 0; }
   .custom-popup .leaflet-popup-tip { background: white; }
-  .school-marker { background: none !important; border: none !important; width: 34px !important; height: 44px !important; }
+  .leaflet-div-icon { background: none !important; border: none !important; }
   .marker-pin {
     width: 32px; height: 32px;
     border-radius: 50% 50% 50% 0;
@@ -2899,7 +2899,7 @@
   // ── MAP INIT ─────────────────────────────────────────────────
   function initMap() {
     var mapDiv = document.getElementById('map');
-    mapDiv.style.cssText = 'display:flex; height:calc(100vh - 120px); width:100%;';
+    mapDiv.style.display = 'flex';
 
     // Sidebar
     var sidebar = document.createElement('div');
@@ -2949,7 +2949,7 @@
       var fs = s.num >= 10 ? '10' : '21';
 
       var icon = L.divIcon({
-        className: 'school-marker',
+        className: '',
         html: '<div style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4))">'
           + '<svg width="34" height="44" viewBox="0 0 34 44" xmlns="http://www.w3.org/2000/svg">'
           + '<path d="M17 0C7.6 0 0 7.6 0 17c0 13 17 27 17 27s17-14 17-27C34 7.6 26.4 0 17 0z" fill="'+color+'"/>'
