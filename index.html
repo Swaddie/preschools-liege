@@ -2935,7 +2935,9 @@
     var lmap = L.map('leaflet-map').setView([50.632, 5.579], 11);
     window._lmap = lmap;
     lmap.on('popupopen', function(e) {
-      var btn = e.popup._contentNode && e.popup._contentNode.querySelector('.panel-btn');
+      var el = e.popup.getElement();
+      if (!el) return;
+      var btn = el.querySelector('.panel-btn');
       if (btn) btn.addEventListener('click', function() {
         openSchoolPanel(parseInt(this.getAttribute('data-num')));
       });
